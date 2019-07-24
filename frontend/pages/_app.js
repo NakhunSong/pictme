@@ -13,6 +13,8 @@ import rootSaga from '../sagas';
 const AppWrapper = styled.div`
   height: 100%;
   background: #fafafa;
+  margin: 0px;
+  padding: 0px;
 `;
 const ComponentWrapper = styled.div`
   height: 100%;

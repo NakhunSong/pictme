@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AuthTemplate from '../components/common/AuthTemplate';
+import AuthTemplate from '../components/auth/AuthTemplate';
 import SignupForm from '../containers/signup/SignupForm';
 import LinkBox from '../components/common/LinkBox';
 

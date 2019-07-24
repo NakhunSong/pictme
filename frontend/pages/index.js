@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import AuthTemplate from '../components/common/AuthTemplate';
+import AuthTemplate from '../components/auth/AuthTemplate';
 import SignupForm from '../containers/signup/SignupForm';
 import LinkBox from '../components/common/LinkBox';
+import Main from '../containers/main/Main';
 
 const Pictme = () => {
   const { me } = useSelector(state => state.user);
@@ -17,7 +18,7 @@ const Pictme = () => {
           </AuthTemplate>
         )
         : (
-          <div>메인</div>
+          <Main />
         )
       }
     </div>
