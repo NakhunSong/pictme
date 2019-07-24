@@ -1,9 +1,15 @@
 import React from 'react';
-import SignupContainer from '../containers/SignupContainer';
+
+import AuthTemplate from '../components/common/AuthTemplate';
+import SignupForm from '../containers/signup/SignupForm';
+import LinkBox from '../components/common/LinkBox';
 
 const Pictme = () => {
   return (
-    <SignupContainer/>
+    <AuthTemplate>
+      <SignupForm />
+      <LinkBox question={"계정이 있으시다면?"} pageName={"로그인"} />
+    </AuthTemplate>
   );
 };
 
