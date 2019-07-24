@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { Button, Input } from 'antd';
 
@@ -6,23 +7,32 @@ import {
   LoginFormWrapper,
   LoginFormInnerWrapper,
   TitleWrapper,
-  FormWrapper
+  FormWrapper,
 } from './style';
 
-import {useInput} from '../signup/SignupForm';
+import { useInput } from '../signup/SignupForm';
+import { LOG_IN_REQUEST } from '../../reducers/user';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const { isLogginIn } = useSelector(state => state.user);
   const [userId, onChangeUserId] = useInput('');
   const [password, onChangePassword] = useInput('');
 
   const onSubmit = useCallback((e) => {
     e.preventDefault();
-    console.log({
-      userId,
-      password
+    if (!userId || !userId.trim() || !password || !password.trim()) { // 공백 작성 막음.
+      return alert('내용을 채워주시기 바랍니다.');
+    }
+    dispatch({
+      type: LOG_IN_REQUEST,
+      data: {
+        userId,
+        password,
+      },
     });
-  },[userId, password]);
-  
+  }, [userId, password]);
+
   return (
     <LoginFormWrapper>
       <LoginFormInnerWrapper>
@@ -39,11 +49,11 @@ const LoginForm = () => {
           </div>
         </TitleWrapper>
         <FormWrapper onSubmit={onSubmit}>
-          <Input size="large" placeholder="아이디" onChange={onChangeUserId} />
+          <Input value={userId} size="large" placeholder="아이디" onChange={onChangeUserId} />
           <br />
-          <Input size="large" placeholder="패스워드확인" onChange={onChangePassword} />
+          <Input value={password} size="large" placeholder="패스워드확인" onChange={onChangePassword} type="password" />
           <br />
-          <Button type="danger" size="large" block htmlType="submit">로그인</Button>
+          <Button type="primary" size="large" block htmlType="submit" loading={isLogginIn}>로그인</Button>
         </FormWrapper>
       </LoginFormInnerWrapper>
     </LoginFormWrapper>
