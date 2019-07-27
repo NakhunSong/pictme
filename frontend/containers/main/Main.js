@@ -1,64 +1,63 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { Input, Icon } from 'antd';
+import { Card, Avatar } from 'antd';
 
 import MainTemplate from '../../components/main/MainTemplate';
+import Header from './Header';
+import PostCard from '../post/PostCard';
+import { LOAD_MAIN_POSTS_REQUEST } from '../../reducers/post';
 
-const Menu = styled.div`
-  width: 100%;
-  height: 80px;
-  background: white;
-  border: 1px solid #e6e6e6;
+const MainWrapper = styled.main`
+  width: 100%;  
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  justify-content: space-around;
 
-  div {
-    display: inline-block;
+  .posts {
+    margin-top: 10px;
+    width: 100%;  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-
-  .logo {
-    font-size: 30px;
-    transition: all .2s;
-    &:hover {
-      color: #3897F0;
-      cursor: pointer;
-      transform: scale(1.2, 1.2);
-    }
-  }
-
-  .profileOrAuth {
-    font-size: 28px;
-    transition: all .2s;
-    &:hover {
-      color: #3897F0;
-      cursor: pointer;
-      transform: scale(1.2, 1.2);
-    } 
-  }
+`;
+const CardWrapper = styled(Card)`
+  max-width: 500px;
+  width: 100%;
 `;
 
 const Main = () => {
+  const { me } = useSelector(state => state.user);
+  const { mainPosts } = useSelector(state => state.post);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MAIN_POSTS_REQUEST,
+    });
+  }, []);
+
   return (
     <MainTemplate>
-      <header style={{ width: '100%' }}>
-        <Menu>
-          <div className="logo">
-            pictme
-          </div>
-          <div className="searchBox">
-            <Input.Search
-              style={{ verticalAlign: 'middle' }}
-            />
-          </div>
-          <div className="profileOrAuth">
-            <Icon type="user" />
-          </div>
-        </Menu>
-      </header>
-      <main>
-        메인
-      </main>
+      <Header />
+      <MainWrapper style={{ width: '100%' }}>
+        <CardWrapper>
+          <Card.Meta
+            avatar={<Avatar>{me.nickname[0]}</Avatar>}
+            title={me.nickname}
+          />
+        </CardWrapper>
+        <div className="posts">
+          {mainPosts && mainPosts.map((p) => {
+            return (
+              <PostCard key={p.id} post={p} />
+            );
+          })}
+        </div>
+      </MainWrapper>
     </MainTemplate>
   );
 };

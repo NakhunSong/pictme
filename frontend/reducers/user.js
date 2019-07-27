@@ -3,9 +3,10 @@ import Router from 'next/router';
 const dummyUser = {
   id: 0,
   nickname: '나쿤',
-  Post: [],
+  profileImg: '../public/testImg.jpg',
+  Posts: [],
   Followings: [],
-  Follower: [],
+  Followers: [],
 };
 
 export const initialState = {
