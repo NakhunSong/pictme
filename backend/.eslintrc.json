@@ -12,5 +12,7 @@
     "airbnb"
   ],
   "plugins": [],
-  "rules": {}
+  "rules": {
+    "no-underscore-dangle": "off",
+  }
 }
