@@ -1,7 +1,7 @@
 {
   "parserOptions": {
     "ecmaVersion": 2019,
-    "sourceType": "module",
+    "sourceType": "module"
   },
   "env": {
     "browser": true,

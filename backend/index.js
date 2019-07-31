@@ -19,7 +19,9 @@ dotenv.config();
 const {
   COOKIE_SECRET: cookieSecret
 } = process.env;
+
 const app = express();
+
 db.sequelize.sync();
 passportConfig();
 
