@@ -10,12 +10,13 @@ const dummyUser = {
 };
 
 export const initialState = {
-  isLogginIn: false,
+  isLoggingIn: false,
   loginErrorReason: '',
   isSigningUp: false,
   isSignedUp: false,
   signUpErrorReason: '',
-  me: null,
+  me: null, // 사용자 정보
+  loadUserErrorReason: '',
 };
 
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -29,6 +30,10 @@ export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
+export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -59,7 +64,7 @@ export default (state = initialState, action) => {
     case LOG_IN_REQUEST: {
       return {
         ...state,
-        isLogginIn: true,
+        isLoggingIn: true,
         loginErrorReason: '',
       };
     }
@@ -67,15 +72,33 @@ export default (state = initialState, action) => {
       Router.push('/');
       return {
         ...state,
-        isLogginIn: false,
+        isLoggingIn: false,
         me: action.data,
       };
     }
     case LOG_IN_FAILURE: {
       return {
         ...state,
-        isLogginIn: false,
+        isLoggingIn: false,
         loginErrorReason: action.error,
+      };
+    }
+    case LOAD_USER_REQUEST: {
+      return {
+        ...state,
+        loadUserErrorReason: '',
+      };
+    }
+    case LOAD_USER_SUCCESS: {
+      return {
+        ...state,
+        me: action.data,
+      };
+    }
+    case LOAD_USER_FAILURE: {
+      return {
+        ...state,
+        loadUserErrorReason: action.error,
       };
     }
     default: {

@@ -1,23 +1,22 @@
 import React from 'react';
 import Head from 'next/head';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import withRedux from 'next-redux-wrapper';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import reducer from '../reducers';
 import rootSaga from '../sagas';
+
+import AppLayout from '../containers/common/AppLayout';
 
 const AppWrapper = styled.div`
   height: 100%;
   background: #fafafa;
   margin: 0px;
   padding: 0px;
-`;
-const ComponentWrapper = styled.div`
-  height: 100%;
 `;
 
 const Pictme = ({ Component, store }) => {
@@ -28,9 +27,9 @@ const Pictme = ({ Component, store }) => {
           <title>pictme</title>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.2/antd.css" />
         </Head>
-        <ComponentWrapper>
+        <AppLayout>
           <Component />
-        </ComponentWrapper>
+        </AppLayout>
       </AppWrapper>
     </Provider>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Icon, Input } from 'antd';
+import { Icon, Input, Button } from 'antd';
 
 const Menu = styled.div`
   width: 100%;
@@ -27,12 +27,24 @@ const Menu = styled.div`
 
   .profileOrAuth {
     font-size: 28px;
-    transition: all .2s;
-    &:hover {
-      color: #3897F0;
-      cursor: pointer;
-      transform: scale(1.2, 1.2);
-    } 
+    
+    .left {
+      margin-right: 10px;
+      &:hover {
+        transition: all .2s;
+        color: #3897F0;
+        cursor: pointer;
+        transform: scale(1.2, 1.2);
+      }
+    }
+    .right {
+      &:hover {
+        transition: all .2s;
+        color: #3897F0;
+        cursor: pointer;
+        transform: scale(1.2, 1.2);
+      }
+    }
   }
 `;
 
@@ -49,7 +61,12 @@ const Header = () => {
           />
         </div>
         <div className="profileOrAuth">
-          <Icon type="user" />
+          <div className="left">
+            <Icon type="user" />
+          </div>
+          <div className="right">
+            <Button type="primary">로그아웃</Button>
+          </div>
         </div>
       </Menu>
     </header>

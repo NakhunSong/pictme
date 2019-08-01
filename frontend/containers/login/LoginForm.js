@@ -15,7 +15,7 @@ import { LOG_IN_REQUEST } from '../../reducers/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLogginIn } = useSelector(state => state.user);
+  const { isLoggingIn } = useSelector(state => state.user);
   const [userId, onChangeUserId] = useInput('');
   const [password, onChangePassword] = useInput('');
 
@@ -53,7 +53,7 @@ const LoginForm = () => {
           <br />
           <Input value={password} size="large" placeholder="패스워드확인" onChange={onChangePassword} type="password" />
           <br />
-          <Button type="primary" size="large" block htmlType="submit" loading={isLogginIn}>로그인</Button>
+          <Button type="primary" size="large" block htmlType="submit" loading={isLoggingIn}>로그인</Button>
         </FormWrapper>
       </LoginFormInnerWrapper>
     </LoginFormWrapper>
