@@ -41,15 +41,15 @@ app.use(expressSession({
     httpOnly: true,
     secure: false // https 사용 시 true
   },
-  name: pckfife,
+  name: 'pckfife',
 }));
 
 app.use(passport.initialize());
 app.use(passport.session()); // express-session 보다 아래에 선언.
 
 app.use('/api/user', userAPIRouter);
-app.use('/api/post', postAPIRouter);
-app.use('/api/posts', postsAPIRouter);
+// app.use('/api/post', postAPIRouter);
+// app.use('/api/posts', postsAPIRouter);
 
 app.get('/', (req, res) => {
   res.send('백엔드 서버 작동중 확인');
