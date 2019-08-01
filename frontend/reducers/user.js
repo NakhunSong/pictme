@@ -11,8 +11,10 @@ const dummyUser = {
 
 export const initialState = {
   isLogginIn: false,
+  loginErrorReason: '',
   isSigningUp: false,
   isSignedUp: false,
+  signUpErrorReason: '',
   me: null,
 };
 
@@ -24,6 +26,10 @@ export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case SIGN_UP_REQUEST: {
@@ -31,6 +37,7 @@ export default (state = initialState, action) => {
         ...state,
         isSigningUp: true,
         isSignedUp: false,
+        signUpErrorReason: '',
       };
     }
     case SIGN_UP_SUCCESS: {
@@ -46,31 +53,29 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSigningUp: false,
+        signUpErrorReason: action.error,
       };
     }
     case LOG_IN_REQUEST: {
       return {
         ...state,
         isLogginIn: true,
+        loginErrorReason: '',
       };
     }
     case LOG_IN_SUCCESS: {
-      console.log(action.data);
-      const userData = action.data;
       Router.push('/');
       return {
         ...state,
         isLogginIn: false,
-        me: {
-          ...dummyUser,
-          userData,
-        },
+        me: action.data,
       };
     }
     case LOG_IN_FAILURE: {
       return {
         ...state,
         isLogginIn: false,
+        loginErrorReason: action.error,
       };
     }
     default: {
