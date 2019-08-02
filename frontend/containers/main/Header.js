@@ -1,5 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Router from 'next/router';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { Icon, Input, Button } from 'antd';
 
@@ -20,10 +22,16 @@ const Menu = styled.div`
   }
 
   .logo {
-    font-size: 30px;
+    a {
+      color: rgba(0, 0, 0, 0.70);
+      font-weight: 600;
+      &:hover {
+        color: #3897F0;
+      }
+    }
+    font-size: 35px;
     transition: all .2s;
     &:hover {
-      color: #3897F0;
       cursor: pointer;
       transform: scale(1.2, 1.2);
     }
@@ -60,7 +68,13 @@ const Menu = styled.div`
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { isLoggingOut } = useSelector(state => state.user);
+  const { isLoggingOut, me } = useSelector(state => state.user);
+
+  useEffect(() => {
+    if (!me) {
+      Router.push('/');
+    }
+  }, [me]);
 
   const onLogOut = useCallback(() => {
     dispatch({
@@ -72,7 +86,7 @@ const Header = () => {
     <header style={{ width: '100%' }}>
       <Menu>
         <div className="logo">
-          pictme
+          <Link href="/"><a>pictme</a></Link>
         </div>
         <div className="searchBox">
           <Input.Search

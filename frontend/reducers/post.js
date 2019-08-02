@@ -7,7 +7,7 @@ const dummyPost = {
     nickname: '나쿤',
     profileImg: '../static/testimg.jpg',
   },
-  img: '../static/testimg.jpg',
+  Images: '../static/testimg.jpg',
   content: 'testImg입니다.',
   Comments: [],
 };
@@ -24,17 +24,8 @@ const dummyComment = {
 
 // post state
 export const initialState = {
-  mainPosts: [{
-    id: 0,
-    User: {
-      id: 2,
-      nickname: '낰낰',
-      profileImg: '../static/testimg.jpg',
-    },
-    img: '../static/testimg.jpg',
-    content: 'testImg입니다.',
-    Comments: [],
-  }],
+  mainPosts: [],
+  imagePaths: [],
 };
 
 export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
@@ -45,6 +36,7 @@ const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_MAIN_POSTS_REQUEST: {
+        draft.mainPosts = [];
         break;
       }
       case LOAD_MAIN_POSTS_SUCCESS: {

@@ -5,9 +5,6 @@ import PropTypes from 'prop-types';
 
 const PostCardWrapper = styled.div`
   margin-bottom: 20px;
-`;
-
-const CardWrapper = styled(Card)`
   max-width: 500px;
   width: 100%;
   max-height: 700px;
@@ -17,10 +14,10 @@ const CardWrapper = styled(Card)`
 const PostCard = ({ post }) => {
   return (
     <PostCardWrapper>
-      <CardWrapper
+      <Card
         size="small"
         key={+post.createdAt}
-        cover={post.img && <img alt="example" src={post.img} />}
+        cover={post.Images && <img alt="example" src={post.Images} />}
         actions={[
           <Icon type="retweet" key="retweet" />,
           <Icon type="heart" key="heart" />,
@@ -34,7 +31,7 @@ const PostCard = ({ post }) => {
           title={post.User.nickname}
           description={post.content}
         />
-      </CardWrapper>
+      </Card>
     </PostCardWrapper>
   );
 };
@@ -43,7 +40,7 @@ PostCard.propTypes = {
   post: PropTypes.shape({
     User: PropTypes.object,
     content: PropTypes.string,
-    img: PropTypes.string,
+    Images: PropTypes.string,
     createdAt: PropTypes.object,
   }).isRequired,
 };

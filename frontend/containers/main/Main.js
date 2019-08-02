@@ -3,10 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Card, Avatar } from 'antd';
 
-import MainTemplate from '../../components/main/MainTemplate';
-import Header from './Header';
 import PostCard from '../post/PostCard';
-import PostButton from '../../components/post/PostButton';
+import PostForm from '../post/PostForm';
 import { LOAD_MAIN_POSTS_REQUEST } from '../../reducers/post';
 
 const MainWrapper = styled.main`
@@ -42,25 +40,22 @@ const Main = () => {
   }, []);
 
   return (
-    <MainTemplate>
-      <Header />
-      <MainWrapper style={{ width: '100%' }}>
-        <CardWrapper>
-          <Card.Meta
-            avatar={<Avatar>{me.nickname[0]}</Avatar>}
-            title={me.nickname}
-          />
-        </CardWrapper>
-        <div className="posts">
-          {mainPosts && mainPosts.map((p) => {
-            return (
-              <PostCard key={p.id} post={p} />
-            );
-          })}
-        </div>
-        <PostButton />
-      </MainWrapper>
-    </MainTemplate>
+    <MainWrapper style={{ width: '100%' }}>
+      <CardWrapper>
+        <Card.Meta
+          avatar={<Avatar>{me.nickname[0]}</Avatar>}
+          title={me.nickname}
+        />
+      </CardWrapper>
+      <div className="posts">
+        {mainPosts && mainPosts.map((p) => {
+          return (
+            <PostCard key={p.id} post={p} />
+          );
+        })}
+      </div>
+      <PostForm />
+    </MainWrapper>
   );
 };
 

@@ -1,8 +1,6 @@
-import React from 'react';
-import { Icon } from 'antd';
 import styled from 'styled-components';
 
-const ButtonWrapper = styled.div`
+export const ButtonWrapper = styled.div`
   position: fixed;
   bottom: 0;
   right: 0;
@@ -21,13 +19,11 @@ const ButtonWrapper = styled.div`
     transform: scale(1.2, 1.2);
   }
 `;
-
-const PostButton = () => {
-  return (
-    <ButtonWrapper>
-      <Icon type="edit" />
-    </ButtonWrapper>
-  );
-};
-
-export default PostButton;
+export const LoginFormWrapper = styled.div`
+  max-width: 390px;
+  max-height: 450px;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+`;

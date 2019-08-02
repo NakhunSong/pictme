@@ -8,7 +8,7 @@ const signup = () => {
   return (
     <AuthTemplate>
       <SignupForm />
-      <LinkBox question="계정이 없으시다면?" pageName="회원가입" />
+      <LinkBox question="계정을 가지고 계신가요?" pageName="로그인" />
     </AuthTemplate>
   );
 };
