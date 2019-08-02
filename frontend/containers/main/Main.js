@@ -6,6 +6,7 @@ import { Card, Avatar } from 'antd';
 import MainTemplate from '../../components/main/MainTemplate';
 import Header from './Header';
 import PostCard from '../post/PostCard';
+import PostButton from '../../components/post/PostButton';
 import { LOAD_MAIN_POSTS_REQUEST } from '../../reducers/post';
 
 const MainWrapper = styled.main`
@@ -57,6 +58,7 @@ const Main = () => {
             );
           })}
         </div>
+        <PostButton />
       </MainWrapper>
     </MainTemplate>
   );

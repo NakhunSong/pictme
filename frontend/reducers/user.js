@@ -11,6 +11,7 @@ const dummyUser = {
 
 export const initialState = {
   isLoggingIn: false,
+  isLoggingOut: false,
   loginErrorReason: '',
   isSigningUp: false,
   isSignedUp: false,
@@ -99,6 +100,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loadUserErrorReason: action.error,
+      };
+    }
+    case LOG_OUT_REQUEST: {
+      return {
+        ...state,
+        isLoggingOut: true,
+      };
+    }
+    case LOG_OUT_SUCCESS: {
+      return {
+        ...state,
+        isLoggingOut: false,
+        me: null,
+      };
+    }
+    case LOG_OUT_FAILURE: {
+      return {
+        ...state,
+        isLoggingOut: false,
       };
     }
     default: {

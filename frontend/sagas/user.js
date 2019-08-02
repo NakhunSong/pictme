@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { all, fork, call, put, delay, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
-import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE } from '../reducers/user';
+import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE } from '../reducers/user';
 
 // 회원가입
 function signUpAPI(signUpData) {
@@ -50,6 +50,29 @@ function* watchLogIn() {
   yield takeEvery(LOG_IN_REQUEST, logIn);
 }
 
+// 로그아웃
+function logOutAPI() {
+  return axios.post('/user/logout', {}, {
+    withCredentials: true,
+  });
+}
+function* logOut() {
+  try {
+    yield call(logOutAPI);
+    yield put({
+      type: LOG_OUT_SUCCESS,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOG_OUT_FAILURE,
+    });
+  }
+}
+function* watchLogOut() {
+  yield takeEvery(LOG_OUT_REQUEST, logOut);
+}
+
 // 사용자 정보 불러오기(로그인 유저)
 function loadUserAPI() {
   return axios.get('/user/', {
@@ -79,6 +102,7 @@ export default function* userSaga() {
   yield all([
     fork(watchSignup),
     fork(watchLogIn),
+    fork(watchLogOut),
     fork(watchLoadUser),
   ]);
 }

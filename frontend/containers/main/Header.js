@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Icon, Input, Button } from 'antd';
+
+import { device } from '../../config/device';
+import { LOG_OUT_REQUEST } from '../../reducers/user';
 
 const Menu = styled.div`
   width: 100%;
@@ -22,6 +26,12 @@ const Menu = styled.div`
       color: #3897F0;
       cursor: pointer;
       transform: scale(1.2, 1.2);
+    }
+  }
+
+  .searchBox {
+    @media (max-width: 500px) {
+      display: none;
     }
   }
 
@@ -49,6 +59,15 @@ const Menu = styled.div`
 `;
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const { isLoggingOut } = useSelector(state => state.user);
+
+  const onLogOut = useCallback(() => {
+    dispatch({
+      type: LOG_OUT_REQUEST,
+    });
+  }, []);
+
   return (
     <header style={{ width: '100%' }}>
       <Menu>
@@ -65,7 +84,7 @@ const Header = () => {
             <Icon type="user" />
           </div>
           <div className="right">
-            <Button type="primary">로그아웃</Button>
+            <Button type="primary" onClick={onLogOut} loading={isLoggingOut}>로그아웃</Button>
           </div>
         </div>
       </Menu>
