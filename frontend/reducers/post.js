@@ -26,11 +26,18 @@ const dummyComment = {
 export const initialState = {
   mainPosts: [],
   imagePaths: [],
+  isAddingPost: false,
+  postAdded: false,
+  addPostErrorReason: '',
 };
 
 export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
 export const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
+
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
@@ -40,11 +47,28 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_MAIN_POSTS_SUCCESS: {
-        dummyPost.Comments.push(dummyComment);
-        draft.mainPosts.push(dummyPost);
+        draft.mainPosts = action.data;
         break;
       }
       case LOAD_MAIN_POSTS_FAILURE: {
+        break;
+      }
+      case ADD_POST_REQUEST: {
+        draft.isAddingPost = true;
+        draft.postAdded = false;
+        draft.addPostErrorReason = '';
+        break;
+      }
+      case ADD_POST_SUCCESS: {
+        draft.isAddingPost = false;
+        draft.postAdded = true;
+        draft.mainPosts.unshift(action.data);
+        draft.imagePaths = []; // 이미지 path 초기화
+        break;
+      }
+      case ADD_POST_FAILURE: {
+        draft.isAddingPost = false;
+        draft.addPostErrorReason = action.error;
         break;
       }
       default: {

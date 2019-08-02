@@ -28,6 +28,7 @@ const PostCard = ({ post }) => {
       >
         <Card.Meta
           avatar={post.User.profileImg ? <Avatar size="large" src={`${post.User.profileImg}`} /> : <Avatar size="large">{post.User.nickname[0]}</Avatar>}
+          // avatar={<Avatar size="large" src={`${post.User.nickname[0]}`} />}
           title={post.User.nickname}
           description={post.content}
         />
