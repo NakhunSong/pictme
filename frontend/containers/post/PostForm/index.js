@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon, Modal, Input, Button } from 'antd';
 
 import { ButtonWrapper } from './style';
-import { ADD_POST_REQUEST } from '../../../reducers/post';
+import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST } from '../../../reducers/post';
 import { backUrl } from '../../../config/config';
 
 const PostForm = () => {
@@ -14,10 +14,12 @@ const PostForm = () => {
   const [textError, setTextError] = useState(false);
   const [visible, setVisible] = useState(false);
   const imageInput = useRef();
+  const buttonClick = useRef();
 
   useEffect(() => {
-    setText('');
-  }, [postAdded === true]); // 게시물 작성 완료 후 input 초기화
+    setText(''); // 게시물 작성 완료 후 input 초기화
+    setVisible(false); // 게시물 작성 완료 후 모달 종료
+  }, [postAdded === true]);
 
   const showModal = useCallback(() => {
     setVisible(true);
@@ -33,7 +35,23 @@ const PostForm = () => {
     setTextError(false);
     setText(e.target.value);
   }, []);
-  const handleSubmit = () => {
+  const handleChangeImages = useCallback((e) => {
+    console.log('e.target.files: ', e.target.files);
+    const imageFormData = new FormData();
+    Array.prototype.forEach.call(e.target.files, (file) => {
+      imageFormData.append('image', file);
+    });
+    dispatch({
+      type: UPLOAD_IMAGES_REQUEST,
+      data: imageFormData,
+    });
+  }, []);
+  const handleOk = useCallback(() => {
+    buttonClick.current.click();
+  }, [buttonClick.current]);
+
+  const handleSubmitForm = useCallback((e) => {
+    e.preventDefault();
     if (!text || !text.trim()) {
       return setTextError(true);
     }
@@ -43,8 +61,7 @@ const PostForm = () => {
         content: text.trim(),
       },
     });
-    setVisible(false);
-  };
+  }, [text]);
 
   return (
     <ButtonWrapper>
@@ -55,38 +72,43 @@ const PostForm = () => {
         maskClosable={false}
         closable={false}
         okText="작성"
-        onOk={handleSubmit}
+        onOk={handleOk}
         confirmLoading={isAddingPost}
         cancelText="취소"
         onCancel={handleCancel}
       >
-        <div>
-          <div style={{ fontSize: '14px', borderBottom: '1px solid #e6e6e6', marginBottom: '2px', paddingBottom: '2px' }}>
-            사진
-          </div>
+        <form encType="multipart/form-data" onSubmit={handleSubmitForm}>
           <div>
-            <input type="file" multiple hidden ref={imageInput} />
-            <Button onClick={handleImageUpload}>업로드</Button>
-          </div>
-          <div>
-            {imagePaths.map(v => (
-              <div>
-                <img src={`${backUrl}/${v}`} style={{ width: '200px' }} alt={v} />
-                <div>
-                  <Button>제거</Button>
+            <div style={{ fontSize: '14px', borderBottom: '1px solid #e6e6e6', marginBottom: '2px', paddingBottom: '2px' }}>
+              사진
+            </div>
+            <div>
+              <input type="file" multiple hidden ref={imageInput} onChange={handleChangeImages} />
+              <Button onClick={handleImageUpload}>업로드</Button>
+            </div>
+            <div>
+              {imagePaths.map(v => (
+                <div key={v} style={{ display: 'inline-block' }}>
+                  <img src={`${backUrl}/${v}`} style={{ width: '200px' }} alt={v} />
+                  <div>
+                    <Button>제거</Button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-        <br />
-        <div>
-          <div style={{ fontSize: '14px', borderBottom: '1px solid #e6e6e6', marginBottom: '2px', paddingBottom: '2px' }}>
-            설명
+          <br />
+          <div>
+            <div style={{ fontSize: '14px', borderBottom: '1px solid #e6e6e6', marginBottom: '2px', paddingBottom: '2px' }}>
+              설명
+            </div>
+            <Input.TextArea maxLength={140} placeholder="사진에 대한 한마디!" value={text} onChange={handleChangeText}/>
+            {textError && <div style={{ color: 'red' }}>사진에 대한 설명을 입력해주세요!</div>}
           </div>
-          <Input.TextArea maxLength={140} placeholder="사진에 대한 한마디!" value={text} onChange={handleChangeText}/>
-          {textError && <div style={{ color: 'red' }}>사진에 대한 설명을 입력해주세요!</div>}
-        </div>
+          <div>
+            <button style={{ display: 'none' }} type="submit" ref={buttonClick}>등록</button>
+          </div>
+        </form>
       </Modal>
     </ButtonWrapper>
   );

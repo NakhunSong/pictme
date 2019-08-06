@@ -26,6 +26,7 @@ db.sequelize.sync();
 passportConfig();
 
 app.use(morgan('dev'));
+app.use('/', express.static('uploads'));
 app.use(cors({
   origin: true, // 요청 주소와 같게 설정. 모든 요청 허락.
   credentials: true, // true: 헤더 전달.

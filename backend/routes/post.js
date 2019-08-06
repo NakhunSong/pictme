@@ -1,13 +1,34 @@
 const express = require('express');
+const path = require('path');
+const multer = require('multer');
+
 const db = require('../models');
+const { isLoggedIn } = require('./middleware');
 
 const router = express.Router();
 
-const { isLoggedIn } = require('./middleware');
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, res, done) {
+      done(null, 'uploads');
+    },
+    filename(req, file, done) {
+      const ext = path.extname(file.originalname); // 확장자명
+      const basename = path.basename(file.originalname, ext); // 확장자명 제거한 주소
+      done(null, basename + new Date().valueOf() + ext); // date를 섞어 고유 이미지명으로 생성
+    }
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
+});
+
+router.post('/images', upload.array('image'), (req, res) => { // POST /api/images
+  res.json(req.files.map(v => v.filename));
+});
 
 router.get('/', (req, res, next) => { // GET /api/post
 
 });
+
 router.post('/', isLoggedIn, async (req, res, next) => { // POST /api/post
   try {
     const hashtags = req.body.content.match(/#[^\s]+/g);

@@ -26,6 +26,7 @@ const dummyComment = {
 export const initialState = {
   mainPosts: [],
   imagePaths: [],
+  uploadImagesError: '',
   isAddingPost: false,
   postAdded: false,
   addPostErrorReason: '',
@@ -39,6 +40,10 @@ export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
+export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
+export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
+export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
+
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
@@ -51,6 +56,18 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_MAIN_POSTS_FAILURE: {
+        break;
+      }
+      case UPLOAD_IMAGES_REQUEST: {
+        draft.uploadImagesError = '';
+        break;
+      }
+      case UPLOAD_IMAGES_SUCCESS: {
+        draft.imagePaths.push(action.data);
+        break;
+      }
+      case UPLOAD_IMAGES_FAILURE: {
+        draft.uploadImagesError = action.error;
         break;
       }
       case ADD_POST_REQUEST: {

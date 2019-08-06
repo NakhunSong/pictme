@@ -72,7 +72,7 @@ const SignupForm = () => {
           <div className="description">
             사진으로 이야기를 공유하세요
           </div>
-          <Button type="danger" size="large" block>
+          <Button type="primary" size="large" block>
             <Link href="/about"><a>About us</a></Link>
           </Button>
           <div className="seperator">
