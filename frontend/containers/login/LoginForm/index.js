@@ -10,8 +10,8 @@ import {
   FormWrapper,
 } from './style';
 
-import { useInput } from '../signup/SignupForm';
-import { LOG_IN_REQUEST } from '../../reducers/user';
+import { useInput } from '../../signup/SignupForm';
+import { LOG_IN_REQUEST } from '../../../reducers/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch();

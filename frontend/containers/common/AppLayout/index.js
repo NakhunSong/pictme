@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { LOAD_USER_REQUEST } from '../../reducers/user';
+import { LOAD_USER_REQUEST } from '../../../reducers/user';
 
 const ComponentWrapper = styled.div`
   height: 100%;

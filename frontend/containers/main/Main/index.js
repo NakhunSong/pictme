@@ -3,10 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { Card, Avatar } from 'antd';
 
-import PostCard from '../post/PostCard';
-import PostForm from '../post/PostFormModal';
-import { LOAD_MAIN_POSTS_REQUEST } from '../../reducers/post';
-import PostButton from '../../components/post/PostButton';
+import PostCard from '../../post/PostCard';
+import { LOAD_MAIN_POSTS_REQUEST } from '../../../reducers/post';
+import PostButton from '../../../components/post/PostButton';
 
 const MainWrapper = styled.main`
   width: 100%;  

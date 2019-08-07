@@ -5,8 +5,8 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { Icon, Input, Button } from 'antd';
 
-import { device } from '../../config/device';
-import { LOG_OUT_REQUEST } from '../../reducers/user';
+import { device } from '../../../config/device';
+import { LOG_OUT_REQUEST } from '../../../reducers/user';
 
 const Menu = styled.div`
   width: 100%;
