@@ -1,4 +1,5 @@
 import produce from 'immer';
+import Router from 'next/router';
 
 const dummyPost = {
   id: 1,
@@ -81,6 +82,7 @@ const reducer = (state = initialState, action) => {
         draft.postAdded = true;
         draft.mainPosts.unshift(action.data);
         draft.imagePaths = []; // 이미지 path 초기화
+        Router.push('/');
         break;
       }
       case ADD_POST_FAILURE: {

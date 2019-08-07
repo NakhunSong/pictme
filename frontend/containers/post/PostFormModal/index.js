@@ -1,12 +1,8 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Input, Button, message } from 'antd';
+import { Icon, Modal, Input, Button } from 'antd';
 
-import {
-  Wrapper,
-  PostFormWrapper,
-  TitleWrapper,
-} from './style';
+import { ButtonWrapper } from './style';
 import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST } from '../../../reducers/post';
 import { backUrl } from '../../../config/config';
 
@@ -25,6 +21,13 @@ const PostForm = () => {
     setVisible(false); // 게시물 작성 완료 후 모달 종료
   }, [postAdded === true]);
 
+  const showModal = useCallback(() => {
+    setVisible(true);
+  }, []);
+  const handleCancel = useCallback(() => {
+    setText('');
+    setVisible(false);
+  }, []);
   const handleImageUpload = useCallback(() => {
     imageInput.current.click(); // ref 가리키는 곳 클릭.
   }, [imageInput.current]);
@@ -43,6 +46,9 @@ const PostForm = () => {
       data: imageFormData,
     });
   }, []);
+  const handleOk = useCallback(() => {
+    buttonClick.current.click();
+  }, [buttonClick.current]);
 
   const handleSubmitForm = useCallback((e) => {
     e.preventDefault();
@@ -55,25 +61,35 @@ const PostForm = () => {
         content: text.trim(),
       },
     });
-    message.success('등록이 완료되었습니다.');
   }, [text]);
 
   return (
-    <Wrapper>
-      <PostFormWrapper encType="multipart/form-data" onSubmit={handleSubmitForm}>
-        <TitleWrapper>
-          <div className="title">Post</div>
-        </TitleWrapper>
-        <div className="image">
-          <div className="seperator">
-            <div className="or">사진</div>
-          </div>
-          <div className="upload-image">
-            <input type="file" multiple hidden ref={imageInput} onChange={handleChangeImages} />
+    <ButtonWrapper>
+      <Icon type="edit" onClick={showModal} />
+      <Modal
+        title="게시물 작성"
+        visible={visible}
+        maskClosable={false}
+        closable={false}
+        okText="작성"
+        onOk={handleSubmitForm}
+        confirmLoading={isAddingPost}
+        cancelText="취소"
+        onCancel={handleCancel}
+      >
+        <form encType="multipart/form-data" onSubmit={handleSubmitForm}>
+          <div>
+            <div style={{ fontSize: '14px', borderBottom: '1px solid #e6e6e6', marginBottom: '2px', paddingBottom: '2px' }}>
+              사진
+            </div>
+            <div>
+              <input type="file" multiple hidden ref={imageInput} onChange={handleChangeImages} />
+              <Button onClick={handleImageUpload}>업로드</Button>
+            </div>
             <div>
               {imagePaths.map(v => (
                 <div key={v} style={{ display: 'inline-block' }}>
-                  <img src={`${backUrl}/${v}`} style={{ width: '200px', height: '230px' }} alt={v} />
+                  <img src={`${backUrl}/${v}`} style={{ width: '200px' }} alt={v} />
                   <div>
                     <Button>제거</Button>
                   </div>
@@ -81,22 +97,20 @@ const PostForm = () => {
               ))}
             </div>
           </div>
-          <div className="upload-button">
-            <Button onClick={handleImageUpload}>업로드</Button>
+          <br />
+          <div>
+            <div style={{ fontSize: '14px', borderBottom: '1px solid #e6e6e6', marginBottom: '2px', paddingBottom: '2px' }}>
+              설명
+            </div>
+            <Input.TextArea maxLength={140} placeholder="사진에 대한 한마디!" value={text} onChange={handleChangeText}/>
+            {textError && <div style={{ color: 'red' }}>사진에 대한 설명을 입력해주세요!</div>}
           </div>
-        </div>
-        <div className="description">
-          <div className="seperator">
-            <div className="or">설명</div>
+          <div>
+            <button style={{ display: 'none' }} type="submit" ref={buttonClick}>등록</button>
           </div>
-          <Input.TextArea maxLength={500} placeholder="사진에 대한 한마디!" value={text} onChange={handleChangeText}/>
-          {textError && <div style={{ color: 'red' }}>사진에 대한 설명을 입력해주세요!</div>}
-        </div>
-        <div className="submit-button">
-          <Button htmlType="submit" type="primary" ref={buttonClick}>등록</Button>
-        </div>
-      </PostFormWrapper>
-    </Wrapper>
+        </form>
+      </Modal>
+    </ButtonWrapper>
   );
 };
 

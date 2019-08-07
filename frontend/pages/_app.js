@@ -14,7 +14,6 @@ import AppLayout from '../containers/common/AppLayout';
 
 const AppWrapper = styled.div`
   height: 100%;
-  background: #fafafa;
   margin: 0px;
   padding: 0px;
 `;

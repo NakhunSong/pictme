@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 
 import AuthTemplate from '../components/auth/AuthTemplate';
 import MainTemplate from '../components/main/MainTemplate';
-import SignupForm from '../containers/signup/SignupForm';
 import LinkBox from '../components/common/LinkBox';
 import Main from '../containers/main/Main';
 import Header from '../containers/main/Header';
+import SignupForm from '../containers/signup/SignupForm';
 
 const Pictme = () => {
   const { me } = useSelector(state => state.user);

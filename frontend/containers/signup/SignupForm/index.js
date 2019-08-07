@@ -9,7 +9,7 @@ import {
   TitleWrapper,
   FormWrapper,
 } from './style';
-import { SIGN_UP_REQUEST } from '../../reducers/user';
+import { SIGN_UP_REQUEST } from '../../../reducers/user';
 
 export const useInput = (initValue = null) => {
   const [value, setter] = useState(initValue);

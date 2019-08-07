@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { Card, Avatar } from 'antd';
 
 import PostCard from '../post/PostCard';
-import PostForm from '../post/PostForm';
+import PostForm from '../post/PostFormModal';
 import { LOAD_MAIN_POSTS_REQUEST } from '../../reducers/post';
+import PostButton from '../../components/post/PostButton';
 
 const MainWrapper = styled.main`
   width: 100%;  
@@ -40,7 +41,7 @@ const Main = () => {
   }, []);
 
   return (
-    <MainWrapper style={{ width: '100%' }}>
+    <MainWrapper>
       <CardWrapper>
         <Card.Meta
           avatar={<Avatar>{me.nickname[0]}</Avatar>}
@@ -54,7 +55,7 @@ const Main = () => {
           );
         })}
       </div>
-      <PostForm />
+      <PostButton />
     </MainWrapper>
   );
 };
