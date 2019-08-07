@@ -45,7 +45,33 @@ export const PostFormWrapper = styled.form`
     .upload-image {
       height: 250px;
       border-bottom: 1px solid #e6e6e6;
+
+      .images-wrapper {
+        display: flex; 
+        justify-content: space-around;
+
+
+        .image-preview {
+          position: relative;
+          display: inline-block;
+          border: 1px solid #e6e6e6;
+  
+          .remove-image-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: red;
+            &:hover {
+              transform: scale(1.2, 1.2);
+              cursor: pointer;
+            }
+          }
+
+        }
+
+      }
     }
+    
     .upload-button {
       margin-top: 5px;
       text-align: right;

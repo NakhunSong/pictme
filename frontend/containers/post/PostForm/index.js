@@ -1,13 +1,13 @@
 import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Input, Button, message } from 'antd';
+import { Input, Button, message, Icon } from 'antd';
 
 import {
   Wrapper,
   PostFormWrapper,
   TitleWrapper,
 } from './style';
-import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST } from '../../../reducers/post';
+import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE } from '../../../reducers/post';
 import { backUrl } from '../../../config/config';
 
 const PostForm = () => {
@@ -43,7 +43,12 @@ const PostForm = () => {
       data: imageFormData,
     });
   }, []);
-
+  const handleRemovePreviewImage = useCallback(index => () => {
+    dispatch({
+      type: REMOVE_IMAGE,
+      index,
+    });
+  }, []);
   const handleSubmitForm = useCallback((e) => {
     e.preventDefault();
     if (!text || !text.trim()) {
@@ -70,19 +75,19 @@ const PostForm = () => {
           </div>
           <div className="upload-image">
             <input type="file" multiple hidden ref={imageInput} onChange={handleChangeImages} />
-            <div>
-              {imagePaths.map(v => (
-                <div key={v} style={{ display: 'inline-block' }}>
-                  <img src={`${backUrl}/${v}`} style={{ width: '200px', height: '230px' }} alt={v} />
-                  <div>
-                    <Button>제거</Button>
+            <div className="images-wrapper">
+              {imagePaths.map((v, i) => (
+                <div key={v} className="image-preview">
+                  <img src={`${backUrl}/post_image/${v}`} style={{ width: '180px', height: '230px' }} alt={v} />
+                  <div className="remove-image-button">
+                    <Icon type="close" onClick={handleRemovePreviewImage(i)}>제거</Icon>
                   </div>
                 </div>
               ))}
             </div>
           </div>
           <div className="upload-button">
-            <Button onClick={handleImageUpload}>업로드</Button>
+            <Button type="primary" onClick={handleImageUpload}>업로드</Button>
           </div>
         </div>
         <div className="description">

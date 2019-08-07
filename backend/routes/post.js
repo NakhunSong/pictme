@@ -9,19 +9,18 @@ const router = express.Router();
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination(req, res, done) {
-      done(null, 'uploads');
+    destination(req, file, done) {
+      done(null, 'uploads/post_image');
     },
     filename(req, file, done) {
-      const ext = path.extname(file.originalname); // 확장자명
-      const basename = path.basename(file.originalname, ext); // 확장자명 제거한 주소
-      done(null, basename + new Date().valueOf() + ext); // date를 섞어 고유 이미지명으로 생성
-    }
-  }),
-  limits: { fileSize: 20 * 1024 * 1024 },
+      const ext = path.extname(file.originalname);
+      const basename = path.basename(file.originalname, ext); // abc.png -> ext: .png, .jpg, ... basename: abc
+      done(null, basename + new Date().valueOf() + ext);
+    },
+  })
 });
 
-router.post('/images', upload.array('image'), (req, res) => { // POST /api/images
+router.post('/images', upload.array('image'), (req, res) => { // POST /api/images **upload.'array' : 이미지 동시에 여러개 업로드 가능.
   res.json(req.files.map(v => v.filename));
 });
 

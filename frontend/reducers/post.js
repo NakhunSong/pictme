@@ -45,6 +45,8 @@ export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
 export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
 export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
 
+export const REMOVE_IMAGE = 'REMOVE_IMAGE';
+
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
@@ -69,6 +71,11 @@ const reducer = (state = initialState, action) => {
       }
       case UPLOAD_IMAGES_FAILURE: {
         draft.uploadImagesError = action.error;
+        break;
+      }
+      case REMOVE_IMAGE: {
+        const index = draft.imagePaths.findIndex((v, i) => i === action.index);
+        draft.imagePaths.splice(index, 1);
         break;
       }
       case ADD_POST_REQUEST: {
