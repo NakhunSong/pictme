@@ -54,14 +54,17 @@ const PostForm = () => {
     if (!text || !text.trim()) {
       return setTextError(true);
     }
+    const formData = new FormData();
+    imagePaths.forEach((i) => {
+      formData.append('image', i);
+    });
+    formData.append('content', text);
     dispatch({
       type: ADD_POST_REQUEST,
-      data: {
-        content: text.trim(),
-      },
+      data: formData,
     });
     message.success('등록이 완료되었습니다.');
-  }, [text]);
+  }, [text, imagePaths]);
 
   return (
     <Wrapper>
