@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 
 const AuthTemplateWrapper = styled.div`
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
 const AuthTemplate = ({ children }) => {

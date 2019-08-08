@@ -37,9 +37,14 @@ export const Menu = styled.div`
 
   .profileOrAuth {
     font-size: 28px;
-    
+    width: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
     .left {
-      margin-right: 10px;
+      display: inline-box;
+      margin-top: 5px;
       &:hover {
         transition: all .2s;
         color: #3897F0;
@@ -48,6 +53,7 @@ export const Menu = styled.div`
       }
     }
     .right {
+      display: inline-box;
       &:hover {
         transition: all .2s;
         color: #3897F0;

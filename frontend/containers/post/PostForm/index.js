@@ -3,12 +3,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Input, Button, message, Icon } from 'antd';
 
 import {
+  ADD_POST_REQUEST,
+  UPLOAD_IMAGES_REQUEST,
+  REMOVE_IMAGE,
+} from '../../../reducers/post';
+import { backUrl } from '../../../config/config';
+import {
   Wrapper,
   PostFormWrapper,
   TitleWrapper,
+  ButtonWrapper,
 } from './style';
-import { ADD_POST_REQUEST, UPLOAD_IMAGES_REQUEST, REMOVE_IMAGE } from '../../../reducers/post';
-import { backUrl } from '../../../config/config';
 
 const PostForm = () => {
   const dispatch = useDispatch();
@@ -74,7 +79,7 @@ const PostForm = () => {
         </TitleWrapper>
         <div className="image">
           <div className="seperator">
-            <div className="or">사진</div>
+            <div className="or">Picture</div>
           </div>
           <div className="upload-image">
             <input type="file" multiple hidden ref={imageInput} onChange={handleChangeImages} />
@@ -90,12 +95,19 @@ const PostForm = () => {
             </div>
           </div>
           <div className="upload-button">
-            <Button type="primary" onClick={handleImageUpload}>업로드</Button>
+            {imagePaths.length >= 2
+              ? null
+              : (
+                <ButtonWrapper>
+                  <Icon type="upload" onClick={handleImageUpload} />
+                </ButtonWrapper>
+              )
+            }
           </div>
         </div>
         <div className="description">
           <div className="seperator">
-            <div className="or">설명</div>
+            <div className="or">Comment</div>
           </div>
           <Input.TextArea maxLength={500} placeholder="사진에 대한 한마디!" value={text} onChange={handleChangeText}/>
           {textError && <div style={{ color: 'red' }}>사진에 대한 설명을 입력해주세요!</div>}

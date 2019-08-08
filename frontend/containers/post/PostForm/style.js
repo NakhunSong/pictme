@@ -60,9 +60,11 @@ export const PostFormWrapper = styled.form`
             position: absolute;
             top: 5px;
             right: 5px;
-            color: red;
+            color: black;
+            font-size: 1px;           
             &:hover {
               transform: scale(1.2, 1.2);
+              color: red;
               cursor: pointer;
             }
           }
@@ -73,8 +75,9 @@ export const PostFormWrapper = styled.form`
     }
     
     .upload-button {
-      margin-top: 5px;
-      text-align: right;
+      margin-top: 8px;
+      display: flex;
+      justify-content: flex-end;
     }
   }
   .description {
@@ -127,5 +130,22 @@ export const TitleWrapper = styled.div`
         color: e6e6e6;
         font-size: 0.9rem;
     }
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  width: 55px;
+  height: 35px;
+  border-radius: 3px;
+  // background: #3897f0;
+  background: #1890ff;
+  color: white;
+  font-size: 22px;
+  text-align: center;
+
+  &:hover {
+    transition: all .2s;
+    cursor: pointer;
+    transform: scale(1.2, 1.2);
   }
 `;
