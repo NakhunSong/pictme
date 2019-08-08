@@ -1,32 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
 import { Card, Avatar } from 'antd';
 
 import PostCard from '../../post/PostCard';
 import { LOAD_MAIN_POSTS_REQUEST } from '../../../reducers/post';
 import PostButton from '../../../components/post/PostButton';
-
-const MainWrapper = styled.main`
-  width: 100%;  
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .posts {
-    margin-top: 10px;
-    width: 100%;  
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-const CardWrapper = styled(Card)`
-  max-width: 500px;
-  width: 100%;
-`;
+import {
+  MainWrapper,
+  CardWrapper,
+} from './style';
 
 const Main = () => {
   const { me } = useSelector(state => state.user);

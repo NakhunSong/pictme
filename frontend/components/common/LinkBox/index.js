@@ -23,7 +23,7 @@ const LinkBoxWrapper = styled.div`
   }
 `;
 
-const LinkBox = ({question, pageName}) => {
+const LinkBox = ({ question, pageName }) => {
   return (
     <LinkBoxWrapper>
       <div className="question">{question}</div>
