@@ -1,5 +1,6 @@
-import React from 'react';
-import { Card, Icon, Avatar } from 'antd';
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Card, Icon, Avatar, message } from 'antd';
 import PropTypes from 'prop-types';
 
 import {
@@ -7,8 +8,31 @@ import {
   CardWrapper,
 } from './style';
 import PostImages from '../../../components/post/PostImages';
+import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from '../../../reducers/post';
 
 const PostCard = ({ post }) => {
+  const dispatch = useDispatch();
+  const { me } = useSelector(state => state.user);
+
+  const liked = me && post.Likers && post.Likers.find(v => v.id === me.id);
+
+  const onToggleLike = useCallback(() => {
+    if (!me) {
+      return message.info('로그인이 필요한 작업입니다.');
+    }
+    if (liked) {
+      dispatch({
+        type: UNLIKE_POST_REQUEST,
+        data: post.id,
+      });
+    } else {
+      dispatch({
+        type: LIKE_POST_REQUEST,
+        data: post.id,
+      });
+    }
+  }, [me && me.id, post && post.id, liked]);
+
   return (
     <PostCardWrapper>
       <CardWrapper
@@ -22,7 +46,7 @@ const PostCard = ({ post }) => {
         key={+post.createdAt}
         cover={post.Images && post.Images[0] && <PostImages images={post.Images} />}
         actions={[
-          <Icon type="heart" key="heart" />,
+          <Icon type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} twoToneColor="#eb2f96" onClick={onToggleLike} />,
           <Icon type="message" key="message" />,
           <Icon type="ellipsis" key="ellipsis" />,
         ]}
@@ -37,10 +61,12 @@ const PostCard = ({ post }) => {
 
 PostCard.propTypes = {
   post: PropTypes.shape({
+    id: PropTypes.number.isRequired,
     User: PropTypes.object,
     content: PropTypes.string,
-    Images: PropTypes.string,
-    createdAt: PropTypes.object,
+    Images: PropTypes.array,
+    Likers: PropTypes.array,
+    createdAt: PropTypes.string,
   }).isRequired,
 };
 

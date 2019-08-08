@@ -34,7 +34,7 @@ const Header = () => {
         </div>
         <div className="searchBox">
           <Input.Search
-            style={{ verticalAlign: 'middle' }}
+            style={{ verticalAlign: 'middle', width: '280px' }}
           />
         </div>
         <div className="profileOrAuth">

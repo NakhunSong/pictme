@@ -72,4 +72,36 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST 
   }
 });
 
+router.post('/:id/like', isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await db.Post.findOne({
+      where: { id: req.params.id }
+    });
+    if (!post) {
+      return res.status(401).send('포스트가 존재하지 않습니다.');
+    }
+    await post.addLiker(req.user.id);
+    res.json({ userId: req.user.id });
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
+
+router.delete('/:id/like', isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await db.Post.findOne({
+      where: { id: req.params.id }
+    });
+    if (!post) {
+      return res.status(401).send('포스트가 존재하지 않습니다.');
+    }
+    await post.removeLiker(req.user.id); 
+    res.json({ userId: req.user.id });
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
+
 module.exports = router;

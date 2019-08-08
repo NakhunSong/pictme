@@ -15,7 +15,7 @@ const AuthTemplate = ({ children }) => {
 };
 
 AuthTemplate.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object.isRequired,
 };
 
 export default AuthTemplate;
