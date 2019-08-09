@@ -13,16 +13,6 @@ const dummyPost = {
   Comments: [],
 };
 
-const dummyComment = {
-  id: 1,
-  User: {
-    id: 1,
-    nickname: '나쿤',
-  },
-  createdAt: new Date(),
-  content: '더미 댓글입니다.',
-};
-
 // post state
 export const initialState = {
   mainPosts: [],
@@ -31,11 +21,20 @@ export const initialState = {
   isAddingPost: false,
   postAdded: false,
   addPostErrorReason: '',
+  singlePost: null, // 개별 post 정보
 };
 
 export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
 export const LOAD_MAIN_POSTS_SUCCESS = 'LOAD_MAIN_POSTS_SUCCESS';
 export const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
+
+export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
+export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
+export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
+
+export const LOAD_SINGLE_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_SINGLE_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_SINGLE_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -58,15 +57,29 @@ export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case LOAD_MAIN_POSTS_REQUEST: {
+      case LOAD_MAIN_POSTS_REQUEST:
+      case LOAD_HASHTAG_POSTS_REQUEST: {
         draft.mainPosts = [];
         break;
       }
-      case LOAD_MAIN_POSTS_SUCCESS: {
+      case LOAD_MAIN_POSTS_SUCCESS:
+      case LOAD_HASHTAG_POSTS_SUCCESS: {
         draft.mainPosts = action.data;
         break;
       }
-      case LOAD_MAIN_POSTS_FAILURE: {
+      case LOAD_MAIN_POSTS_FAILURE:
+      case LOAD_HASHTAG_POSTS_FAILURE: {
+        break;
+      }
+      case LOAD_SINGLE_POST_REQUEST: {
+        draft.singlePost = [];
+        break;
+      }
+      case LOAD_SINGLE_POST_SUCCESS: {
+        draft.singlePost = action.data;
+        break;
+      }
+      case LOAD_SINGLE_POST_FAILURE: {
         break;
       }
       case UPLOAD_IMAGES_REQUEST: {

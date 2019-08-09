@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { all, fork, call, put, delay, takeLatest, takeEvery, throttle } from 'redux-saga/effects';
-import { LOAD_MAIN_POSTS_REQUEST, LOAD_MAIN_POSTS_FAILURE, LOAD_MAIN_POSTS_SUCCESS, ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE, UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS, UPLOAD_IMAGES_FAILURE, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, LIKE_POST_FAILURE, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UNLIKE_POST_FAILURE } from '../reducers/post';
+import { LOAD_MAIN_POSTS_REQUEST, LOAD_MAIN_POSTS_FAILURE, LOAD_MAIN_POSTS_SUCCESS, ADD_POST_REQUEST, ADD_POST_SUCCESS, ADD_POST_FAILURE, UPLOAD_IMAGES_REQUEST, UPLOAD_IMAGES_SUCCESS, UPLOAD_IMAGES_FAILURE, LIKE_POST_REQUEST, LIKE_POST_SUCCESS, LIKE_POST_FAILURE, UNLIKE_POST_REQUEST, UNLIKE_POST_SUCCESS, UNLIKE_POST_FAILURE, LOAD_SINGLE_POST_REQUEST, LOAD_SINGLE_POST_SUCCESS, LOAD_SINGLE_POST_FAILURE, LOAD_HASHTAG_POSTS_REQUEST, LOAD_HASHTAG_POSTS_SUCCESS, LOAD_HASHTAG_POSTS_FAILURE } from '../reducers/post';
 
 // 메인 게시물 로드
 function loadMainPostsAPI() {
@@ -23,6 +23,54 @@ function* loadMainPosts() {
 }
 function* watchLoadMainPosts() {
   yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadMainPosts);
+}
+
+// 해시태그 게시물 로드
+function loadHashtagPostsAPI(tag) {
+  return axios.get(`/hashtag/${encodeURIComponent(tag)}`, {
+    withCredentials: true,
+  });
+}
+function* loadHashtagPosts(action) {
+  try {
+    const result = yield call(loadHashtagPostsAPI, action.data);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOAD_HASHTAG_POSTS_FAILURE,
+      error: e.response && e.response.data,
+    });
+  }
+}
+function* watchLoadHashtagPosts() {
+  yield takeLatest(LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts);
+}
+
+// 개별 게시물 로드
+function loadSinglePostAPI(postId) {
+  return axios.get(`/posts/${postId}`);
+}
+function* loadSinglePost(action) {
+  try {
+    const result = yield call(loadSinglePostAPI, action.data);
+    yield put({
+      type: LOAD_SINGLE_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: LOAD_SINGLE_POST_FAILURE,
+      error: e.response && e.response.data,
+    });
+  }
+}
+function* watchLoadSinglePost() {
+  yield takeLatest(LOAD_SINGLE_POST_REQUEST, loadSinglePost);
 }
 
 // 이미지 업로드
@@ -133,6 +181,8 @@ function* watchUnlikePost() {
 export default function* postSaga() {
   yield all([
     fork(watchLoadMainPosts),
+    fork(watchLoadHashtagPosts),
+    fork(watchLoadSinglePost),
     fork(watchUploadImages),
     fork(watchAddPost),
     fork(watchLikePost),

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Icon, Avatar, message } from 'antd';
 import PropTypes from 'prop-types';
@@ -7,17 +7,18 @@ import {
   PostCardWrapper,
   CardWrapper,
 } from './style';
-import PostImages from '../../../components/post/PostImages';
 import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from '../../../reducers/post';
+import PostImages from '../../../components/post/PostImages';
+import PostCardContent from '../../../components/post/PostCardContent';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
-  const { me } = useSelector(state => state.user);
+  const userId = useSelector(state => state.user.me && state.user.me.id);
 
-  const liked = me && post.Likers && post.Likers.find(v => v.id === me.id);
+  const liked = userId && post.Likers && post.Likers.find(v => v.id === userId);
 
   const onToggleLike = useCallback(() => {
-    if (!me) {
+    if (!userId) {
       return message.info('로그인이 필요한 작업입니다.');
     }
     if (liked) {
@@ -31,7 +32,7 @@ const PostCard = ({ post }) => {
         data: post.id,
       });
     }
-  }, [me && me.id, post && post.id, liked]);
+  }, [userId, post && post.id, liked]);
 
   return (
     <PostCardWrapper>
@@ -52,7 +53,7 @@ const PostCard = ({ post }) => {
         ]}
       >
         <Card.Meta
-          description={post.content}
+          description={<PostCardContent postContent={post.content} />}
         />
       </CardWrapper>
     </PostCardWrapper>
