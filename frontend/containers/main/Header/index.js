@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import {
 const Header = () => {
   const dispatch = useDispatch();
   const { isLoggingOut, me } = useSelector(state => state.user);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     if (!me) {
@@ -26,6 +27,14 @@ const Header = () => {
     });
   }, []);
 
+  const handleChangeSearch = useCallback((e) => {
+    setSearchText(e.target.value);
+  }, []);
+  const handleSearch = useCallback(() => { 
+    Router.push({ pathname: '/hashtag', query: { tag: searchText } }, `/hashtag/${searchText}`);
+    setSearchText('');
+  }, [searchText]);
+
   return (
     <header style={{ width: '100%' }}>
       <Menu>
@@ -35,6 +44,9 @@ const Header = () => {
         <div className="searchBox">
           <Input.Search
             style={{ verticalAlign: 'middle', width: '280px' }}
+            onChange={handleChangeSearch}
+            onSearch={handleSearch}
+            // enterButton={handleSearch}
           />
         </div>
         <div className="profileOrAuth">
