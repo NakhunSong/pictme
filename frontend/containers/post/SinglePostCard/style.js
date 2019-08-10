@@ -40,10 +40,10 @@ export const SinglePostWrapper = styled.div`
   .interest {
     width: 100%;
     padding: 0 15px 15px 15px;
-    & ~ & {
-      margin-right: 5px;
-    }
     
+    .like-counter {
+      margin-top: 8px;
+    }
   }
 `;
 export const IconWrapper = styled(Icon)`

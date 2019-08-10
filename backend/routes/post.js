@@ -3,7 +3,7 @@ const path = require('path');
 const multer = require('multer');
 
 const db = require('../models');
-const { isLoggedIn } = require('./middleware');
+const { isLoggedIn, hasPost } = require('./middleware');
 
 const router = express.Router();
 
@@ -68,23 +68,71 @@ try {
 }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', hasPost, async (req, res, next) => {
   try {
-    
     const singlePost = await db.Post.findOne({
       where: { id: req.params.id },
       include: [{
         model: db.User,
-        attribute: ['id', 'nickname'],
+        attributes: ['id', 'nickname'],
       }, {
         model: db.Image,
       }, {
         model: db.User,
         as: 'Likers',
-        attribute: ['id'],
+        attributes: ['id'],
+      }, {
+        model: db.Comment,
       }]
     });
     return res.json(singlePost);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
+router.get('/:id/comments', hasPost, async (req, res, next) => {
+  try {
+    const comments = await db.Comment.findAll({
+      where: { PostId: req.params.id },
+      include: [{
+        model: db.User,
+        attributes: ['id', 'nickname'],
+      }],
+      order: [['createdAt', 'ASC']],
+    });
+    return res.json(comments);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
+router.post('/:id/comment', isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await db.Post.findOne({
+      where: { id: req.params.id }
+    });
+    if (!post) {
+      return res.status(404).send('존재하지 않는 게시물입니다.');
+    }
+    const newComment = await db.Comment.create({
+      content: req.body.content,
+      UserId: req.user.id,
+      PostId: req.params.id,
+    });
+    await post.addComment(newComment);
+    const comment = await db.Comment.findOne({
+      where: {
+        id: newComment.id,
+      },
+      include: [{
+        model: db.User,
+        attributes: ['id', 'nickname'],
+      }],
+    });
+    return res.json(comment);
   } catch (e) {
     console.error(e);
     return next(e);

@@ -22,6 +22,9 @@ export const initialState = {
   postAdded: false,
   addPostErrorReason: '',
   singlePost: null, // 개별 post 정보
+  isAddingComment: false,
+  commentAdded: false,
+  addCommentErrorReason: null,
 };
 
 export const LOAD_MAIN_POSTS_REQUEST = 'LOAD_MAIN_POSTS_REQUEST';
@@ -36,9 +39,17 @@ export const LOAD_SINGLE_POST_REQUEST = 'LOAD_SINGLE_POST_REQUEST';
 export const LOAD_SINGLE_POST_SUCCESS = 'LOAD_SINGLE_POST_SUCCESS';
 export const LOAD_SINGLE_POST_FAILURE = 'LOAD_SINGLE_POST_FAILURE';
 
+export const LOAD_COMMENTS_REQUEST = 'LOAD_COMMENTS_REQUEST';
+export const LOAD_COMMENTS_SUCCESS = 'LOAD_COMMENTS_SUCCESS';
+export const LOAD_COMMENTS_FAILURE = 'LOAD_COMMENTS_FAILURE';
+
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 export const UPLOAD_IMAGES_REQUEST = 'UPLOAD_IMAGES_REQUEST';
 export const UPLOAD_IMAGES_SUCCESS = 'UPLOAD_IMAGES_SUCCESS';
@@ -81,6 +92,16 @@ const reducer = (state = initialState, action) => {
       case LOAD_SINGLE_POST_FAILURE: {
         break;
       }
+      case LOAD_COMMENTS_REQUEST: {
+        break;
+      }
+      case LOAD_COMMENTS_SUCCESS: {
+        draft.singlePost.Comments = action.data;
+        break;
+      }
+      case LOAD_COMMENTS_FAILURE: {
+        break;
+      }
       case UPLOAD_IMAGES_REQUEST: {
         draft.uploadImagesError = '';
         break;
@@ -115,6 +136,23 @@ const reducer = (state = initialState, action) => {
       case ADD_POST_FAILURE: {
         draft.isAddingPost = false;
         draft.addPostErrorReason = action.error;
+        break;
+      }
+      case ADD_COMMENT_REQUEST: {
+        draft.addCommentErrorReason = '';
+        draft.isAddingComment = true;
+        draft.commentAdded = false;
+        break;
+      }
+      case ADD_COMMENT_SUCCESS: {
+        draft.singlePost.Comments.push(action.data.comment);
+        draft.isAddingComment = false;
+        draft.commentAdded = true;
+        break;
+      }
+      case ADD_COMMENT_FAILURE: {
+        draft.addCommentErrorReason = action.error;
+        draft.isAddingComment = false;
         break;
       }
       case LIKE_POST_REQUEST: {

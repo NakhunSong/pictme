@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Icon, Avatar, message } from 'antd';
 import PropTypes from 'prop-types';
+import Router from 'next/router';
 
 import {
   PostCardWrapper,
@@ -10,7 +11,6 @@ import {
 import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from '../../../reducers/post';
 import PostImages from '../../../components/post/PostImages';
 import PostCardContent from '../../../components/post/PostCardContent';
-import Router from 'next/router';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const PostCard = ({ post }) => {
       pathname: '/singlepost',
       query: { id: post.id },
     });
-  }, [post.id]);
+  }, [post && post.id]);
 
   return (
     <PostCardWrapper>

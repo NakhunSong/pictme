@@ -15,6 +15,8 @@ router.get('/', async (req, res, next) => { // GET /api/posts
         model: db.User,
         as: 'Likers',
         attributes: ['id'],
+      }, {
+        model: db.Comment,
       }],
       order: [['createdAt', 'DESC']],
     });
