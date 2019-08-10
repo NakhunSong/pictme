@@ -10,6 +10,7 @@ import {
 import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from '../../../reducers/post';
 import PostImages from '../../../components/post/PostImages';
 import PostCardContent from '../../../components/post/PostCardContent';
+import Router from 'next/router';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -34,9 +35,17 @@ const PostCard = ({ post }) => {
     }
   }, [userId, post && post.id, liked]);
 
+  const handleClickCard = useCallback(() => {
+    Router.push({
+      pathname: '/singlepost',
+      query: { id: post.id },
+    });
+  }, [post.id]);
+
   return (
     <PostCardWrapper>
       <CardWrapper
+        onClick={handleClickCard}
         title={(
           <Card.Meta
             avatar={post.User.profileImg ? <Avatar size="large" src={`${post.User.profileImg}`} /> : <Avatar size="large">{post.User.nickname[0]}</Avatar>}

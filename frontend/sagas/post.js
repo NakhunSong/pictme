@@ -27,9 +27,7 @@ function* watchLoadMainPosts() {
 
 // 해시태그 게시물 로드
 function loadHashtagPostsAPI(tag) {
-  return axios.get(`/hashtag/${encodeURIComponent(tag)}`, {
-    withCredentials: true,
-  });
+  return axios.get(`/hashtag/${encodeURIComponent(tag)}`);
 }
 function* loadHashtagPosts(action) {
   try {
@@ -52,7 +50,7 @@ function* watchLoadHashtagPosts() {
 
 // 개별 게시물 로드
 function loadSinglePostAPI(postId) {
-  return axios.get(`/posts/${postId}`);
+  return axios.get(`/post/${postId}`);
 }
 function* loadSinglePost(action) {
   try {
@@ -70,7 +68,7 @@ function* loadSinglePost(action) {
   }
 }
 function* watchLoadSinglePost() {
-  yield takeLatest(LOAD_SINGLE_POST_REQUEST, loadSinglePost);
+  yield takeEvery(LOAD_SINGLE_POST_REQUEST, loadSinglePost);
 }
 
 // 이미지 업로드

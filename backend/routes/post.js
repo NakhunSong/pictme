@@ -68,9 +68,23 @@ try {
 }
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-
+    
+    const singlePost = await db.Post.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: db.User,
+        attribute: ['id', 'nickname'],
+      }, {
+        model: db.Image,
+      }, {
+        model: db.User,
+        as: 'Likers',
+        attribute: ['id'],
+      }]
+    });
+    return res.json(singlePost);
   } catch (e) {
     console.error(e);
     return next(e);

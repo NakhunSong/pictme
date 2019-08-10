@@ -2,9 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
+import {
+  PostCardContentWrapper,
+} from './style';
+
 const PostCardContent = ({ postContent }) => {
   return (
-    <div>
+    <PostCardContentWrapper>
       {postContent.split(/(#[^\s]+)/g).map((v) => {
         if (v.match(/#[^\s]+/)) {
           return (
@@ -19,7 +23,7 @@ const PostCardContent = ({ postContent }) => {
         }
         return v;
       })}
-    </div>
+    </PostCardContentWrapper>
   );
 };
 

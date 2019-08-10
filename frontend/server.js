@@ -30,7 +30,7 @@ app.prepare().then(() => { // express와 next 연동
     },
   }));
 
-  server.get('/singpost/:id', (req, res) => {
+  server.get('/singlepost/:id', (req, res) => {
     return app.render(req, res, '/singlepost', { id: req.params.id });
   });
   server.get('/hashtag/:tag', (req, res) => { // 실제 동작 주소

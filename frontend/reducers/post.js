@@ -32,9 +32,9 @@ export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
 export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
 export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
 
-export const LOAD_SINGLE_POST_REQUEST = 'LOAD_POST_REQUEST';
-export const LOAD_SINGLE_POST_SUCCESS = 'LOAD_POST_SUCCESS';
-export const LOAD_SINGLE_POST_FAILURE = 'LOAD_POST_FAILURE';
+export const LOAD_SINGLE_POST_REQUEST = 'LOAD_SINGLE_POST_REQUEST';
+export const LOAD_SINGLE_POST_SUCCESS = 'LOAD_SINGLE_POST_SUCCESS';
+export const LOAD_SINGLE_POST_FAILURE = 'LOAD_SINGLE_POST_FAILURE';
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -72,7 +72,6 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_SINGLE_POST_REQUEST: {
-        draft.singlePost = [];
         break;
       }
       case LOAD_SINGLE_POST_SUCCESS: {

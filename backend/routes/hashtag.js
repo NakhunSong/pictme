@@ -5,7 +5,7 @@ const { isLoggedIn } = require('./middleware');
 
 const router = express.Router();
 
-router.get('/:tag', isLoggedIn, async (req, res, next) => {
+router.get('/:tag', async (req, res, next) => {
   try {
     const hashtagPosts = await db.Post.findAll({
       include: [{
