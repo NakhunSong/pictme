@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const AuthTemplateWrapper = styled.div`
+const AuthTemplateWrapper = styled.main`
   height: 100%;
 `;
 

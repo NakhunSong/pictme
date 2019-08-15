@@ -78,4 +78,29 @@ router.post('/login', (req, res, next) => { // POST /api/user/login
   })(req, res, next);
 });
 
+router.get('/:id/posts', async (req, res, next) => {
+  try {
+    const posts = await db.Post.findAll({
+      where: { UserId: parseInt(req.params.id) },
+      include: [{
+        model: db.User,
+        attributes: ['id', 'nickname'],
+      }, {
+        model: db.Image,
+      }, {
+        model: db.User,
+        as: 'Likers',
+        attributes: ['id'],
+      }, {
+        model: db.Comment,
+      }],
+      order: [['createdAt', 'DESC']],
+    });
+    return res.status(200).json(posts);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
 module.exports = router;

@@ -15,6 +15,8 @@ const Header = () => {
   const { isLoggingOut, me } = useSelector(state => state.user);
   const [searchText, setSearchText] = useState('');
 
+  const userId = me.id;
+
   useEffect(() => {
     if (!me) {
       Router.push('/');
@@ -34,6 +36,9 @@ const Header = () => {
     Router.push({ pathname: '/hashtag', query: { tag: searchText } }, `/hashtag/${searchText}`);
     setSearchText('');
   }, [searchText]);
+  const handleClickProfile = useCallback(() => {
+    Router.push('/profile');
+  }, [userId]);
 
   return (
     <header style={{ width: '100%' }}>
@@ -43,7 +48,7 @@ const Header = () => {
         </div>
         <div className="searchBox">
           <Input.Search
-            style={{ verticalAlign: 'middle', width: '280px' }}
+            style={{ verticalAlign: 'middle', width: '250px' }}
             onChange={handleChangeSearch}
             onSearch={handleSearch}
             // enterButton={handleSearch}
@@ -51,7 +56,7 @@ const Header = () => {
         </div>
         <div className="profileOrAuth">
           <div className="left">
-            <Icon type="user" />
+            <Icon type="user" onClick={handleClickProfile} />
           </div>
           <div className="right">
             <Button type="primary" onClick={onLogOut} loading={isLoggingOut}>로그아웃</Button>

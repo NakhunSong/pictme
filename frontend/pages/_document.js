@@ -15,7 +15,9 @@ export default class MyDocument extends Document {
         <head>
           <title>My page</title>
           <style>{`
-            #__next { height: 100% }
+            #__next {
+              height: 100%
+            }
           `}
           </style>
           {this.props.styleTags}

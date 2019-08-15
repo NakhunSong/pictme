@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Input, Icon } from 'antd';
 
-const MainTemplateWrapper = styled.div`
+const MainTemplateWrapper = styled.main`
   height: 100%;
   display: flex;
   flex-direction: column;

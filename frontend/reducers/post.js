@@ -16,6 +16,7 @@ const dummyPost = {
 // post state
 export const initialState = {
   mainPosts: [],
+  userPost: [],
   imagePaths: [],
   uploadImagesError: '',
   isAddingPost: false,
@@ -34,6 +35,10 @@ export const LOAD_MAIN_POSTS_FAILURE = 'LOAD_MAIN_POSTS_FAILURE';
 export const LOAD_HASHTAG_POSTS_REQUEST = 'LOAD_HASHTAG_POSTS_REQUEST';
 export const LOAD_HASHTAG_POSTS_SUCCESS = 'LOAD_HASHTAG_POSTS_SUCCESS';
 export const LOAD_HASHTAG_POSTS_FAILURE = 'LOAD_HASHTAG_POSTS_FAILURE';
+
+export const LOAD_USER_POSTS_REQUEST = 'LOAD_USER_POSTS_REQUEST';
+export const LOAD_USER_POSTS_SUCCESS = 'LOAD_USER_POSTS_SUCCESS';
+export const LOAD_USER_POSTS_FAILURE = 'LOAD_USER_POSTS_FAILURE';
 
 export const LOAD_SINGLE_POST_REQUEST = 'LOAD_SINGLE_POST_REQUEST';
 export const LOAD_SINGLE_POST_SUCCESS = 'LOAD_SINGLE_POST_SUCCESS';
@@ -90,6 +95,24 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_SINGLE_POST_FAILURE: {
+        break;
+      }
+      case LOAD_USER_POSTS_REQUEST: {
+        break;
+      }
+      case LOAD_USER_POSTS_SUCCESS: {
+        const posts = action.data;
+        let postList = [];
+        posts.map((v, i) => {
+          postList.push(v);
+          if ((i + 1) % 3 === 0) {
+            draft.userPost.push(postList);
+            postList = [];
+          }
+        });
+        break;
+      }
+      case LOAD_USER_POSTS_FAILURE: {
         break;
       }
       case LOAD_COMMENTS_REQUEST: {
