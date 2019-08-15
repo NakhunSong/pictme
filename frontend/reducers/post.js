@@ -96,7 +96,7 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_COMMENTS_SUCCESS: {
-        draft.singlePost.Comments = action.data;
+        draft.singlePost.Comments = action.data.comments;
         break;
       }
       case LOAD_COMMENTS_FAILURE: {

@@ -80,7 +80,10 @@ function* loadComments(action) {
     const result = yield call(loadCommentsAPI, action.data);
     yield put({
       type: LOAD_COMMENTS_SUCCESS,
-      data: result.data,
+      data: {
+        postId: action.data,
+        comments: result.data,
+      },
     });
   } catch (e) {
     console.error(e);

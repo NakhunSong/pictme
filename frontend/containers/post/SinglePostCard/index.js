@@ -43,8 +43,9 @@ const SinglePostCard = ({ singlePost }) => {
         data: singlePost.id,
       });
     }
-  }, []);
+  }, [singlePost.id]);
 
+  console.log('singlePost: ', singlePost);
   return (
     <SinglePostWrapper>
       <div className="profile">
@@ -75,8 +76,8 @@ const SinglePostCard = ({ singlePost }) => {
             renderItem={item => (
               <li>
                 <Comment
-                  author={item.User.nickname}
-                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  // author={item.User.nickname}
+                  // avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
                   content={item.content}
                 />
               </li>
