@@ -16,6 +16,11 @@ const Profile = () => {
     });
   }, [userId]);
 
+  if (!userId) {
+    return (
+      <div>로딩중</div>
+    );
+  }
   return (
     <ProfileBox />
   );

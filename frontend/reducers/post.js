@@ -16,7 +16,6 @@ const dummyPost = {
 // post state
 export const initialState = {
   mainPosts: [],
-  userPost: [],
   imagePaths: [],
   uploadImagesError: '',
   isAddingPost: false,

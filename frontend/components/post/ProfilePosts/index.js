@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import ProfilePostImage from '../ProfilePostImage';
 import {
   RowWrapper,
   ColWrapper,
@@ -9,9 +10,15 @@ import {
 const ProfilePosts = ({ postRow }) => {
   return (
     <RowWrapper>
-      <ColWrapper>{postRow[0].id}</ColWrapper>
-      <ColWrapper>{postRow[1].id}</ColWrapper>
-      <ColWrapper>{postRow[2].id}</ColWrapper>
+      <ColWrapper>
+        <ProfilePostImage images={postRow[0].Images} />
+      </ColWrapper>
+      <ColWrapper>
+        <ProfilePostImage images={postRow[1].Images} />
+      </ColWrapper>
+      <ColWrapper>
+        <ProfilePostImage images={postRow[2].Images} />
+      </ColWrapper>
     </RowWrapper>
   );
 };

@@ -16,7 +16,10 @@ export default class MyDocument extends Document {
           <title>My page</title>
           <style>{`
             #__next {
-              height: 100%
+              height: 100%;
+            }
+            div {
+              align-items: stretch;
             }
           `}
           </style>

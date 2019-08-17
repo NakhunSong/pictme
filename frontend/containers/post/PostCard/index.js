@@ -47,6 +47,7 @@ const PostCard = ({ post }) => {
       type: REMOVE_POST_REQUEST,
       data: postId,
     });
+    message.success('성공적으로 삭제되었습니다.');
   }, []);
 
   return (

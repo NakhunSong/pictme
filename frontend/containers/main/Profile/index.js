@@ -16,25 +16,33 @@ import {
 
 const Profile = () => {
   const { me } = useSelector(state => state.user);
-  const { userPost } = useSelector(state => state.post);
+  const { mainPosts } = useSelector(state => state.post);
 
   return (
     <Wrapper>
       <Card
         actions={[
-          <Link href="/profile" key="post">
+          <div>
+            게시글
+            <br />
+            {me.Posts.length}
+          </div>,
+          <Link href="/following">
             <a>
-              <div>게시글</div>
+              <div>
+                팔로잉
+                <br />
+                {me.Followings.length}
+              </div>
             </a>
           </Link>,
-          <Link href="/profile" key="following">
+          <Link href="/follower">
             <a>
-              <div>팔로잉</div>
-            </a>
-          </Link>,
-          <Link href="/profile" key="follower">
-            <a>
-              <div>팔로워</div>
+              <div>
+                팔로워
+                <br />
+                {me.Followers.length}
+              </div>
             </a>
           </Link>,
         ]}
@@ -48,7 +56,7 @@ const Profile = () => {
       <Seperator />
       <PostsWrapper>
         <Posts>
-          {userPost.map((v) => {
+          {mainPosts.map((v) => {
             return (
               <ProfilePosts postRow={v} />
             );
