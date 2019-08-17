@@ -62,6 +62,10 @@ export const UPLOAD_IMAGES_FAILURE = 'UPLOAD_IMAGES_FAILURE';
 
 export const REMOVE_IMAGE = 'REMOVE_IMAGE';
 
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
+
 export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
 export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS';
 export const LIKE_POST_FAILURE = 'LIKE_POST_FAILURE';
@@ -98,6 +102,7 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_USER_POSTS_REQUEST: {
+        draft.mainPosts = [];
         break;
       }
       case LOAD_USER_POSTS_SUCCESS: {
@@ -106,7 +111,7 @@ const reducer = (state = initialState, action) => {
         posts.map((v, i) => {
           postList.push(v);
           if ((i + 1) % 3 === 0) {
-            draft.userPost.push(postList);
+            draft.mainPosts.push(postList);
             postList = [];
           }
         });
@@ -176,6 +181,17 @@ const reducer = (state = initialState, action) => {
       case ADD_COMMENT_FAILURE: {
         draft.addCommentErrorReason = action.error;
         draft.isAddingComment = false;
+        break;
+      }
+      case REMOVE_POST_REQUEST: {
+        break;
+      }
+      case REMOVE_POST_SUCCESS: {
+        const postIndex = draft.mainPosts.findIndex((v, i) => v.id === action.data);
+        draft.mainPosts.splice(postIndex, 1);
+        break;
+      }
+      case REMOVE_POST_FAILURE: {
         break;
       }
       case LIKE_POST_REQUEST: {

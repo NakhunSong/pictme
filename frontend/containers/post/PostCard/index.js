@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Icon, Avatar, message } from 'antd';
+import { Card, Icon, Avatar, message, Popover, Button } from 'antd';
 import PropTypes from 'prop-types';
 import Router from 'next/router';
 
@@ -8,7 +8,7 @@ import {
   PostCardWrapper,
   CardWrapper,
 } from './style';
-import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from '../../../reducers/post';
+import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST, REMOVE_POST_REQUEST } from '../../../reducers/post';
 import PostImages from '../../../components/post/PostImages';
 import PostCardContent from '../../../components/post/PostCardContent';
 
@@ -34,13 +34,20 @@ const PostCard = ({ post }) => {
       });
     }
   }, [userId, post && post.id, liked]);
-
-  const handleClickCard = useCallback(() => {
+  const handleClickCard = useCallback((e) => {
+    e.stopPropagation();
     Router.push({
       pathname: '/singlepost',
       query: { id: post.id },
     });
   }, [post && post.id]);
+  const handleRemovePost = useCallback(postId => (e) => {
+    e.stopPropagation();
+    dispatch({
+      type: REMOVE_POST_REQUEST,
+      data: postId,
+    });
+  }, []);
 
   return (
     <PostCardWrapper>
@@ -58,7 +65,24 @@ const PostCard = ({ post }) => {
         actions={[
           <Icon type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} twoToneColor="#eb2f96" onClick={onToggleLike} />,
           <Icon type="message" key="message" />,
-          <Icon type="ellipsis" key="ellipsis" />,
+          <Popover
+            key="ellipsis"
+            content={(
+              <Button.Group>
+                {userId && post.UserId === userId
+                  ? (
+                    <>
+                      <Button type="default">수정</Button>
+                      <Button type="danger" onClick={handleRemovePost(post.id)}>삭제</Button>
+                    </>
+                  )
+                  : <Button>신고</Button>
+                }
+              </Button.Group>
+            )}
+          >
+            <Icon type="ellipsis" key="ellipsis" />
+          </Popover>,
         ]}
       >
         <Card.Meta
@@ -72,11 +96,12 @@ const PostCard = ({ post }) => {
 PostCard.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    User: PropTypes.object,
     content: PropTypes.string,
+    createdAt: PropTypes.string,
+    UserId: PropTypes.number.isRequired,
+    User: PropTypes.object,
     Images: PropTypes.array,
     Likers: PropTypes.array,
-    createdAt: PropTypes.string,
   }).isRequired,
 };
 

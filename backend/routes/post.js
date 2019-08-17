@@ -92,6 +92,18 @@ router.get('/:id', hasPost, async (req, res, next) => {
   }
 });
 
+router.delete('/:id', isLoggedIn, hasPost, async (req, res, next) => {
+  try {
+    await db.Post.destroy({
+      where: { id: req.params.id }
+    });
+    res.status(200).send(req.params.id);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
 router.get('/:id/comments', hasPost, async (req, res, next) => {
   try {
     const comments = await db.Comment.findAll({

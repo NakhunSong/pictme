@@ -36,6 +36,8 @@ export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case SIGN_UP_REQUEST: {
@@ -119,6 +121,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoggingOut: false,
+      };
+    }
+    case REMOVE_POST_OF_ME: {
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Posts: state.me.Posts.filter(v => v.id !== action.data),
+        },
       };
     }
     default: {

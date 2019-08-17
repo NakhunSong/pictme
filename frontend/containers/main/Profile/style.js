@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Col } from 'antd';
 
 export const Wrapper = styled.div`
   flex-grow: 1;
@@ -53,7 +54,24 @@ export const UserInfo = styled.section`
 `;
 
 export const Seperator = styled.ul`
-  border-top: 1px solid black;
+  border: 1px solid #e6e6e6;
+  border-style: hidden solid solid solid;
   display: flex;
   flex-direction: row;
+  height: 40px;
+`;
+
+export const PostsWrapper = styled.div`
+  @media (max-width: 735px) {
+    flex-grow: 1;
+  }
+`;
+
+export const Posts = styled.article`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 1;
+  flex-shrink: 0;
+  // box-sizing: border-box;
 `;
