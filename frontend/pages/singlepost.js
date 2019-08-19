@@ -16,7 +16,7 @@ const SinglePost = ({ id }) => {
       type: LOAD_SINGLE_POST_REQUEST,
       data: id,
     });
-  }, []);
+  }, [id]);
 
   if (!singlePost) {
     return (

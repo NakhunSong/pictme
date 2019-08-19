@@ -11,13 +11,13 @@ const ProfilePosts = ({ postRow }) => {
   return (
     <RowWrapper>
       <ColWrapper>
-        <ProfilePostImage images={postRow[0].Images} />
+        {postRow[0].Images && <ProfilePostImage images={postRow[0].Images} />}
       </ColWrapper>
       <ColWrapper>
-        <ProfilePostImage images={postRow[1].Images} />
+        {postRow[1].Images && <ProfilePostImage images={postRow[1].Images} />}
       </ColWrapper>
       <ColWrapper>
-        <ProfilePostImage images={postRow[2].Images} />
+        {postRow[2].Images && <ProfilePostImage images={postRow[2].Images} />}
       </ColWrapper>
     </RowWrapper>
   );

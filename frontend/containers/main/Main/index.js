@@ -21,6 +21,11 @@ const Main = () => {
     });
   }, []);
 
+  if (!mainPosts) {
+    return (
+      <div>로딩 중</div>
+    );
+  }
   return (
     <MainWrapper>
       <CardWrapper>

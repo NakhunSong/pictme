@@ -168,7 +168,7 @@ function* addPost(action) {
   }
 }
 function* watchAddPost() {
-  yield throttle(2000, ADD_POST_REQUEST, addPost);
+  yield takeLatest(ADD_POST_REQUEST, addPost);
 }
 
 // 게시물 LIKE
