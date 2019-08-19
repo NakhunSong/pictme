@@ -15,6 +15,10 @@ export const SinglePostWrapper = styled.div`
     display: flex;
     align-items: center;
 
+    &:hover {
+      cursor: pointer;
+    }
+
     .nickname {
       display: 'inline-block';
       margin-left: 5px;
@@ -27,7 +31,6 @@ export const SinglePostWrapper = styled.div`
     overflow: hidden;
 
     img {
-
       max-width: 100%;
       width: auto;
       height: 350px;

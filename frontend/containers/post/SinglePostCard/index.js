@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Avatar, List, Comment } from 'antd';
+import Router from 'next/router';
 
 import { UNLIKE_POST_REQUEST, LIKE_POST_REQUEST, LOAD_COMMENTS_REQUEST } from '../../../reducers/post';
 import { backUrl } from '../../../config/config';
@@ -43,12 +44,16 @@ const SinglePostCard = ({ singlePost }) => {
         data: singlePost.id,
       });
     }
-  }, [singlePost.id]);
-
-  console.log('singlePost: ', singlePost);
+  }, [singlePost && singlePost.id]);
+  const handleClickProfile = useCallback(() => {
+    Router.push({
+      pathname: '/user',
+      query: { id: userId },
+    }, `/user/${userId}`);
+  }, [userId]);
   return (
     <SinglePostWrapper>
-      <div className="profile">
+      <div className="profile" onClick={handleClickProfile}>
         <Avatar>{singlePost.User.nickname[0]}</Avatar>
         <div className="nickname">{singlePost.User.nickname}</div>
       </div>

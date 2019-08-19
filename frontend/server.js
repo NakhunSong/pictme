@@ -36,7 +36,9 @@ app.prepare().then(() => { // express와 next 연동
   server.get('/hashtag/:tag', (req, res) => { // 실제 동작 주소
     return app.render(req, res, '/hashtag', { tag: req.params.tag }); // next 주소 express 주소와 연결
   });
-
+  server.get('/user/:id', (req, res) => {
+    return app.render(req, res, '/user', { id: req.params.id });
+  });
   server.get('*', (req, res) => {
     return handle(req, res); // handle에 (req, res) 연결
   });
