@@ -94,6 +94,7 @@ export default (state = initialState, action) => {
       };
     }
     case LOAD_USER_SUCCESS: {
+      console.log('action.me: ', action.me);
       if (action.me) {
         return {
           ...state,

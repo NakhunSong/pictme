@@ -14,7 +14,7 @@ const Profile = () => {
       type: LOAD_USER_POSTS_REQUEST,
       data: userId,
     });
-  }, [userId]);
+  }, []);
 
   if (!userId) {
     return (
@@ -24,6 +24,14 @@ const Profile = () => {
   return (
     <ProfileBox />
   );
+};
+
+Profile.getInitialProps = (context) => {
+  const { id } = context.store.getState().user.me;
+  context.store.dispatch({
+    type: LOAD_USER_POSTS_REQUEST,
+    data: id,
+  });
 };
 
 export default Profile;

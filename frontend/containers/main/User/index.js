@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import { Card, Avatar, Col, Row } from 'antd';
+import { Card, Avatar, Button } from 'antd';
 import PropTypes from 'prop-types';
 
 import ProfilePosts from '../../../components/post/ProfilePosts';
@@ -47,6 +47,7 @@ const User = ({ mainPosts, userInfo }) => {
             </a>
           </Link>,
         ]}
+        extra={<Button>팔로우</Button>}
       >
         <Card.Meta
           avatar={<Avatar>{userInfo.nickname[0]}</Avatar>}

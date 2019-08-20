@@ -5,27 +5,29 @@ import FullScreen from '../components/common/FullScreen';
 import LinkBox from '../components/common/LinkBox';
 import Main from '../containers/main/Main';
 import SignupForm from '../containers/signup/SignupForm';
+import { LOAD_MAIN_POSTS_REQUEST } from '../reducers/post';
 
-const Pictme = () => {
+const Home = () => {
   const { me } = useSelector(state => state.user);
+  // const { mainPosts } = useSelector(state => state.post);
 
-  if (me) {
+  if (!me) {
     return (
-      <Main />
+      <FullScreen>
+        <SignupForm />
+        <LinkBox question="계정을 가지고 계신가요?" pageName="로그인" />
+      </FullScreen>
     );
   }
   return (
-    <FullScreen>
-      <SignupForm />
-      <LinkBox question="계정을 가지고 계신가요?" pageName="로그인" />
-    </FullScreen>
-    // <div style={{ height: '100%' }}>
-    //   {!me
-    //     ? (
-    //     )
-    //   }
-    // </div>
+    <Main />
   );
 };
 
-export default Pictme;
+Home.getInitialProps = async (context) => {
+  context.store.dispatch({
+    type: LOAD_MAIN_POSTS_REQUEST,
+  });
+};
+
+export default Home;

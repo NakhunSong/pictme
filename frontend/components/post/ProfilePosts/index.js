@@ -14,10 +14,10 @@ const ProfilePosts = ({ postRow }) => {
         {postRow[0].Images && <ProfilePostImage images={postRow[0].Images} />}
       </ColWrapper>
       <ColWrapper>
-        {postRow[1].Images && <ProfilePostImage images={postRow[1].Images} />}
+        {postRow[1] ? <ProfilePostImage images={postRow[1].Images} /> : <div>blank</div> }
       </ColWrapper>
       <ColWrapper>
-        {postRow[2].Images && <ProfilePostImage images={postRow[2].Images} />}
+        {postRow[2] ? <ProfilePostImage images={postRow[2].Images} /> : <div>blank</div>}
       </ColWrapper>
     </RowWrapper>
   );

@@ -11,16 +11,6 @@ const User = ({ id }) => {
   const { userInfo } = useSelector(state => state.user);
   const { mainPosts } = useSelector(state => state.post);
 
-  useEffect(() => {
-    dispatch({
-      type: LOAD_USER_POSTS_REQUEST,
-      data: id,
-    });
-    dispatch({
-      type: LOAD_USER_REQUEST,
-      data: id,
-    });
-  }, []);
   if (!mainPosts || !userInfo) {
     return (
       <div>로딩 중</div>
@@ -36,8 +26,17 @@ User.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-User.getInitialProps = (ctx) => {
-  const id = parseInt(ctx.query.id, 10);
+User.getInitialProps = (context) => {
+  const id = parseInt(context.query.id, 10);
+  console.log('userId: ', id);
+  context.store.dispatch({
+    type: LOAD_USER_POSTS_REQUEST,
+    data: id,
+  });
+  context.store.dispatch({
+    type: LOAD_USER_REQUEST,
+    data: id,
+  });
   return { id };
 };
 

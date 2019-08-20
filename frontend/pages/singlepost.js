@@ -8,15 +8,7 @@ import { LOAD_SINGLE_POST_REQUEST, UNLIKE_POST_REQUEST, LIKE_POST_REQUEST } from
 import SinglePostCard from '../containers/post/SinglePostCard';
 
 const SinglePost = ({ id }) => {
-  const dispatch = useDispatch();
   const { singlePost } = useSelector(state => state.post);
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_SINGLE_POST_REQUEST,
-      data: id,
-    });
-  }, [id]);
 
   if (!singlePost) {
     return (
@@ -35,6 +27,10 @@ SinglePost.propTypes = {
 SinglePost.getInitialProps = async (context) => {
   const { id } = context.query;
   console.log('singlepost context: ', context.query.id);
+  context.store.dispatch({
+    type: LOAD_SINGLE_POST_REQUEST,
+    data: id,
+  });
   return { id };
 };
 

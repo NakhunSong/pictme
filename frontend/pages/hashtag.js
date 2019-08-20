@@ -10,13 +10,6 @@ const Hashtag = ({ tag }) => {
   const dispatch = useDispatch();
   const { mainPosts } = useSelector(state => state.post);
 
-  useEffect(() => {
-    dispatch({
-      type: LOAD_HASHTAG_POSTS_REQUEST,
-      data: tag,
-    });
-  }, [tag]);
-
   return (
     <HashtagPostTemplate>
       {mainPosts.map((v) => {
@@ -34,7 +27,10 @@ Hashtag.propTypes = {
 
 Hashtag.getInitialProps = async (context) => {
   const { tag } = context.query;
-
+  context.store.dispatch({
+    type: LOAD_HASHTAG_POSTS_REQUEST,
+    data: tag,
+  });
   return { tag };
 };
 

@@ -106,6 +106,7 @@ const reducer = (state = initialState, action) => {
       }
       case LOAD_USER_POSTS_SUCCESS: {
         const posts = action.data;
+        console.log('posts???????: ', posts);
         let postList = [];
         posts.map((v, i) => {
           postList.push(v);
@@ -114,6 +115,7 @@ const reducer = (state = initialState, action) => {
             postList = [];
           }
         });
+        draft.mainPosts.push(postList);
         break;
       }
       case LOAD_USER_POSTS_FAILURE: {

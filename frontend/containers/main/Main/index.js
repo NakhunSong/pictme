@@ -11,15 +11,9 @@ import {
 } from './style';
 
 const Main = () => {
+  const dispatch = useDispatch();
   const { me } = useSelector(state => state.user);
   const { mainPosts } = useSelector(state => state.post);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({
-      type: LOAD_MAIN_POSTS_REQUEST,
-    });
-  }, []);
 
   if (!mainPosts) {
     return (

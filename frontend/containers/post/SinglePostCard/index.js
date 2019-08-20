@@ -16,11 +16,12 @@ import CommentForm from '../CommentForm';
 
 const SinglePostCard = ({ singlePost }) => {
   const dispatch = useDispatch();
-  const userId = useSelector(state => state.user.me && state.user.me.id);
 
   const [commentFormOpended, setCommentFormOpended] = useState(false);
+
   const imageSrc = singlePost && singlePost.Images && singlePost.Images[0] && singlePost.Images[0].src;
   const liked = singlePost && singlePost.Likers && singlePost.Likers.find(v => v.id === userId);
+  const userId = singlePost && singlePost.User && singlePost.User.id;
 
   const handleToggleLike = useCallback(() => {
     if (liked) {
@@ -51,6 +52,7 @@ const SinglePostCard = ({ singlePost }) => {
       query: { id: userId },
     }, `/user/${userId}`);
   }, [userId]);
+
   return (
     <SinglePostWrapper>
       <div className="profile" onClick={handleClickProfile}>
