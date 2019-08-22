@@ -17,7 +17,8 @@ const upload = multer({
       const basename = path.basename(file.originalname, ext); // abc.png -> ext: .png, .jpg, ... basename: abc
       done(null, basename + new Date().valueOf() + ext);
     },
-  })
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 },
 });
 
 router.post('/images', upload.array('image'), (req, res) => { // POST /api/images 이미지 업로드 **upload.'array' : 파일 동시에 여러개 업로드 가능.

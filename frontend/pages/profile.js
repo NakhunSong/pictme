@@ -9,16 +9,9 @@ const Profile = () => {
 
   const userId = useSelector(state => state.user.me && state.user.me.id);
 
-  useEffect(() => {
-    dispatch({
-      type: LOAD_USER_POSTS_REQUEST,
-      data: userId,
-    });
-  }, []);
-
   if (!userId) {
     return (
-      <div>로딩중</div>
+      <div>로딩 중</div>
     );
   }
   return (

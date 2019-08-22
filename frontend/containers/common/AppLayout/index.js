@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Button } from 'antd';
 
 import { LOAD_USER_REQUEST } from '../../../reducers/user';
 import AuthTemplate from '../../../components/auth/AuthTemplate';

@@ -133,4 +133,30 @@ router.get('/:id/posts', async (req, res, next) => {
   }
 });
 
+router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
+  try {
+    const me = await db.User.findOne({
+      where: { id: req.user.id }
+    });
+    await me.addFollowing(req.params.id);
+    return res.send(req.params.id);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
+router.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
+  try {
+    const me = await db.User.findOne({
+      where: { id: req.user.id }
+    });
+    await me.removeFollowing(req.params.id);
+    return res.send(req.params.id);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
 module.exports = router;

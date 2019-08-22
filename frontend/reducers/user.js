@@ -18,7 +18,7 @@ export const initialState = {
   signUpErrorReason: '',
   me: null, // 사용자 정보
   loadUserErrorReason: '',
-  userInfo: null, // 다른 사용자 정보
+  userInfo: null, // 다른 사용자 정보,
 };
 
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
@@ -36,6 +36,14 @@ export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
+
+export const FOLLOW_USER_REQUEST = 'FOLLOW_USER_REQUEST';
+export const FOLLOW_USER_SUCCESS = 'FOLLOW_USER_SUCCESS';
+export const FOLLOW_USER_FAILURE = 'FOLLOW_USER_FAILURE';
+
+export const UNFOLLOW_USER_REQUEST = 'UNFOLLOW_USER_REQUEST';
+export const UNFOLLOW_USER_SUCCESS = 'UNFOLLOW_USER_SUCCESS';
+export const UNFOLLOW_USER_FAILURE = 'UNFOLLOW_USER_FAILURE';
 
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
@@ -129,6 +137,47 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoggingOut: false,
+      };
+    }
+    case FOLLOW_USER_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case FOLLOW_USER_SUCCESS: {
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Followings: [
+            ...state.me.Followings,
+            { id: action.data },
+          ],
+        },
+      };
+    }
+    case FOLLOW_USER_FAILURE: {
+      return {
+        ...state,
+      };
+    }
+    case UNFOLLOW_USER_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case UNFOLLOW_USER_SUCCESS: {
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Followings: state.me.Followings.filter(v => v.id !== action.data),
+        },
+      };
+    }
+    case UNFOLLOW_USER_FAILURE: {
+      return {
+        ...state,
       };
     }
     case REMOVE_POST_OF_ME: {

@@ -6,9 +6,8 @@ export const PostCardWrapper = styled.div`
   max-width: 500px;
   width: 100%;
   max-height: 700px;
-  height: 100%;
 `;
 
 export const CardWrapper = styled(Card)`
-  height: 100%;
+  // height: 100%;
 `;

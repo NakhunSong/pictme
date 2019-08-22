@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { all, fork, call, put, delay, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
-import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE } from '../reducers/user';
+import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAILURE, UNFOLLOW_USER_REQUEST, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAILURE } from '../reducers/user';
 
 // 회원가입
 function signUpAPI(signUpData) {
@@ -99,11 +99,63 @@ function* watchLoadUser() {
   yield takeEvery(LOAD_USER_REQUEST, loadUser);
 }
 
+// 사용자 팔로우 신청
+function followUserAPI(userId) {
+  return axios.post(`/user/${userId}/follow/`, {}, {
+    withCredentials: true,
+  });
+}
+function* followUser(action) {
+  try {
+    const result = yield call(followUserAPI, action.data);
+    yield put({
+      type: FOLLOW_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: FOLLOW_USER_FAILURE,
+      error: e.response && e.response.data,
+    });
+  }
+}
+function* watchFollowUser() {
+  yield takeEvery(FOLLOW_USER_REQUEST, followUser);
+}
+
+// 사용자 언팔로우
+function unfollowUserAPI(userId) {
+  return axios.delete(`/user/${userId}/follow/`, {
+    withCredentials: true,
+  });
+}
+function* unfollowUser(action) {
+  try {
+    const result = yield call(unfollowUserAPI, action.data);
+    yield put({
+      type: UNFOLLOW_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: UNFOLLOW_USER_FAILURE,
+      error: e.response && e.response.data,
+    });
+  }
+}
+function* watchUnfollowUser() {
+  yield takeEvery(UNFOLLOW_USER_REQUEST, unfollowUser);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchSignup),
     fork(watchLogIn),
     fork(watchLogOut),
     fork(watchLoadUser),
+    fork(watchFollowUser),
+    fork(watchUnfollowUser),
   ]);
 }
