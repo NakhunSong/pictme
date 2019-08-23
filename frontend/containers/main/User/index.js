@@ -44,14 +44,14 @@ const User = ({ mainPosts, userInfo }) => {
           <div>
             게시글
             <br />
-            {userInfo.Posts}
+            {userInfo.Posts.length}
           </div>,
           <Link href="/following">
             <a>
               <div>
                 팔로잉
                 <br />
-                {userInfo.Followings}
+                {userInfo.Followings.length}
               </div>
             </a>
           </Link>,
@@ -60,7 +60,7 @@ const User = ({ mainPosts, userInfo }) => {
               <div>
                 팔로워
                 <br />
-                {userInfo.Followers}
+                {userInfo.Followers.length}
               </div>
             </a>
           </Link>,

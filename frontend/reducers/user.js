@@ -154,6 +154,13 @@ export default (state = initialState, action) => {
             { id: action.data },
           ],
         },
+        userInfo: {
+          ...state.userInfo,
+          Followers: [
+            ...state.userInfo.Followers,
+            { id: state.me.id },
+          ],
+        },
       };
     }
     case FOLLOW_USER_FAILURE: {
@@ -172,6 +179,10 @@ export default (state = initialState, action) => {
         me: {
           ...state.me,
           Followings: state.me.Followings.filter(v => v.id !== action.data),
+        },
+        userInfo: {
+          ...state.userInfo,
+          Followers: state.userInfo.Followers.filter(v => v.id !== state.me.id),
         },
       };
     }

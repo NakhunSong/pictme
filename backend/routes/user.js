@@ -97,11 +97,10 @@ router.get('/:id', async (req, res, next) => {
       }],
       attributes: ['id', 'nickname'],
     });
-    const newUser = user.toJSON();
-    newUser.Posts = newUser.Posts ? newUser.Posts.length : 0
-    newUser.Followings = newUser.Followings ? newUser.Followings.length : 0
-    newUser.Followers = newUser.Followers ? newUser.Followers.length : 0
-    return res.json(newUser);
+    // newUser.Posts = newUser.Posts ? newUser.Posts.length : 0
+    // newUser.Followings = newUser.Followings ? newUser.Followings.length : 0
+    // newUser.Followers = newUser.Followers ? newUser.Followers.length : 0
+    return res.json(user);
   } catch (e) {
     console.error(e);
     return next(e);
@@ -126,7 +125,7 @@ router.get('/:id/posts', async (req, res, next) => {
       }],
       order: [['createdAt', 'DESC']],
     });
-    return res.status(200).json(posts);
+    return res.json(posts);
   } catch (e) {
     console.error(e);
     return next(e);
