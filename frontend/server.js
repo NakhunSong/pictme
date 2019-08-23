@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const dotenv = require('dotenv');
+const path = require('path');
 
 const dev = process.env.NODE_ENV !== 'production';
 const prod = process.env.NODE_ENV === 'production';
@@ -15,8 +16,9 @@ dotenv.config();
 
 app.prepare().then(() => { // express와 next 연동
   const server = express();
-  server.use(morgan('dev'));
 
+  server.use(morgan('dev'));
+  server.use('/', express.static(path.join(__dirname, 'public'))); // 앞 '/': 프론트 주소, express.static: 서버 주소(/public/).
   server.use(express.json());
   server.use(express.urlencoded({ extended: true }));
   server.use(cookieParser(process.env.COOKIE_SECRET)); // 백엔드와 같게
