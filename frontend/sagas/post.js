@@ -4,12 +4,12 @@ import { LOAD_MAIN_POSTS_REQUEST, LOAD_MAIN_POSTS_FAILURE, LOAD_MAIN_POSTS_SUCCE
 import { REMOVE_POST_OF_ME } from '../reducers/user';
 
 // 메인 게시물 로드
-function loadMainPostsAPI() {
-  return axios.get('/posts');
+function loadMainPostsAPI(lastId = 0, limit = 12) {
+  return axios.get(`/posts?lastId=${lastId}&limit=${limit}`);
 }
-function* loadMainPosts() {
+function* loadMainPosts(action) {
   try {
-    const result = yield call(loadMainPostsAPI);
+    const result = yield call(loadMainPostsAPI, action.lastId);
     yield put({
       type: LOAD_MAIN_POSTS_SUCCESS,
       data: result.data,
@@ -27,12 +27,12 @@ function* watchLoadMainPosts() {
 }
 
 // 해시태그 게시물 로드
-function loadHashtagPostsAPI(tag) {
-  return axios.get(`/hashtag/${encodeURIComponent(tag)}`);
+function loadHashtagPostsAPI(tag, lastId = 0, limit = 12) {
+  return axios.get(`/hashtag/${encodeURIComponent(tag)}?lastId=${lastId}&limit=${limit}`);
 }
 function* loadHashtagPosts(action) {
   try {
-    const result = yield call(loadHashtagPostsAPI, action.data);
+    const result = yield call(loadHashtagPostsAPI, action.data, action.lastId);
     yield put({
       type: LOAD_HASHTAG_POSTS_SUCCESS,
       data: result.data,
@@ -73,12 +73,12 @@ function* watchLoadSinglePost() {
 }
 
 // 유저 게시물 로드
-function loadUserPostsAPI(userId) {
-  return axios.get(`/user/${userId || 0}/posts`);
+function loadUserPostsAPI(userId, lastId = 0, limit = 12) {
+  return axios.get(`/user/${userId || 0}/posts?lastId=${lastId}&limit=${limit}`);
 }
 function* loadUserPosts(action) {
   try {
-    const result = yield call(loadUserPostsAPI, action.data);
+    const result = yield call(loadUserPostsAPI, action.data, action.lastId);
     yield put({
       type: LOAD_USER_POSTS_SUCCESS,
       data: result.data,

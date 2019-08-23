@@ -78,12 +78,14 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
       case LOAD_MAIN_POSTS_REQUEST:
       case LOAD_HASHTAG_POSTS_REQUEST: {
-        draft.mainPosts = [];
+        draft.mainPosts = !action.lastId ? [] : draft.mainPosts;
         break;
       }
       case LOAD_MAIN_POSTS_SUCCESS:
       case LOAD_HASHTAG_POSTS_SUCCESS: {
-        draft.mainPosts = action.data;
+        action.data.forEach((post) => {
+          draft.mainPosts.push(post);
+        });
         break;
       }
       case LOAD_MAIN_POSTS_FAILURE:
