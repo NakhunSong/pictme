@@ -1,29 +1,30 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import ProfileBox from '../containers/main/Profile';
+// import ProfileBox from '../containers/main/Profile';
+import ProfileBox from '../containers/user/Profile';
 import { LOAD_USER_POSTS_REQUEST } from '../reducers/post';
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const me = useSelector(state => state.user.me && state.user.me);
+  const { mainPosts } = useSelector(state => state.post);
 
-  const userId = useSelector(state => state.user.me && state.user.me.id);
-
-  if (!userId) {
+  if (!mainPosts && !me) {
     return (
       <div>로딩 중</div>
     );
   }
   return (
-    <ProfileBox />
+    <ProfileBox mode="meProfile" mainPosts={mainPosts} userInfo={me} />
   );
 };
 
 Profile.getInitialProps = (context) => {
-  const { id } = context.store.getState().user.me;
+  const state = context.store.getState();
   context.store.dispatch({
     type: LOAD_USER_POSTS_REQUEST,
-    data: id,
+    data: state.user.me && state.user.me.id,
   });
 };
 

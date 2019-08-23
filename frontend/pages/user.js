@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { LOAD_USER_POSTS_REQUEST } from '../reducers/post';
-import UserInfo from '../containers/main/User';
+import ProfileBox from '../containers/user/Profile';
 import { LOAD_USER_REQUEST } from '../reducers/user';
 
 const User = ({ id }) => {
-  const dispatch = useDispatch();
   const { userInfo } = useSelector(state => state.user);
   const { mainPosts } = useSelector(state => state.post);
 
@@ -17,8 +16,11 @@ const User = ({ id }) => {
     );
   }
   return (
-    // <div>테스트</div>
-    <UserInfo mainPosts={mainPosts} userInfo={userInfo} />
+    <ProfileBox
+      mode="userProfile"
+      mainPosts={mainPosts}
+      userInfo={userInfo}
+    />
   );
 };
 

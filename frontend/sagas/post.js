@@ -74,7 +74,7 @@ function* watchLoadSinglePost() {
 
 // 유저 게시물 로드
 function loadUserPostsAPI(userId) {
-  return axios.get(`/user/${userId}/posts`);
+  return axios.get(`/user/${userId || 0}/posts`);
 }
 function* loadUserPosts(action) {
   try {

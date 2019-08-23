@@ -44,17 +44,18 @@ Pictme.propTypes = {
 };
 
 Pictme.getInitialProps = async (context) => {
-  console.log('appjs context: ', context);
+  console.log('appjs context????????: ', context);
   const { ctx, Component } = context; // ctx: pages, store, ..., Component: pages file(login, postup, ...)
   let pageProps = {};
 
   const state = ctx.store.getState(); // store에서 state 로드
   const cookie = ctx.isServer ? ctx.req.headers.cookie : ''; // 서버환경이면 headers에서 직접 쿠키 가져오기, 클라환경이면 빈값('')
-  // console.log('-----ctx.isServer------ : ', ctx.isServer);
+  console.log('-----ctx.isServer------ : ', ctx.isServer);
   Axios.defaults.headers.Cookie = ''; // 이전 로그인한 사용자 쿠키가 frontend 서버(axios) 패키지에 계속 남아있어, 방지하고자 초기화.
   if (ctx.isServer && cookie) {
     Axios.defaults.headers.Cookie = cookie; // axios에 쿠키를 기본적으로 심어주는 기능(브라우저가 제공하는 기능 직접 구현해야함).
   }
+  console.log('!!!!!!!!!!!!!!!!!!!!: ', state);
   if (!state.user.me) {
     ctx.store.dispatch({
       type: LOAD_USER_REQUEST,

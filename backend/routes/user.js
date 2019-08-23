@@ -110,7 +110,7 @@ router.get('/:id', async (req, res, next) => {
 router.get('/:id/posts', async (req, res, next) => {
   try {
     const posts = await db.Post.findAll({
-      where: { UserId: parseInt(req.params.id) },
+      where: { UserId: parseInt(req.params.id) || (req.user && req.user.id) || 0 },
       include: [{
         model: db.User,
         attributes: ['id', 'nickname'],
