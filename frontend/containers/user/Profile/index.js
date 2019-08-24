@@ -38,7 +38,7 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
   }, [userInfo && userInfo.id]);
 
   const handleScroll = useCallback(() => {
-    if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 150) {
+    if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 200) {
       if (hasMorePost) {
         const mainPostsLastRow = mainPosts[mainPosts.length - 1] && mainPosts[mainPosts.length - 1];
         const lastId = mainPostsLastRow[mainPostsLastRow.length - 1].id;

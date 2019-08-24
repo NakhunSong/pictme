@@ -209,6 +209,7 @@ const reducer = (state = initialState, action) => {
       case LIKE_POST_SUCCESS: {
         const postIndex = draft.mainPosts.findIndex((v, i) => v.id === action.data.postId);
         draft.mainPosts[postIndex].Likers.unshift({ id: action.data.userId });
+        draft.singlePost.Likers.unshift({ id: action.data.userId });
         break;
       }
       case LIKE_POST_FAILURE: {
@@ -221,6 +222,7 @@ const reducer = (state = initialState, action) => {
         const postIndex = draft.mainPosts.findIndex(v => v.id === action.data.postId);
         const likeIndex = draft.mainPosts[postIndex].Likers.findIndex(v => v.id === action.data.userId);
         draft.mainPosts[postIndex].Likers.splice(likeIndex, 1);
+        draft.singlePost.Likers.splice(likeIndex, 1);
         break;
       }
       case UNLIKE_POST_FAILURE: {

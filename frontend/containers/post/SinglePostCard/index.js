@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Avatar, List, Comment } from 'antd';
+import { Avatar, List, Comment, message } from 'antd';
 import Router from 'next/router';
 
 import { UNLIKE_POST_REQUEST, LIKE_POST_REQUEST, LOAD_COMMENTS_REQUEST } from '../../../reducers/post';
@@ -20,10 +20,14 @@ const SinglePostCard = ({ singlePost }) => {
   const [commentFormOpended, setCommentFormOpended] = useState(false);
 
   const imageSrc = singlePost && singlePost.Images && singlePost.Images[0] && singlePost.Images[0].src;
-  const liked = singlePost && singlePost.Likers && singlePost.Likers.find(v => v.id === userId);
+  const meId = useSelector(state => state.user.me && state.user.me.id);
   const userId = singlePost && singlePost.User && singlePost.User.id;
+  const liked = singlePost && singlePost.Likers && singlePost.Likers.find(v => v.id === meId);
 
   const handleToggleLike = useCallback(() => {
+    if (!meId) {
+      return message.info('로그인이 필요한 작업입니다.');
+    }
     if (liked) {
       dispatch({
         type: UNLIKE_POST_REQUEST,
@@ -35,7 +39,7 @@ const SinglePostCard = ({ singlePost }) => {
         data: singlePost.id,
       });
     }
-  }, [singlePost && singlePost.id, liked]);
+  }, [meId, singlePost && singlePost.id, liked]);
 
   const handleToggleComment = useCallback(() => {
     setCommentFormOpended(prev => !prev);
