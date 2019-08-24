@@ -12,7 +12,7 @@ const User = ({ id }) => {
 
   if (!mainPosts || !userInfo) {
     return (
-      <div>로딩 중</div>
+      <div>ë¡œë”© ì¤‘</div>
     );
   }
   return (

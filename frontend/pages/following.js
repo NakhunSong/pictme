@@ -13,7 +13,7 @@ const Following = () => {
     );
   }
   return (
-    <FollowList title="팔로잉" followingList={followingList} userInfo={userInfo} />
+    <FollowList title="팔로잉" followList={followingList} userInfo={userInfo} />
   );
 };
 

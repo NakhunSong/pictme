@@ -20,6 +20,8 @@ export const initialState = {
   loadUserErrorReason: '',
   followingList: [],
   followerList: [],
+  hasMoreFollowing: false,
+  hasMoreFollower: false,
   userInfo: null, // 다른 사용자 정보,
 };
 
@@ -204,13 +206,15 @@ export default (state = initialState, action) => {
     case LOAD_FOLLOWINGS_REQUEST: {
       return {
         ...state,
-        followingList: [],
+        followingList: !action.lastId ? [] : state.followingList,
+        hasMoreFollowing: action.lastId ? state.hasMoreFollowing : true,
       };
     }
     case LOAD_FOLLOWINGS_SUCCESS: {
       return {
         ...state,
-        followingList: action.data,
+        followingList: state.followingList.concat(action.data),
+        hasMoreFollowing: action.data.length === 2,
       };
     }
     case LOAD_FOLLOWINGS_FAILURE: {
@@ -221,13 +225,15 @@ export default (state = initialState, action) => {
     case LOAD_FOLLOWERS_REQUEST: {
       return {
         ...state,
-        followerList: [],
+        followerList: !action.lastId ? [] : state.followerList,
+        hasMoreFollower: action.lastId ? state.hasMoreFollower : true,
       };
     }
     case LOAD_FOLLOWERS_SUCCESS: {
       return {
         ...state,
-        followerList: action.data,
+        followerList: state.followerList.concat(action.data),
+        hasMoreFollower: action.data.length === 2,
       };
     }
     case LOAD_FOLLOWERS_FAILURE: {

@@ -175,11 +175,23 @@ router.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
 
 router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
   try {
+    let where = {};
+    const lastId = parseInt(req.query.lastId, 10);
+    if (lastId) {
+      where = {
+        id: {
+          [db.Sequelize.Op.lt]: lastId,
+        }
+      }
+    }
     const user = await db.User.findOne({
       where: { id: parseInt(req.params.id) || (req.user && req.user.id) || 0 },
     });
     const followingList = await user.getFollowings({
+      where,
       attributes: ['id', 'nickname'],
+      limit: parseInt(req.query.limit, 10),
+      order: [['createdAt', 'DESC']],
     });
     return res.json(followingList);
   } catch (e) {
@@ -190,11 +202,23 @@ router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
 
 router.get('/:id/followers', isLoggedIn, async (req, res, next) => {
   try {
+    let where = {};
+    const lastId = parseInt(req.query.lastId, 10);
+    if (lastId) {
+      where = {
+        id: {
+          [db.Sequelize.Op.lt]: lastId,
+        }
+      }
+    }
     const user = await db.User.findOne({
       where: { id: parseInt(req.params.id) },
     });
     const followerList = await user.getFollowers({
+      where,
       attributes: ['id', 'nickname'],
+      order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10),
     });
     return res.json(followerList);
   } catch (e) {

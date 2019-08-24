@@ -150,14 +150,14 @@ function* watchUnfollowUser() {
 }
 
 // 팔로잉 목록 불러오기
-function loadFollowingsAPI(userId) {
-  return axios.get(`/user/${userId}/followings/`, {
+function loadFollowingsAPI(userId, lastId = 0, limit = 2) {
+  return axios.get(`/user/${userId}/followings?lastId=${lastId}&limit=${limit}`, {
     withCredentials: true,
   });
 }
 function* loadFollowings(action) {
   try {
-    const result = yield call(loadFollowingsAPI, action.data);
+    const result = yield call(loadFollowingsAPI, action.data, action.lastId);
     yield put({
       type: LOAD_FOLLOWINGS_SUCCESS,
       data: result.data,
@@ -171,18 +171,18 @@ function* loadFollowings(action) {
   }
 }
 function* watchLoadFollowings() {
-  yield takeEvery(LOAD_FOLLOWINGS_REQUEST, loadFollowings);
+  yield throttle(2000, LOAD_FOLLOWINGS_REQUEST, loadFollowings);
 }
 
 // 팔로워 목록 불러오기
-function loadFollowersAPI(userId) {
-  return axios.get(`/user/${userId}/followers/`, {
+function loadFollowersAPI(userId, lastId = 0, limit = 2) {
+  return axios.get(`/user/${userId}/followers?lastId=${lastId}&limit=${limit}`, {
     withCredentials: true,
   });
 }
 function* loadFollowers(action) {
   try {
-    const result = yield call(loadFollowersAPI, action.data);
+    const result = yield call(loadFollowersAPI, action.data, action.lastId);
     yield put({
       type: LOAD_FOLLOWERS_SUCCESS,
       data: result.data,
