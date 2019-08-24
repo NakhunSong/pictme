@@ -23,7 +23,7 @@ function* loadMainPosts(action) {
   }
 }
 function* watchLoadMainPosts() {
-  yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadMainPosts);
+  yield throttle(2000, LOAD_MAIN_POSTS_REQUEST, loadMainPosts);
 }
 
 // 해시태그 게시물 로드
@@ -92,7 +92,7 @@ function* loadUserPosts(action) {
   }
 }
 function* watchLoadUserPosts() {
-  yield takeEvery(LOAD_USER_POSTS_REQUEST, loadUserPosts);
+  yield throttle(2000, LOAD_USER_POSTS_REQUEST, loadUserPosts);
 }
 
 // 개별 게시물 댓글 로드

@@ -51,6 +51,7 @@ const Header = () => {
             style={{ verticalAlign: 'middle', width: '250px' }}
             onChange={handleChangeSearch}
             onSearch={handleSearch}
+            value={searchText}
             // enterButton={handleSearch}
           />
         </div>

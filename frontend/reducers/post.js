@@ -20,6 +20,7 @@ export const initialState = {
   uploadImagesError: '',
   isAddingPost: false,
   postAdded: false,
+  hasMorePost: false,
   addPostErrorReason: '',
   singlePost: null, // 개별 post 정보
   isAddingComment: false,
@@ -79,6 +80,7 @@ const reducer = (state = initialState, action) => {
       case LOAD_MAIN_POSTS_REQUEST:
       case LOAD_HASHTAG_POSTS_REQUEST: {
         draft.mainPosts = !action.lastId ? [] : draft.mainPosts;
+        draft.hasMorePost = action.lastId ? draft.hasMorePost : true;
         break;
       }
       case LOAD_MAIN_POSTS_SUCCESS:
@@ -86,6 +88,7 @@ const reducer = (state = initialState, action) => {
         action.data.forEach((post) => {
           draft.mainPosts.push(post);
         });
+        draft.hasMorePost = action.data.length === 12;
         break;
       }
       case LOAD_MAIN_POSTS_FAILURE:
@@ -103,7 +106,8 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_USER_POSTS_REQUEST: {
-        draft.mainPosts = [];
+        draft.mainPosts = !action.lastId ? [] : draft.mainPosts;
+        draft.hasMorePost = action.lastId ? draft.hasMorePost : true;
         break;
       }
       case LOAD_USER_POSTS_SUCCESS: {
@@ -119,6 +123,7 @@ const reducer = (state = initialState, action) => {
         if (postList.length !== 0) {
           draft.mainPosts.push(postList);
         }
+        draft.hasMorePost = action.data.length === 12;
         break;
       }
       case LOAD_USER_POSTS_FAILURE: {

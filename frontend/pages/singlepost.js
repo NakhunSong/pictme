@@ -12,7 +12,7 @@ const SinglePost = ({ id }) => {
 
   if (!singlePost) {
     return (
-      <div>로딩중</div>
+      <div>ë¡œë”©ì¤‘</div>
     );
   }
   return (

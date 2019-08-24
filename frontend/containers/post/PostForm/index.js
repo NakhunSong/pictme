@@ -21,6 +21,7 @@ const PostForm = () => {
 
   const [text, setText] = useState('');
   const [textError, setTextError] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const [visible, setVisible] = useState(false);
   const imageInput = useRef();
   const buttonClick = useRef();
@@ -39,6 +40,7 @@ const PostForm = () => {
   }, []);
   const handleChangeImages = useCallback((e) => {
     console.log('e.target.files: ', e.target.files);
+    setImageError(false);
     const imageFormData = new FormData();
     Array.prototype.forEach.call(e.target.files, (file) => {
       imageFormData.append('image', file);
@@ -63,13 +65,16 @@ const PostForm = () => {
     imagePaths.forEach((i) => {
       formData.append('image', i);
     });
+    if (imagePaths.length === 0) {
+      return setImageError(true);
+    }
     formData.append('content', text);
     dispatch({
       type: ADD_POST_REQUEST,
       data: formData,
     });
     message.success('등록이 완료되었습니다.');
-  }, [text, imagePaths]);
+  }, [text, imagePaths, imagePaths && imagePaths.length]);
 
   return (
     <Wrapper>
@@ -92,6 +97,7 @@ const PostForm = () => {
                   </div>
                 </div>
               ))}
+              {imageError && <div style={{ color: 'red' }}>이미지를 넣어주세요!</div>}
             </div>
           </div>
           <div className="upload-button">

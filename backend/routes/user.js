@@ -109,8 +109,22 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/posts', async (req, res, next) => {
   try {
+    let where = {};
+    const lastId = parseInt(req.query.lastId, 10);
+    if (lastId) {
+      where = {
+        id: {
+          [db.Sequelize.Op.lt]: lastId,
+        },
+        UserId: parseInt(req.params.id, 10) || (req.user && req.user.id) || 0,
+      }
+    } else {
+        where = {
+          UserId: parseInt(req.params.id, 10) || (req.user && req.user.id) || 0,
+        }
+    }
     const posts = await db.Post.findAll({
-      where: { UserId: parseInt(req.params.id) || (req.user && req.user.id) || 0 },
+      where,
       include: [{
         model: db.User,
         attributes: ['id', 'nickname'],
@@ -124,6 +138,7 @@ router.get('/:id/posts', async (req, res, next) => {
         model: db.Comment,
       }],
       order: [['createdAt', 'DESC']],
+      limit: parseInt(req.query.limit, 10),
     });
     return res.json(posts);
   } catch (e) {

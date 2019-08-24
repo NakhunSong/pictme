@@ -12,7 +12,7 @@ const Profile = () => {
 
   if (!mainPosts && !me) {
     return (
-      <div>로딩 중</div>
+      <div>ë¡œë”© ì¤‘</div>
     );
   }
   return (
