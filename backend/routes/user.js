@@ -173,4 +173,34 @@ router.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
   }
 });
 
+router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
+  try {
+    const user = await db.User.findOne({
+      where: { id: parseInt(req.params.id) || (req.user && req.user.id) || 0 },
+    });
+    const followingList = await user.getFollowings({
+      attributes: ['id', 'nickname'],
+    });
+    return res.json(followingList);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
+router.get('/:id/followers', isLoggedIn, async (req, res, next) => {
+  try {
+    const user = await db.User.findOne({
+      where: { id: parseInt(req.params.id) },
+    });
+    const followerList = await user.getFollowers({
+      attributes: ['id', 'nickname'],
+    });
+    return res.json(followerList);
+  } catch (e) {
+    console.error(e);
+    return next(e);
+  }
+});
+
 module.exports = router;

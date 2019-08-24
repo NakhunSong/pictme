@@ -41,6 +41,12 @@ app.prepare().then(() => { // express와 next 연동
   server.get('/user/:id', (req, res) => {
     return app.render(req, res, '/user', { id: req.params.id });
   });
+  server.get('/following/:id', (req, res) => {
+    return app.render(req, res, '/following', { id: req.params.id });
+  });
+  server.get('/follower/:id', (req, res) => {
+    return app.render(req, res, '/follower', { id: req.params.id });
+  });
   server.get('*', (req, res) => {
     return handle(req, res); // handle에 (req, res) 연결
   });

@@ -65,7 +65,7 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
             <br />
             {userInfo.Posts.length}
           </div>,
-          <Link href="/following">
+          <Link href={{ pathname: '/following', query: { id: userInfo.id } }} as={`/following/${userInfo.id}`}>
             <a>
               <div>
                 팔로잉
@@ -74,7 +74,7 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
               </div>
             </a>
           </Link>,
-          <Link href="/follower">
+          <Link href={{ pathname: '/follower', query: { id: userInfo.id } }} as={`/follower/${userInfo.id}`}>
             <a>
               <div>
                 팔로워

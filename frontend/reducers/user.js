@@ -18,6 +18,8 @@ export const initialState = {
   signUpErrorReason: '',
   me: null, // 사용자 정보
   loadUserErrorReason: '',
+  followingList: [],
+  followerList: [],
   userInfo: null, // 다른 사용자 정보,
 };
 
@@ -44,6 +46,14 @@ export const FOLLOW_USER_FAILURE = 'FOLLOW_USER_FAILURE';
 export const UNFOLLOW_USER_REQUEST = 'UNFOLLOW_USER_REQUEST';
 export const UNFOLLOW_USER_SUCCESS = 'UNFOLLOW_USER_SUCCESS';
 export const UNFOLLOW_USER_FAILURE = 'UNFOLLOW_USER_FAILURE';
+
+export const LOAD_FOLLOWERS_REQUEST = 'LOAD_FOLLOWERS_REQUEST';
+export const LOAD_FOLLOWERS_SUCCESS = 'LOAD_FOLLOWERS_SUCCESS';
+export const LOAD_FOLLOWERS_FAILURE = 'LOAD_FOLLOWERS_FAILURE';
+
+export const LOAD_FOLLOWINGS_REQUEST = 'LOAD_FOLLOWINGS_REQUEST';
+export const LOAD_FOLLOWINGS_SUCCESS = 'LOAD_FOLLOWINGS_SUCCESS';
+export const LOAD_FOLLOWINGS_FAILURE = 'LOAD_FOLLOWINGS_FAILURE';
 
 export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
@@ -187,6 +197,40 @@ export default (state = initialState, action) => {
       };
     }
     case UNFOLLOW_USER_FAILURE: {
+      return {
+        ...state,
+      };
+    }
+    case LOAD_FOLLOWINGS_REQUEST: {
+      return {
+        ...state,
+        followingList: [],
+      };
+    }
+    case LOAD_FOLLOWINGS_SUCCESS: {
+      return {
+        ...state,
+        followingList: action.data,
+      };
+    }
+    case LOAD_FOLLOWINGS_FAILURE: {
+      return {
+        ...state,
+      };
+    }
+    case LOAD_FOLLOWERS_REQUEST: {
+      return {
+        ...state,
+        followerList: [],
+      };
+    }
+    case LOAD_FOLLOWERS_SUCCESS: {
+      return {
+        ...state,
+        followerList: action.data,
+      };
+    }
+    case LOAD_FOLLOWERS_FAILURE: {
       return {
         ...state,
       };
