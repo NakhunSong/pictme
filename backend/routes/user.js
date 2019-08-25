@@ -132,6 +132,7 @@ router.get('/:id/posts', async (req, res, next) => {
         model: db.Image,
       }, {
         model: db.User,
+        through: 'Like',
         as: 'Likers',
         attributes: ['id'],
       }, {

@@ -80,8 +80,9 @@ router.get('/:id', hasPost, async (req, res, next) => {
         model: db.Image,
       }, {
         model: db.User,
+        through: 'Like',
         as: 'Likers',
-        attributes: ['id'],
+        attributes: ['id', 'nickname'],
       }, {
         model: db.Comment,
       }]

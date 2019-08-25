@@ -30,7 +30,6 @@ User.propTypes = {
 
 User.getInitialProps = (context) => {
   const id = parseInt(context.query.id, 10);
-  console.log('userId: ', id);
   context.store.dispatch({
     type: LOAD_USER_POSTS_REQUEST,
     data: id,

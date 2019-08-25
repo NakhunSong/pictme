@@ -14,15 +14,15 @@ import {
 } from './style';
 import CommentForm from '../CommentForm';
 
-const SinglePostCard = ({ singlePost }) => {
+const SinglePostCard = () => {
   const dispatch = useDispatch();
-
+  const { singlePost } = useSelector(state => state.post);
   const [commentFormOpended, setCommentFormOpended] = useState(false);
 
   const imageSrc = singlePost && singlePost.Images && singlePost.Images[0] && singlePost.Images[0].src;
   const meId = useSelector(state => state.user.me && state.user.me.id);
   const userId = singlePost && singlePost.User && singlePost.User.id;
-  const liked = singlePost && singlePost.Likers && singlePost.Likers.find(v => v.id === meId);
+  const liked = meId && singlePost.Likers && singlePost.Likers.find(v => v.id === meId);
 
   const handleToggleLike = useCallback(() => {
     if (!meId) {

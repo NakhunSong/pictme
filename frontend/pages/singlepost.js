@@ -1,11 +1,11 @@
-import React, { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Icon, Avatar } from 'antd';
+import Helmet from 'react-helmet';
 
-import { LOAD_SINGLE_POST_REQUEST, UNLIKE_POST_REQUEST, LIKE_POST_REQUEST } from '../reducers/post';
+import { LOAD_SINGLE_POST_REQUEST } from '../reducers/post';
 import SinglePostCard from '../containers/post/SinglePostCard';
+import { backUrl } from '../config/config';
 
 const SinglePost = ({ id }) => {
   const { singlePost } = useSelector(state => state.post);
@@ -16,7 +16,24 @@ const SinglePost = ({ id }) => {
     );
   }
   return (
-    <SinglePostCard singlePost={singlePost} />
+    <div>
+      <Helmet
+        title={`${singlePost.User.nickname}님의 글`}
+        description={singlePost.content}
+        meta={[{
+          name: 'description', content: singlePost.content,
+        }, {
+          property: 'og:title', content: `${singlePost.User.nickname}님의 게시글`,
+        }, {
+          property: 'og:description', content: singlePost.content,
+        }, {
+          property: 'og:image', content: singlePost.Images[0] && `${backUrl}/post_image/${singlePost.Images[0].src}`,
+        }, {
+          property: 'og:url', content: `http://localhost:3020/post/${id}`,
+        }]}
+      />
+      <SinglePostCard />
+    </div>
   );
 };
 
@@ -26,7 +43,6 @@ SinglePost.propTypes = {
 
 SinglePost.getInitialProps = async (context) => {
   const { id } = context.query;
-  console.log('singlepost context: ', context.query.id);
   context.store.dispatch({
     type: LOAD_SINGLE_POST_REQUEST,
     data: id,

@@ -15,7 +15,7 @@ const ResultScreen = ({ status, title, page }) => {
   return (
     <ResultWrapper
       status={status}
-      title={title}
+      title="에러발생"
       extra={(
         <Button type="primary" key="go_main" onClick={handleGoPage}>
           메인 페이지로

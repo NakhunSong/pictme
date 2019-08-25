@@ -1,14 +1,5 @@
 import Router from 'next/router';
 
-const dummyUser = {
-  id: 0,
-  nickname: '나쿤',
-  profileImg: '../public/testImg.jpg',
-  Posts: [],
-  Followings: [],
-  Followers: [],
-};
-
 export const initialState = {
   isLoggingIn: false,
   isLoggingOut: false,
@@ -70,7 +61,6 @@ export default (state = initialState, action) => {
       };
     }
     case SIGN_UP_SUCCESS: {
-      console.log(action.data);
       Router.push('/login'); // 회원가입 성공 시 로그인 페이지로
       return {
         ...state,
@@ -114,7 +104,6 @@ export default (state = initialState, action) => {
       };
     }
     case LOAD_USER_SUCCESS: {
-      console.log('action.me: ', action.me);
       if (action.me) {
         return {
           ...state,

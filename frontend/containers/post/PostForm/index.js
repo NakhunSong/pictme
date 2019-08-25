@@ -39,7 +39,6 @@ const PostForm = () => {
     setText(e.target.value);
   }, []);
   const handleChangeImages = useCallback((e) => {
-    console.log('e.target.files: ', e.target.files);
     setImageError(false);
     const imageFormData = new FormData();
     Array.prototype.forEach.call(e.target.files, (file) => {

@@ -7,7 +7,6 @@ import {
 } from './style';
 
 const PostImages = ({ images }) => {
-  console.log('images: ', images);
   return (
     <div>
       <Img src={`${backUrl}/post_image/${images[0].src}`} width="100%" alt="" />

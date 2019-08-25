@@ -18,22 +18,22 @@ const PostCard = ({ post }) => {
 
   const liked = userId && post.Likers && post.Likers.find(v => v.id === userId);
 
-  const onToggleLike = useCallback(() => {
-    if (!userId) {
-      return message.info('로그인이 필요한 작업입니다.');
-    }
-    if (liked) {
-      dispatch({
-        type: UNLIKE_POST_REQUEST,
-        data: post.id,
-      });
-    } else {
-      dispatch({
-        type: LIKE_POST_REQUEST,
-        data: post.id,
-      });
-    }
-  }, [userId, post && post.id, liked]);
+  // const onToggleLike = useCallback(() => {
+  //   if (!userId) {
+  //     return message.info('로그인이 필요한 작업입니다.');
+  //   }
+  //   if (liked) {
+  //     dispatch({
+  //       type: UNLIKE_POST_REQUEST,
+  //       data: post.id,
+  //     });
+  //   } else {
+  //     dispatch({
+  //       type: LIKE_POST_REQUEST,
+  //       data: post.id,
+  //     });
+  //   }
+  // }, [userId, post && post.id, liked]);
   const handleClickCard = useCallback((e) => {
     e.stopPropagation();
     Router.push({
@@ -64,7 +64,7 @@ const PostCard = ({ post }) => {
         key={+post.createdAt}
         cover={post.Images && post.Images[0] && <PostImages images={post.Images} />}
         actions={[
-          <Icon type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} twoToneColor="#eb2f96" onClick={onToggleLike} />,
+          <Icon type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} twoToneColor="#eb2f96" />,
           <Icon type="message" key="message" />,
           <Popover
             key="ellipsis"

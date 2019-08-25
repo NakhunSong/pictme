@@ -9,12 +9,11 @@ function signUpAPI(signUpData) {
 function* signUp(action) {
   try {
     const result = yield call(signUpAPI, action.data);
-    console.dir('signup result: ', result);
     yield put({
       type: SIGN_UP_SUCCESS,
     });
   } catch (e) {
-    console.dir(e);
+    console.error(e);
     yield put({
       type: SIGN_UP_FAILURE,
       error: e.response && e.response.data,
@@ -34,7 +33,6 @@ function logInAPI(loginData) {
 function* logIn(action) {
   try {
     const result = yield call(logInAPI, action.data);
-    console.log('login result', result);
     yield put({
       type: LOG_IN_SUCCESS,
       data: result.data,

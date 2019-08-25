@@ -9,7 +9,6 @@ import { LOAD_MAIN_POSTS_REQUEST } from '../reducers/post';
 
 const Home = () => {
   const { me } = useSelector(state => state.user);
-  // const { mainPosts } = useSelector(state => state.post);
 
   if (!me) {
     return (
