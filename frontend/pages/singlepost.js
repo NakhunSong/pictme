@@ -32,7 +32,7 @@ const SinglePost = ({ id }) => {
           property: 'og:url', content: `http://localhost:3020/post/${id}`,
         }]}
       />
-      <SinglePostCard />
+      <SinglePostCard singlePost={singlePost} />
     </div>
   );
 };

@@ -14,9 +14,9 @@ import {
 } from './style';
 import CommentForm from '../CommentForm';
 
-const SinglePostCard = () => {
+const SinglePostCard = ({ singlePost }) => {
   const dispatch = useDispatch();
-  const { singlePost } = useSelector(state => state.post);
+  // const { singlePost } = useSelector(state => state.post);
   const [commentFormOpended, setCommentFormOpended] = useState(false);
 
   const imageSrc = singlePost && singlePost.Images && singlePost.Images[0] && singlePost.Images[0].src;
@@ -49,7 +49,8 @@ const SinglePostCard = () => {
         data: singlePost.id,
       });
     }
-  }, [singlePost && singlePost.id]);
+  }, []);
+
   const handleClickProfile = useCallback(() => {
     Router.push({
       pathname: '/user',
@@ -87,9 +88,9 @@ const SinglePostCard = () => {
             renderItem={item => (
               <li>
                 <Comment
-                  // author={item.User.nickname}
-                  // avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
                   content={item.content}
+                  author={item.User && item.User.nickname}
+                  avatar={item.User && <Avatar>{item.User.nickname[0]}</Avatar>}
                 />
               </li>
             )}
