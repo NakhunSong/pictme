@@ -211,7 +211,7 @@ function* unlikePost(action) {
       type: UNLIKE_POST_SUCCESS,
       data: {
         postId: action.data,
-        userId: result.data,
+        userId: result.data.userId,
       },
     });
   } catch (e) {
@@ -225,6 +225,8 @@ function* unlikePost(action) {
 function* watchUnlikePost() {
   yield takeLatest(UNLIKE_POST_REQUEST, unlikePost);
 }
+
+// 게시물 삭제
 function removePostAPI(postId) {
   return axios.delete(`/post/${postId}`, {
     withCredentials: true,
