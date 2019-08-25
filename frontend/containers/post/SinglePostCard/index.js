@@ -52,6 +52,9 @@ const SinglePostCard = ({ singlePost }) => {
   }, []);
 
   const handleClickProfile = useCallback(() => {
+    if (userId === meId) {
+      return Router.push('/profile');
+    }
     Router.push({
       pathname: '/user',
       query: { id: userId },
