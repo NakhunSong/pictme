@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,15 +10,20 @@ const Hashtag = ({ tag }) => {
   const dispatch = useDispatch();
   const mainPosts = useSelector(state => state.post.mainPosts);
   const hasMorePost = useSelector(state => state.post.hasMorePost);
+  const countRef = useRef([]);
 
   const onScroll = useCallback(() => {
     if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
       if (hasMorePost) {
-        dispatch({
-          type: LOAD_HASHTAG_POSTS_REQUEST,
-          data: tag,
-          lastId: mainPosts[mainPosts.length - 1].id,
-        });
+        const lastId = mainPosts[mainPosts.length - 1] && mainPosts[mainPosts.length - 1].id;
+        if (!countRef.current.includes(lastId)) {
+          dispatch({
+            type: LOAD_HASHTAG_POSTS_REQUEST,
+            data: tag,
+            lastId,
+          });
+          countRef.current.push(lastId);
+        }
       }
     }
   }, [hasMorePost, mainPosts.length]);

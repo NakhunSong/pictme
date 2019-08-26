@@ -11,3 +11,10 @@ export const PostCardWrapper = styled.div`
 export const CardWrapper = styled(Card)`
   // height: 100%;
 `;
+
+export const InlineBlock = styled.div`
+  display: inline-block;
+  & + & {
+    margin-left: 4px;
+  }
+`;

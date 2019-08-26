@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card, Icon, Avatar, message, Popover, Button } from 'antd';
 import PropTypes from 'prop-types';
@@ -7,33 +7,18 @@ import Router from 'next/router';
 import {
   PostCardWrapper,
   CardWrapper,
+  InlineBlock,
 } from './style';
-import { LIKE_POST_REQUEST, UNLIKE_POST_REQUEST, REMOVE_POST_REQUEST } from '../../../reducers/post';
+import { REMOVE_POST_REQUEST } from '../../../reducers/post';
 import PostImages from '../../../components/post/PostImages';
 import PostCardContent from '../../../components/post/PostCardContent';
 
-const PostCard = ({ post }) => {
+const PostCard = memo(({ post }) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.user.me && state.user.me.id);
 
   const liked = userId && post.Likers && post.Likers.find(v => v.id === userId);
 
-  // const onToggleLike = useCallback(() => {
-  //   if (!userId) {
-  //     return message.info('로그인이 필요한 작업입니다.');
-  //   }
-  //   if (liked) {
-  //     dispatch({
-  //       type: UNLIKE_POST_REQUEST,
-  //       data: post.id,
-  //     });
-  //   } else {
-  //     dispatch({
-  //       type: LIKE_POST_REQUEST,
-  //       data: post.id,
-  //     });
-  //   }
-  // }, [userId, post && post.id, liked]);
   const handleClickCard = useCallback((e) => {
     e.stopPropagation();
     Router.push({
@@ -64,8 +49,24 @@ const PostCard = ({ post }) => {
         key={+post.createdAt}
         cover={post.Images && post.Images[0] && <PostImages images={post.Images} />}
         actions={[
-          <Icon type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} twoToneColor="#eb2f96" />,
-          <Icon type="message" key="message" />,
+          <div>
+            <InlineBlock>
+              <Icon type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} twoToneColor="#eb2f96" />
+            </InlineBlock>
+            <InlineBlock>
+              {post.Likers && post.Likers.length}
+              개
+            </InlineBlock>
+          </div>,
+          <div>
+            <InlineBlock>
+              <Icon type="message" key="message" />
+            </InlineBlock>
+            <InlineBlock>
+              {post.Comments && post.Comments.length}
+              개
+            </InlineBlock>
+          </div>,
           <Popover
             key="ellipsis"
             content={(
@@ -92,7 +93,7 @@ const PostCard = ({ post }) => {
       </CardWrapper>
     </PostCardWrapper>
   );
-};
+});
 
 PostCard.propTypes = {
   post: PropTypes.shape({
@@ -103,6 +104,7 @@ PostCard.propTypes = {
     User: PropTypes.object,
     Images: PropTypes.array,
     Likers: PropTypes.array,
+    Comments: PropTypes.array,
   }).isRequired,
 };
 

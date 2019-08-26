@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 import ProfilePostImage from '../ProfilePostImage';
@@ -7,7 +7,7 @@ import {
   ColWrapper,
 } from './style';
 
-const ProfilePosts = ({ postRow }) => {
+const ProfilePosts = memo(({ postRow }) => {
   return (
     <RowWrapper>
       <ColWrapper>
@@ -21,7 +21,7 @@ const ProfilePosts = ({ postRow }) => {
       </ColWrapper>
     </RowWrapper>
   );
-};
+});
 
 ProfilePosts.propTypes = {
   postRow: PropTypes.array.isRequired,

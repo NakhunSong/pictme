@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 import { Card, Avatar, message } from 'antd';
@@ -20,6 +20,7 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
   const { me } = useSelector(state => state.user);
   const hasMorePost = useSelector(state => state.post.hasMorePost);
   const dispatch = useDispatch();
+  const countRef = useRef([]);
 
   const handleClickFollow = useCallback(() => {
     if (!me) {
@@ -38,15 +39,18 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
   }, [userInfo && userInfo.id]);
 
   const handleScroll = useCallback(() => {
-    if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 200) {
+    if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 50) {
       if (hasMorePost) {
         const mainPostsLastRow = mainPosts[mainPosts.length - 1] && mainPosts[mainPosts.length - 1];
         const lastId = mainPostsLastRow[mainPostsLastRow.length - 1].id;
-        dispatch({
-          type: LOAD_USER_POSTS_REQUEST,
-          data: userInfo.id,
-          lastId,
-        });
+        if (!countRef.current.includes(lastId)) {
+          dispatch({
+            type: LOAD_USER_POSTS_REQUEST,
+            data: userInfo.id,
+            lastId,
+          });
+          countRef.current.push(lastId);
+        }
       }
     }
   }, [hasMorePost, mainPosts.length]);
