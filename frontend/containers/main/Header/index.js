@@ -18,6 +18,9 @@ const Header = () => {
   const userId = me.id;
 
   useEffect(() => {
+    Router.prefetch('/profile');
+  }, []);
+  useEffect(() => {
     if (!me) {
       Router.push('/');
     }
