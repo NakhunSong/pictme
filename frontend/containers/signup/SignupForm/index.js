@@ -8,6 +8,7 @@ import {
   SignupFormInnerWrapper,
   TitleWrapper,
   FormWrapper,
+  SignupError,
 } from './style';
 import { SIGN_UP_REQUEST } from '../../../reducers/user';
 
@@ -21,7 +22,7 @@ export const useInput = (initValue = null) => {
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const { isSigningUp } = useSelector(state => state.user);
+  const { isSigningUp, signUpErrorReason } = useSelector(state => state.user);
 
   const [userId, onChangeUserId] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
@@ -80,6 +81,7 @@ const SignupForm = () => {
           </div>
         </TitleWrapper>
         <FormWrapper onSubmit={onSubmit}>
+          {signUpErrorReason && <SignupError>{signUpErrorReason}</SignupError>}
           <Input value={userId} size="large" placeholder="아이디" onChange={onChangeUserId} />
           <br />
           <Input value={nickname} size="large" placeholder="닉네임" onChange={onChangeNickname} />
@@ -88,9 +90,9 @@ const SignupForm = () => {
           <br />
           <Input value={passwordCheck} size="large" placeholder="패스워드확인" onChange={onChangePasswordCheck} type="password" />
           <br />
-          {passwordError ? <div style={{ color: 'red' }}>패스워드가 다릅니다.</div> : null}
+          {passwordError ? <SignupError>패스워드가 다릅니다.</SignupError> : null}
           <Checkbox onChange={onChangeTerm}>정보 제공에 동의합니다.</Checkbox>
-          {termError ? <div style={{ color: 'red' }}>정보 제공에 동의해주세요.</div> : null}
+          {termError ? <SignupError>정보 제공에 동의해주세요.</SignupError> : null}
           <Button type="primary" size="large" block htmlType="submit" loading={isSigningUp}>가입</Button>
           <div className="policy">
             가입하면 pictme의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.

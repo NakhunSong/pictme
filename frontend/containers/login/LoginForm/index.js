@@ -8,6 +8,7 @@ import {
   LoginFormInnerWrapper,
   TitleWrapper,
   FormWrapper,
+  loginError,
 } from './style';
 
 import { useInput } from '../../signup/SignupForm';
@@ -15,7 +16,7 @@ import { LOG_IN_REQUEST } from '../../../reducers/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggingIn } = useSelector(state => state.user);
+  const { isLoggingIn, loginErrorReason } = useSelector(state => state.user);
   const [userId, onChangeUserId] = useInput('');
   const [password, onChangePassword] = useInput('');
 
@@ -53,6 +54,7 @@ const LoginForm = () => {
           <br />
           <Input value={password} size="large" placeholder="패스워드확인" onChange={onChangePassword} type="password" />
           <br />
+          {loginErrorReason && <loginError>{loginErrorReason}</loginError>}
           <Button type="primary" size="large" block htmlType="submit" loading={isLoggingIn}>로그인</Button>
         </FormWrapper>
       </LoginFormInnerWrapper>

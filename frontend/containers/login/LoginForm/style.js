@@ -68,3 +68,7 @@ export const FormWrapper = styled(Form)`
     text-align: center;
   }
 `;
+
+export const loginError = styled.div`
+  color: red;
+`;

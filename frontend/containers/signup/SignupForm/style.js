@@ -68,3 +68,7 @@ export const FormWrapper = styled(Form)`
     text-align: center;
   }
 `;
+
+export const SignupError = styled.div`
+  color: red;
+`;

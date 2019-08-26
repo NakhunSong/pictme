@@ -69,10 +69,9 @@ router.post('/login', (req, res, next) => { // POST /api/user/login
           }],
           attributes: ['id', 'nickname', 'userId'],
         });
-        console.log(fullUser);
         return res.json(fullUser);
       } catch (e) {
-        next(e);
+        return next(e);
       }
     })
   })(req, res, next);
