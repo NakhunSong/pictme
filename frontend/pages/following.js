@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 
 import { LOAD_FOLLOWINGS_REQUEST, LOAD_USER_REQUEST } from '../reducers/user';
 import FollowList from '../containers/user/FollowList';
+import Loading from '../components/common/Loading';
 
 const Following = () => {
   const { followingList, userInfo } = useSelector(state => state.user);
 
   if (!followingList || !userInfo) {
     return (
-      <div>로딩 중</div>
+      <Loading />
     );
   }
   return (

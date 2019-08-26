@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { LOAD_USER_POSTS_REQUEST } from '../reducers/post';
-import ProfileBox from '../containers/user/Profile';
 import { LOAD_USER_REQUEST } from '../reducers/user';
+import ProfileBox from '../containers/user/Profile';
+import Loading from '../components/common/Loading';
 
 const User = ({ id }) => {
   const { userInfo } = useSelector(state => state.user);
@@ -12,7 +13,7 @@ const User = ({ id }) => {
 
   if (!mainPosts || !userInfo) {
     return (
-      <div>ë¡œë”© ì¤‘</div>
+      <Loading />
     );
   }
   return (

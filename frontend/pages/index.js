@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import FullScreen from '../components/common/FullScreen';
 import LinkBox from '../components/common/LinkBox';
 import Main from '../containers/main/Main';
-import SignupForm from '../containers/signup/SignupForm';
+import SignupForm from '../containers/auth/SignupForm';
 import { LOAD_MAIN_POSTS_REQUEST } from '../reducers/post';
 
 const Home = () => {

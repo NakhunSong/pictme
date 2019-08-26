@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_HASHTAG_POSTS_REQUEST } from '../reducers/post';
 import HashtagPostTemplate from '../components/post/HashtagPostTemplate';
 import PostCard from '../containers/post/PostCard';
+import Loading from '../components/common/Loading';
 
 const Hashtag = ({ tag }) => {
   const dispatch = useDispatch();
@@ -34,6 +35,11 @@ const Hashtag = ({ tag }) => {
     };
   }, [mainPosts.length]);
 
+  if (!mainPosts) {
+    return (
+      <Loading />
+    );
+  }
   return (
     <HashtagPostTemplate>
       {mainPosts.map((v) => {

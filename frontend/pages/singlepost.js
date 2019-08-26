@@ -5,6 +5,7 @@ import Helmet from 'react-helmet';
 
 import { LOAD_SINGLE_POST_REQUEST } from '../reducers/post';
 import SinglePostCard from '../containers/post/SinglePostCard';
+import Loading from '../components/common/Loading';
 import { backUrl } from '../config/config';
 
 const SinglePost = ({ id }) => {
@@ -12,7 +13,7 @@ const SinglePost = ({ id }) => {
 
   if (!singlePost) {
     return (
-      <div>로딩 중</div>
+      <Loading />
     );
   }
   return (

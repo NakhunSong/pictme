@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import ProfileBox from '../containers/main/Profile';
 import ProfileBox from '../containers/user/Profile';
 import { LOAD_USER_POSTS_REQUEST } from '../reducers/post';
+import Loading from '../components/common/Loading';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const Profile = () => {
 
   if (!mainPosts && !me) {
     return (
-      <div>로딩 중</div>
+      <Loading />
     );
   }
   return (

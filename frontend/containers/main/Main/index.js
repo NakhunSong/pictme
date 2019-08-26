@@ -5,6 +5,7 @@ import { Card, Avatar } from 'antd';
 import PostCard from '../../post/PostCard';
 import { LOAD_MAIN_POSTS_REQUEST } from '../../../reducers/post';
 import PostButton from '../../../components/post/PostButton';
+import Loading from '../../../components/common/Loading';
 import {
   MainWrapper,
   CardWrapper,
@@ -40,7 +41,7 @@ const Main = () => {
 
   if (!mainPosts) {
     return (
-      <div>로딩 중</div>
+      <Loading />
     );
   }
   return (

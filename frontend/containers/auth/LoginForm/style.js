@@ -69,6 +69,6 @@ export const FormWrapper = styled(Form)`
   }
 `;
 
-export const loginError = styled.div`
+export const LoginError = styled.div`
   color: red;
 `;

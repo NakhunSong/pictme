@@ -8,10 +8,10 @@ import {
   LoginFormInnerWrapper,
   TitleWrapper,
   FormWrapper,
-  loginError,
+  LoginError,
 } from './style';
 
-import { useInput } from '../../signup/SignupForm';
+import { useInput } from '../SignupForm';
 import { LOG_IN_REQUEST } from '../../../reducers/user';
 
 const LoginForm = () => {
@@ -54,7 +54,7 @@ const LoginForm = () => {
           <br />
           <Input value={password} size="large" placeholder="패스워드확인" onChange={onChangePassword} type="password" />
           <br />
-          {loginErrorReason && <loginError>{loginErrorReason}</loginError>}
+          {loginErrorReason && <LoginError>{loginErrorReason}</LoginError>}
           <Button type="primary" size="large" block htmlType="submit" loading={isLoggingIn}>로그인</Button>
         </FormWrapper>
       </LoginFormInnerWrapper>

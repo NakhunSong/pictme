@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import FullScreen from '../components/common/FullScreen';
-import LoginForm from '../containers/login/LoginForm';
+import LoginForm from '../containers/auth/LoginForm';
 import LinkBox from '../components/common/LinkBox';
 import ResultScreen from '../components/common/ResultScreen';
 

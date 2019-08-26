@@ -1,7 +1,7 @@
 import React from 'react';
 
 import FullScreen from '../components/common/FullScreen';
-import SignupForm from '../containers/signup/SignupForm';
+import SignupForm from '../containers/auth/SignupForm';
 import LinkBox from '../components/common/LinkBox';
 
 const signup = () => {

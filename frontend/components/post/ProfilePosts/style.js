@@ -16,7 +16,7 @@ export const ColWrapper = styled.div`
   display: block;
   position: relative;
   width: 100%;
-  background: black;
+  background: white;
   color: white;
 
   @media (max-width: 735px) {

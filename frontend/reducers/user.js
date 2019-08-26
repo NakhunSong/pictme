@@ -128,6 +128,7 @@ export default (state = initialState, action) => {
       };
     }
     case LOG_OUT_SUCCESS: {
+      Router.push('/');
       return {
         ...state,
         isLoggingOut: false,
