@@ -51,7 +51,7 @@ app.prepare().then(() => { // express와 next 연동
     return handle(req, res); // handle에 (req, res) 연결
   });
 
-  server.listen(3020, () => {
-    console.log('Running on Frontend server 3020');
+  server.listen(prod ? process.env.PORT : 3020, () => {
+    console.log(`프론트엔드 서버 작동 on port ${process.env.PORT}`);
   });
 });

@@ -57,6 +57,6 @@ app.get('/', (req, res) => {
   res.send('백엔드 서버 작동중 확인');
 });
 
-app.listen(3030, () => {
-  console.log('서버 작동 on http://localhost:3030')
+app.listen(prod ? process.env.PORT : 3030, () => {
+  console.log(`백엔드 서버 작동 on port ${process.env.PORT}`);
 });
