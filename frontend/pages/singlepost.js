@@ -28,9 +28,9 @@ const SinglePost = ({ id }) => {
         }, {
           property: 'og:description', content: singlePost.content,
         }, {
-          property: 'og:image', content: singlePost.Images[0] && `${backUrl}/post_image/${singlePost.Images[0].src}`,
+          property: 'og:image', content: singlePost.Images[0] && `http://api.pictme.xyz/post_image/${singlePost.Images[0].src}`,
         }, {
-          property: 'og:url', content: `http://localhost:3020/post/${id}`,
+          property: 'og:url', content: `http://pictme.xyz/post/${id}`,
         }]}
       />
       <SinglePostCard singlePost={singlePost} />

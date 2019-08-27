@@ -30,15 +30,15 @@ const Pictme = ({ Component, store, pageProps }) => {
           }, {
             'http-equiv': 'X-UA-Compatible', content: 'IE=edge',
           }, {
-            name: 'description', content: '어서오세요 Pictme입니다.',
+            name: 'description', content: 'Welcome to pictme.',
           }, {
-            property: 'og:title', content: 'Rlog',
+            property: 'og:title', content: 'pictme',
           }, {
-            property: 'og:description', content: 'Nakun의 Rlog',
+            property: 'og:description', content: 'Welcome to pictme.',
           }, {
             property: 'og:type', content: 'website',
           }, {
-            property: 'og:image', content: 'http://localhost:3020/favicon.ico',
+            property: 'og:image', content: 'http://pictme.xyz/favicon.ico',
           }]}
           link={[{
             rel: 'shortcut icon', href: '/favicon.ico',
