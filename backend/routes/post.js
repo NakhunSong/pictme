@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer');
 const AWS = require('aws-sdk');
-const MulterS3 = require('multer-s3');
+const multerS3 = require('multer-s3');
 
 const db = require('../models');
 const { isLoggedIn, hasPost } = require('./middleware');
@@ -16,19 +16,14 @@ AWS.config.update({
 });
 
 const upload = multer({
-  storage: MulterS3({
+  storage: multerS3({
     s3: new AWS.S3(),
     bucket: 'pictme',
     key(req, file, cb) {
-      cb(null, `original/${+new Date()}${path.basename(file.originalname)}`)
+      cb(null, `original/${+new Date()}${path.basename(file.originalname)}`);
     },
   }),
   limits: { fileSize: 20 * 1024 * 1024 },
-});
-
-
-router.post('/images', upload.array('image'), (req, res) => { // POST /api/images 이미지 업로드 **upload.'array' : 파일 동시에 여러개 업로드 가능.
-  return res.json(req.files.map(v => v.location));
 });
 
 router.post('/', isLoggedIn, upload.none(), async (req, res, next) => { // POST /api/ 게시물 작성 ** upload.'none' : 파일 업로드 생략
@@ -73,6 +68,10 @@ try {
   console.error(e);
   return next(e);
 }
+});
+
+router.post('/images', upload.array('image'), (req, res) => { // POST /api/images 이미지 업로드 **upload.'array' : 파일 동시에 여러개 업로드 가능.
+  return res.json(req.files.map(v => v.location));
 });
 
 router.get('/:id', hasPost, async (req, res, next) => {
