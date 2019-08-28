@@ -9,8 +9,8 @@ const transforms = [
 ];
 
 exports.handler = async (event, context, callback) => {
-  const Bucket = event.Record[0].s3.bucket.name; // pictme
-  const Key = event.Record[0].s3.object.key; // 파일 경로(파일명 포함)
+  const Bucket = event.Records[0].s3.bucket.name; // pictme
+  const Key = event.Records[0].s3.object.key; // 파일 경로(파일명 포함)
   const filename = Key.split('/')[Key.split('/').length - 1]; // ['directoryname', 'filename']
   const ext = Key.split('.')[Key.split('.').length - 1]; // jpg, png, ...
   console.log(Bucket, Key, filename, ext);
