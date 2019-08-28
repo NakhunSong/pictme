@@ -90,7 +90,7 @@ const PostForm = () => {
             <div className="images-wrapper">
               {imagePaths.map((v, i) => (
                 <div key={v} className="image-preview">
-                  <img src={`${backUrl}/post_image/${v}`} style={{ width: '180px', height: '230px' }} alt={v} />
+                  <img src={v} style={{ width: '180px', height: '230px' }} alt={v} />
                   <div className="remove-image-button">
                     <Icon type="close" onClick={handleRemovePreviewImage(i)}>제거</Icon>
                   </div>

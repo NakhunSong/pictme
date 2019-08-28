@@ -28,7 +28,7 @@ const SinglePost = ({ id }) => {
         }, {
           property: 'og:description', content: singlePost.content,
         }, {
-          property: 'og:image', content: singlePost.Images[0] ? `http://api.pictme.site/post_image/${singlePost.Images[0].src}` : 'https://pictme.site/favicon.ico',
+          property: 'og:image', content: singlePost.Images[0] ? singlePost.Images[0].src : 'https://pictme.site/favicon.ico',
         }, {
           property: 'og:url', content: `http://pictme.site/post/${id}`,
         }]}

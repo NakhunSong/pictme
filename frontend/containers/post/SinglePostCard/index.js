@@ -69,7 +69,7 @@ const SinglePostCard = ({ singlePost }) => {
       </div>
       <div className="image">
         {imageSrc
-          ? <img src={`${backUrl}/post_image/${imageSrc}`} alt="" />
+          ? <img src={imageSrc} alt="" />
           : <img src={`${backUrl}/post_image/white1565422049140.png`} alt="" />
         }
       </div>
