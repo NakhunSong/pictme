@@ -43,13 +43,13 @@ exports.handler = async (event, context, callback) => {
     await S3.putObject({
       Bucket,
       Key: `thumbnail_small/${filename}`, // resizing 된 데이터는 thumb(썸네일) 폴더에 넣을 것이다.
-      Body: resizedImage,
+      Body: resizedImageSmall,
     }).promise();
     console.log('putSmall');
     await S3.putObject({
       Bucket,
       Key: `thumbnail_big/${filename}`, // resizing 된 데이터는 thumb(썸네일) 폴더에 넣을 것이다.
-      Body: resizedImage,
+      Body: resizedImageBig,
     }).promise();
     console.log('putBig');
 
