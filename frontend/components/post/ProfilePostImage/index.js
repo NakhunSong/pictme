@@ -9,7 +9,7 @@ import {
 const PostImages = ({ images }) => {
   return (
     <div>
-      <Img src={images[0].src} width="100%" alt="" />
+      <Img src={images[0].src.replace(/original\//, 'thumbnail_small/')} width="100%" alt="" />
     </div>
   );
 };

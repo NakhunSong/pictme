@@ -12,7 +12,7 @@ const PostImages = ({ images }) => {
   if (images.length === 1) { // 이미지 1개
     return (
       <div>
-        <img src={images[0].src} alt="" width="100%" />
+        <img src={images[0].src.replace(/original\//, 'thumbnail_big/')} alt="" width="100%" />
       </div>
     );
   }
