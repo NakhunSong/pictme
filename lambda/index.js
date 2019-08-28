@@ -11,9 +11,6 @@ const transforms = [
 exports.handler = async (event, context, callback) => {
   const Bucket = event.Record[0].s3.bucket.name; // pictme
   const Key = event.Record[0].s3.object.key; // 파일 경로(파일명 포함)
-  console.log(event);
-  console.log(event.Record[0]);
-  console.log(event.Record[1]);
   const filename = Key.split('/')[Key.split('/').length - 1]; // ['directoryname', 'filename']
   const ext = Key.split('.')[Key.split('.').length - 1]; // jpg, png, ...
   console.log(Bucket, Key, filename, ext);
@@ -30,7 +27,7 @@ exports.handler = async (event, context, callback) => {
     await Promise.all(
       transforms.map(async item => {
         const resizedImage = await Sharp(s3Object.body)
-          .resize(size, size, {
+          .resize(item.size, item.size, {
             fit: 'inside',
           })
           .toFormat(requireFormat)
