@@ -1,20 +1,20 @@
+const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
 const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
-AWS.config.update({
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,      
-  region: 'ap-northeast-2',
-});
-console.log('AWS: ', AWS);
-
 const db = require('../models');
 const { isLoggedIn, hasPost } = require('./middleware');
 
 const router = express.Router();
+
+dotenv.config();
+AWS.config.update({
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+});
 
 const upload = multer({
   storage: multerS3({
