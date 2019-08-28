@@ -24,22 +24,34 @@ exports.handler = async (event, context, callback) => {
     console.log('original', s3Object.Body.length);
 
     // resizing & s3 put object
-    await Promise.all(
-      transforms.map(async item => {
-        const resizedImage = await Sharp(s3Object.body)
-          .resize(item.size, item.size, {
-            fit: 'inside',
-          })
-          .toFormat(requireFormat)
-          .toBuffer();
-        return await S3.putObject({
-          Bucket,
-          Key: `${item.name}/${filename}`,
-          Body: resizedImage,
-        }).promise();
+    const resizedImageSmall = await Sharp(s3Object.Body)
+      .resize(320, 320, {
+        fit: 'inside',
       })
-    );
-    console.log('put');
+      .toFormat(requireFormat)
+      .toBuffer(); // such as 010111.
+    console.log('resize', resizedImageSmall);
+
+    const resizedImageBig = await Sharp(s3Object.Body)
+      .resize(640, 640, {
+        fit: 'inside',
+      })
+      .toFormat(requireFormat)
+      .toBuffer(); // such as 010111.
+    console.log('resize', resizedImageBig);
+    
+    await S3.putObject({
+      Bucket,
+      Key: `thumbnail_small/${filename}`, // resizing 된 데이터는 thumb(썸네일) 폴더에 넣을 것이다.
+      Body: resizedImage,
+    }).promise();
+    console.log('putSmall');
+    await S3.putObject({
+      Bucket,
+      Key: `thumbnail_big/${filename}`, // resizing 된 데이터는 thumb(썸네일) 폴더에 넣을 것이다.
+      Body: resizedImage,
+    }).promise();
+    console.log('putBig');
 
     return callback(null, `Success: ${filename}`);
   } catch (e) {
