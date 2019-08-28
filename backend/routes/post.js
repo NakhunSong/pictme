@@ -1,23 +1,26 @@
 const express = require('express');
+const AWS = require('aws-sdk');
 const path = require('path');
 const multer = require('multer');
-const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 
 const db = require('../models');
 const { isLoggedIn, hasPost } = require('./middleware');
 
-const router = express.Router();
-
 AWS.config.update({
   region: 'ap-northeast-2', // Seoul
-  accessKeyId: process.env.S3_ACCESS_KEY_ID,
-  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
 });
+
+const router = express.Router();
 
 const upload = multer({
   storage: multerS3({
-    s3: new AWS.S3(),
+    s3: new AWS.S3({
+      credentials: {
+        accessKeyId: process.env.S3_ACCESS_KEY_ID,
+        secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,      
+      }
+    }),
     bucket: 'pictme',
     key(req, file, cb) {
       cb(null, `original/${+new Date()}${path.basename(file.originalname)}`);
