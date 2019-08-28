@@ -4,20 +4,17 @@ const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
+AWS.config.update({
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,      
+  region: 'ap-northeast-2',
+});
+console.log('AWS: ', AWS);
+
 const db = require('../models');
 const { isLoggedIn, hasPost } = require('./middleware');
 
 const router = express.Router();
-
-const creds = AWS.Credentials();
-creds.accessKeyId = process.env.S3_ACCESS_KEY_ID,
-creds.secretAccessKey = process.env.S3_SECRET_ACCESS_KEY,      
-AWS.config.credentials = creds;
-AWS.config.update({
-  region: 'ap-northeast-2',
-});
-
-console.log('AWS: ', AWS);
 
 const upload = multer({
   storage: multerS3({
