@@ -28,9 +28,9 @@ const SinglePost = ({ id }) => {
         }, {
           property: 'og:description', content: singlePost.content,
         }, {
-          property: 'og:image', content: singlePost.Images[0] && `http://52.78.17.165/post_image/${singlePost.Images[0].src}`,
+          property: 'og:image', content: singlePost.Images[0] ? `http://api.pictme.site/post_image/${singlePost.Images[0].src}` : 'https://pictme.site/favicon.ico',
         }, {
-          property: 'og:url', content: `http://13.125.137.230/post/${id}`,
+          property: 'og:url', content: `http://pictme.site/post/${id}`,
         }]}
       />
       <SinglePostCard singlePost={singlePost} />

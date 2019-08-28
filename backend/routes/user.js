@@ -27,7 +27,9 @@ router.post('/', async (req, res, next) => { // POST /api/user 회원가입
       userId: req.body.userId,
       password: hashedPassword,
     });
-    return res.status(200).json(newUser);
+    const jsonUser = newUser.toJSON();
+    delete jsonUser.password;
+    return res.status(200).json(jsonUser);
   } catch (e) {
     console.error(e);
     next(e);
