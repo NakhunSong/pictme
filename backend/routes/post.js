@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
-const AWS = require('aws-sdk');
 const multer = require('multer');
+const AWS = require('aws-sdk');
 const MulterS3 = require('multer-s3');
 
 const db = require('../models');
