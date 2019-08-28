@@ -3,9 +3,9 @@ import { Card } from 'antd';
 
 export const PostCardWrapper = styled.div`
   margin-bottom: 25px;
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
-  max-height: 700px;
+  max-height: 650px;
 `;
 
 export const CardWrapper = styled(Card)`

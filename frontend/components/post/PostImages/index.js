@@ -19,14 +19,14 @@ const PostImages = ({ images }) => {
   if (images.length === 2) { // 이미지 2개
     return (
       <div>
-        <img src={images[0].src} width="50%" alt="" />
-        <img src={images[1].src} width="50%" alt="" />
+        <img src={images[0].src.replace(/original\//, 'thumbnail_big/')} width="50%" alt="" />
+        <img src={images[1].src.replace(/original\//, 'thumbnail_big/')} width="50%" alt="" />
       </div>
     );
   }
   return (
     <div>
-      <img src={images[0].src} width="50%" alt="" />
+      <img src={images[0].src.replace(/original\//, 'thumbnail_big/')} width="50%" alt="" />
       <More>
         <Icon type="plus" />
         <br />

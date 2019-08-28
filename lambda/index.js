@@ -15,6 +15,7 @@ exports.handler = async (event, context, callback) => {
   const ext = Key.split('.')[Key.split('.').length - 1]; // jpg, png, ...
   console.log(Bucket, Key, filename, ext);
   const requireFormat = ext === 'jpg' ? 'jpeg' : ext;
+  const fitStyle = 'cover';
 
   try {
     const s3Object = await S3.getObject({
@@ -26,7 +27,7 @@ exports.handler = async (event, context, callback) => {
     // resizing & s3 put object
     const resizedImageSmall = await Sharp(s3Object.Body)
       .resize(320, 320, {
-        fit: 'inside',
+        fit: fitStyle,
       })
       .toFormat(requireFormat)
       .toBuffer(); // such as 010111.
@@ -34,7 +35,7 @@ exports.handler = async (event, context, callback) => {
 
     const resizedImageBig = await Sharp(s3Object.Body)
       .resize(640, 640, {
-        fit: 'inside',
+        fit: fitStyle,
       })
       .toFormat(requireFormat)
       .toBuffer(); // such as 010111.
