@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import FullScreen from '../components/common/FullScreen';
 import LoginForm from '../containers/auth/LoginForm';
-import LinkBox from '../components/common/LinkBox';
+import AuthLinkBox from '../components/auth/AuthLinkBox';
 import ResultScreen from '../components/common/ResultScreen';
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <FullScreen>
       <LoginForm />
-      <LinkBox question="계정이 없으시다면?" pageName="회원가입" />
+      <AuthLinkBox question="계정이 없으시다면?" pageName="회원가입" />
     </FullScreen>
   );
 };

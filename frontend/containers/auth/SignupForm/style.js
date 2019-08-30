@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Form } from 'antd';
 
 export const SignupFormWrapper = styled.div`
-  max-width: 390px;
+  max-width: 350px;
   max-height: 650px;
   width: 100%;
   height: 100%;

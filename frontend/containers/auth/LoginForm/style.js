@@ -2,12 +2,10 @@ import styled from 'styled-components';
 import { Form } from 'antd';
 
 export const LoginFormWrapper = styled.div`
-  max-width: 390px;
+  max-width: 350px;
   max-height: 450px;
   width: 100%;
   height: 100%;
-  margin: 0px;
-  padding: 0px;
 `;
 export const LoginFormInnerWrapper = styled.div`
   border: 1px solid #e6e6e6;

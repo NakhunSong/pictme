@@ -5,9 +5,9 @@ import {
   FullscreenWrapper,
 } from './style';
 
-const Fullscreen = ({ children }) => {
+const Fullscreen = ({ children, screenType, maxWidth }) => {
   return (
-    <FullscreenWrapper>
+    <FullscreenWrapper screenType={screenType} maxWidth={maxWidth}>
       {children}
     </FullscreenWrapper>
   );
@@ -15,6 +15,8 @@ const Fullscreen = ({ children }) => {
 
 Fullscreen.propTypes = {
   children: PropTypes.array.isRequired,
+  screenType: PropTypes.string.isRequired,
+  maxWidth: PropTypes.string.isRequired,
 };
 
 export default Fullscreen;
