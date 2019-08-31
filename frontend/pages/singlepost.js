@@ -30,7 +30,7 @@ const SinglePost = ({ id }) => {
         }, {
           property: 'og:image', content: singlePost.Images[0] ? singlePost.Images[0].src : 'https://pictme.site/favicon.ico',
         }, {
-          property: 'og:url', content: `http://pictme.site/post/${id}`,
+          property: 'og:url', content: `https://pictme.site/post/${id}`,
         }]}
       />
       <SinglePostCard singlePost={singlePost} />

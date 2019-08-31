@@ -38,7 +38,7 @@ const Pictme = ({ Component, store, pageProps }) => {
           }, {
             property: 'og:type', content: 'website',
           }, {
-            property: 'og:image', content: 'http://pictme.site/favicon.ico',
+            property: 'og:image', content: 'https://pictme.site/favicon.ico',
           }]}
           link={[{
             rel: 'shortcut icon', href: '/favicon.ico',

@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
+const https = require('https');
+const http = require('http');
 
 const dev = process.env.NODE_ENV !== 'production';
 const prod = process.env.NODE_ENV === 'production';
@@ -51,7 +53,28 @@ app.prepare().then(() => { // express와 next 연동
     return handle(req, res); // handle에 (req, res) 연결
   });
 
-  server.listen(prod ? process.env.PORT : 3020, () => {
-    console.log(`프론트엔드 서버 작동 on port ${process.env.PORT}`);
-  });
+  if (prod) {
+    const lex = require('greenlock-express').create({
+      version: 'draft-11', // letsencrypt version 2
+      configDir: '/etc/letsencrypt',
+      server: 'https://acme-v02.api.letsencrypt.org/directory',
+      approveDomains: (opts, certs, cb) => {
+        if (certs) {
+          opts.domains = ['pictme.site', 'www.pictme.site'];
+        } else {
+          opts.email = 'nak4627@gmail.com';
+          opts.agreeTos = true;
+        }
+        cb(null, { options: opts, certs });
+      },
+      renewWithin: 81 * 24 * 60 * 60 * 1000, // renew auto every 81
+      renewBy: 80 * 24 * 60 * 60 * 1000, // renew auto every 80
+    });
+    https.createServer(lex.httpsOptions, lex.middleware(app)).listen(443); // port 443
+    http.createServer(lex.middleware(require('redirect-https')())).listen(80); // port 80    
+  } else {
+    server.listen(prod ? process.env.PORT : 3020, () => {
+      console.log(`Frontend Server running on port ${process.env.PORT}`);
+    });
+  }
 });

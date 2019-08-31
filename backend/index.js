@@ -7,6 +7,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const hpp = require('hpp');
 const helmet = require('helmet');
+const https = require('https');
+const http = require('http');
 
 const passportConfig = require('./passport');
 const db = require('./models');
@@ -32,7 +34,7 @@ if (prod) {
   app.use(helmet());
   app.use(morgan('combined'));
   app.use(cors({
-    origin: 'http://pictme.site',
+    origin: 'https://pictme.site',
     credentials: true,
   }));
 } else {
@@ -53,7 +55,7 @@ app.use(expressSession({
   secret: cookieSecret,
   cookie: {
     httpOnly: true,
-    secure: false, // https 사용 시 true
+    secure: prod, // https 사용 시 true
     domain: prod && '.pictme.site',
   },
   name: 'pckfife',
@@ -68,9 +70,30 @@ app.use('/api/posts', postsAPIRouter);
 app.use('/api/hashtag', hashtagAPIRouter);
 
 app.get('/', (req, res) => {
-  res.send('백엔드 서버 작동중 확인');
+  res.send('Backend Server is running!');
 });
 
-app.listen(prod ? process.env.PORT : 3030, () => {
-  console.log(`백엔드 서버 작동 on port ${process.env.PORT}`);
-});
+if (prod) {
+  const lex = require('greenlock-express').create({
+    version: 'draft-11', // letsencrypt version 2
+    configDir: '/etc/letsencrypt',
+    server: 'https://acme-v02.api.letsencrypt.org/directory',
+    approveDomains: (opts, certs, cb) => {
+      if (certs) {
+        opts.domains = ['api.pictme.site'];
+      } else {
+        opts.email = 'nak4627@gmail.com';
+        opts.agreeTos = true;
+      }
+      cb(null, { options: opts, certs });
+    },
+    renewWithin: 81 * 24 * 60 * 60 * 1000, // renew auto every 81
+    renewBy: 80 * 24 * 60 * 60 * 1000, // renew auto every 80
+  });
+  https.createServer(lex.httpsOptions, lex.middleware(app)).listen(443); // port 443
+  http.createServer(lex.middleware(require('redirect-https')())).listen(80); // port 80
+} else {
+  app.listen(prod ? process.env.PORT : 3030, () => {
+    console.log(`Backend Server running on port ${process.env.PORT}`);
+  });
+}
