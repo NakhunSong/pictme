@@ -70,7 +70,7 @@ app.prepare().then(() => { // express와 next 연동
       renewWithin: 81 * 24 * 60 * 60 * 1000, // renew auto every 81
       renewBy: 80 * 24 * 60 * 60 * 1000, // renew auto every 80
     });
-    https.createServer(lex.httpsOptions, lex.middleware(app)).listen(443); // port 443
+    https.createServer(lex.httpsOptions, lex.middleware(server)).listen(443); // port 443
     http.createServer(lex.middleware(require('redirect-https')())).listen(80); // port 80    
   } else {
     server.listen(prod ? process.env.PORT : 3020, () => {
