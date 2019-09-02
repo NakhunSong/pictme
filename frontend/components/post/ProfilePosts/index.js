@@ -11,13 +11,13 @@ const ProfilePosts = memo(({ postRow }) => {
   return (
     <RowWrapper>
       <ColWrapper>
-        {postRow[0].Images && <ProfilePostImage images={postRow[0].Images} />}
+        {postRow[0] && <ProfilePostImage post={postRow[0]} images={postRow[0].Images} />}
       </ColWrapper>
       <ColWrapper>
-        {postRow[1] ? <ProfilePostImage images={postRow[1].Images} /> : <div>not image</div> }
+        {postRow[1] ? <ProfilePostImage post={postRow[1]} images={postRow[1].Images} /> : <div>not image</div> }
       </ColWrapper>
       <ColWrapper>
-        {postRow[2] ? <ProfilePostImage images={postRow[2].Images} /> : <div>not image</div>}
+        {postRow[2] ? <ProfilePostImage post={postRow[2]} images={postRow[2].Images} /> : <div>not image</div>}
       </ColWrapper>
     </RowWrapper>
   );
