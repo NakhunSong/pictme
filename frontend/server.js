@@ -54,7 +54,7 @@ app.prepare().then(() => { // express와 next 연동
   });
 
   if (prod) {
-    const lex = require('greenlock-express').create({
+    const glx = require('greenlock-express').create({
       version: 'draft-11', // letsencrypt version 2
       configDir: '/etc/letsencrypt',
       server: 'https://acme-v02.api.letsencrypt.org/directory',
@@ -70,8 +70,8 @@ app.prepare().then(() => { // express와 next 연동
       renewWithin: 81 * 24 * 60 * 60 * 1000, // renew auto every 81
       renewBy: 80 * 24 * 60 * 60 * 1000, // renew auto every 80
     });
-    https.createServer(lex.httpsOptions, lex.middleware(server)).listen(443); // port 443
-    http.createServer(lex.middleware(require('redirect-https')())).listen(80); // port 80    
+    https.createServer(glx.httpsOptions, glx.middleware(server)).listen(443); // port 443
+    http.createServer(glx.middleware(require('redirect-https')())).listen(80); // port 80    
   } else {
     server.listen(prod ? process.env.PORT : 3020, () => {
       console.log(`Frontend Server running on port ${process.env.PORT}`);

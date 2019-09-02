@@ -102,9 +102,26 @@ router.get('/:id', hasPost, async (req, res, next) => {
 
 router.delete('/:id', isLoggedIn, hasPost, async (req, res, next) => {
   try {
+    const comments = await db.Comment.findAll({
+      where: { PostId: parseInt(req.params.id, 10) }
+    });
+    if (comments){
+      await db.Comment.destroy({
+        where: { PostId: parseInt(req.params.id) }
+      });
+    }
+    const images = await db.Image.findAll({
+      where: { PostId: parseInt(req.params.id, 10) }
+    });
+    if (images) {
+      await db.Image.destroy({
+        where: { PostId: parseInt(req.params.id) }
+      });
+    }
     await db.Post.destroy({
       where: { id: req.params.id }
     });
+    
     res.status(200).send(req.params.id);
   } catch (e) {
     console.error(e);
@@ -122,6 +139,7 @@ router.get('/:id/comments', hasPost, async (req, res, next) => {
       }],
       order: [['createdAt', 'ASC']],
     });
+    console.log('comments????????????????????????????', comments);
     return res.json(comments);
   } catch (e) {
     console.error(e);
