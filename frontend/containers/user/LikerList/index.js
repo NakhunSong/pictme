@@ -5,6 +5,7 @@ import { List, Avatar } from 'antd';
 import {
   LikerListWrapper,
 } from './style';
+import FollowButton from '../../../components/user/FollowButton';
 
 const LikerList = ({ singlePost }) => {
   return (
@@ -15,7 +16,9 @@ const LikerList = ({ singlePost }) => {
         itemLayout="horizontal"
         dataSource={singlePost.Likers || []}
         renderItem={item => (
-          <List.Item>
+          <List.Item
+            extra={<FollowButton />}
+          >
             <List.Item.Meta
               avatar={<Avatar>{item.nickname[0]}</Avatar>}
               title={<div>{item.nickname}</div>}

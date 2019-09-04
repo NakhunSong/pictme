@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import LikerList from '../containers/user/LikerList';
@@ -6,15 +7,13 @@ import Loading from '../components/common/Loading';
 import { LOAD_SINGLE_POST_REQUEST } from '../reducers/post';
 
 const Liker = ({ id }) => {
-  const { singlePost } = useState(state => state.post);
+  const { singlePost } = useSelector(state => state.post);
 
   if (!singlePost) {
     return (<Loading />);
   }
   return (
-    <div>
-      <LikerList singlePost={singlePost} />
-    </div>
+    <LikerList singlePost={singlePost} />
   );
 };
 
@@ -22,7 +21,7 @@ Liker.propTypes = {
   id: PropTypes.number.isRequired,
 };
 
-Liker.getInitialProps = (context) => {
+Liker.getInitialProps = async (context) => {
   const { id } = context.query;
   context.store.dispatch({
     type: LOAD_SINGLE_POST_REQUEST,

@@ -88,6 +88,7 @@ const reducer = (state = initialState, action) => {
         break;
       }
       case LOAD_SINGLE_POST_REQUEST: {
+        draft.singlePost = null;
         break;
       }
       case LOAD_SINGLE_POST_SUCCESS: {
