@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Avatar, List, Comment, message } from 'antd';
 import Router from 'next/router';
@@ -11,6 +12,7 @@ import PostCardContent from '../../../components/post/PostCardContent';
 import {
   SinglePostWrapper,
   IconWrapper,
+  LikeCounter,
 } from './style';
 import CommentForm from '../CommentForm';
 
@@ -79,7 +81,19 @@ const SinglePostCard = ({ singlePost }) => {
       <div className="interest">
         <IconWrapper type="heart" key="heart" theme={liked ? 'twoTone' : 'outlined'} twoToneColor="#eb2f96" style={{ fontSize: '30px' }} onClick={handleToggleLike} />
         <IconWrapper type="message" key="message" style={{ fontSize: '30px' }} onClick={handleToggleComment} />
-        <div className="like-counter">좋아요 {singlePost.Likers.length}개</div>
+        <div className="like-counter">
+          {singlePost && singlePost.Likers.length > 0
+            ? (
+              <Link
+                href={{ pathname: '/liker', query: { id: singlePost.id } }}
+                as={`/liker/${singlePost.id}`}
+              >
+                <a><LikeCounter active="true">좋아요 {singlePost.Likers.length}개</LikeCounter></a>
+              </Link>
+            )
+            : <LikeCounter>좋아요 {singlePost.Likers.length}개</LikeCounter>
+            }
+        </div>
       </div>
       {commentFormOpended && (
         <div>

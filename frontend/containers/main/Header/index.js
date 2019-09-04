@@ -4,7 +4,6 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { Icon, Input, Button } from 'antd';
 
-import { device } from '../../../config/device';
 import { LOG_OUT_REQUEST } from '../../../reducers/user';
 import {
   Menu,

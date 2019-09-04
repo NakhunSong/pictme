@@ -62,6 +62,10 @@ export const UNLIKE_POST_REQUEST = 'UNLIKE_POST_REQUEST';
 export const UNLIKE_POST_SUCCESS = 'UNLIKE_POST_SUCCESS';
 export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
 
+export const LOAD_LIKER_REQUEST = 'LOAD_LIKER_REQUEST';
+export const LOAD_LIKER_SUCCESS = 'LOAD_LIKER_SUCCESS';
+export const LOAD_LIKER_FAILURE = 'LOAD_LIKER_FAILURE';
+
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {

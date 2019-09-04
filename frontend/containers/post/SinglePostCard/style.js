@@ -54,3 +54,9 @@ export const IconWrapper = styled(Icon)`
     margin-left: 10px;
   }
 `;
+
+export const LikeCounter = styled.div`
+  display: inline-block;
+  color: rgba(0, 0, 0, 0.65);
+  ${props => props.active && 'cursor: pointer'}
+`;
