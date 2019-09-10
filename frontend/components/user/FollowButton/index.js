@@ -5,10 +5,10 @@ import { Button, message } from 'antd';
 
 import { FOLLOW_USER_REQUEST, UNFOLLOW_USER_REQUEST } from '../../../reducers/user';
 
-const FollowButton = memo(({ userId, onFollow, onUnfollow }) => {
+const FollowButton = memo(({ mode, userId }) => {
   const { me } = useSelector(state => state.user);
   const dispatch = useDispatch();
-  const handleClickFollow = useCallback(() => {
+  const handleClickThisFollow = useCallback(() => {
     if (!me) {
       return message.error('로그인이 필요합니다..');
     }
@@ -17,17 +17,18 @@ const FollowButton = memo(({ userId, onFollow, onUnfollow }) => {
       data: userId,
     });
   }, [userId]);
-  const handleClickUnfollow = useCallback(() => {
+  const handleClickThisUnfollow = useCallback(() => {
     dispatch({
       type: UNFOLLOW_USER_REQUEST,
       data: userId,
     });
   }, [userId]);
+  console.log('userId: ', userId);
   return (!me || userId === me.id
-    ? <Button onClick={handleClickFollow}>팔로우</Button>
+    ? null
     : me.Followings && (me.Followings.find(v => v.id === userId)
-      ? <Button onClick={handleClickUnfollow}>언팔로우</Button>
-      : <Button onClick={handleClickFollow}>팔로우</Button>
+      ? <Button onClick={handleClickThisUnfollow}>언팔로우</Button>
+      : <Button onClick={handleClickThisFollow}>팔로우</Button>
     )
   );
 });
@@ -35,8 +36,6 @@ const FollowButton = memo(({ userId, onFollow, onUnfollow }) => {
 FollowButton.propTypes = {
   mode: PropTypes.string.isRequired,
   userId: PropTypes.string.isRequired,
-  onFollow: PropTypes.func.isRequired,
-  onUnfollow: PropTypes.func.isRequired,
 };
 
 export default FollowButton;

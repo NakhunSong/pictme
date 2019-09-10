@@ -180,13 +180,27 @@ export default (state = initialState, action) => {
       };
     }
     case UNFOLLOW_USER_SUCCESS: {
+      console.log('action.me: ', action.me);
+      if (action.me) {
+        return {
+          ...state,
+          me: {
+            ...state.me,
+            Followings: state.me.Followings.filter(v => v.id !== action.data),
+          },
+          followingList: state.followingList.filter(v => v.id !== action.data),
+          userInfo: {
+            ...state.userInfo,
+            Followers: state.userInfo.Followers.filter(v => v.id !== state.me.id),
+          },
+        };
+      }
       return {
         ...state,
         me: {
           ...state.me,
           Followings: state.me.Followings.filter(v => v.id !== action.data),
         },
-        followingList: state.followingList.filter(v => v.id !== action.data),
         userInfo: {
           ...state.userInfo,
           Followers: state.userInfo.Followers.filter(v => v.id !== state.me.id),

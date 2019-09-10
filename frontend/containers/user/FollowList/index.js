@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, Avatar, Button, message, Popconfirm } from 'antd';
+import { List, Avatar, Button, message } from 'antd';
 import PropTypes from 'prop-types';
 
 import FollowButton from '../../../components/user/FollowButton';
@@ -32,6 +32,7 @@ const FollowList = ({ title, mode, followList, userInfo }) => {
       dispatch({
         type: UNFOLLOW_USER_REQUEST,
         data: userId,
+        me: meId,
       });
     } else {
       dispatch({
@@ -53,7 +54,7 @@ const FollowList = ({ title, mode, followList, userInfo }) => {
           <List.Item
             extra={(meId === userInfo.id
               ? <RemoveButton onRemove={handleRemoveFollow} itemId={item.id} />
-              : <FollowButton mode={mode} />
+              : <FollowButton mode={mode} userId={item.id} />
             )}
           >
             <List.Item.Meta

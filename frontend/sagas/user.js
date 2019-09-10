@@ -131,10 +131,11 @@ function unfollowUserAPI(userId) {
 }
 function* unfollowUser(action) {
   try {
-    const result = yield call(unfollowUserAPI, action.data);
+    const result = yield call(unfollowUserAPI, action.data, action.me);
     yield put({
       type: UNFOLLOW_USER_SUCCESS,
       data: result.data,
+      me: action.me,
     });
   } catch (e) {
     console.error(e);
