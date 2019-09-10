@@ -23,7 +23,6 @@ const FollowButton = memo(({ mode, userId }) => {
       data: userId,
     });
   }, [userId]);
-  console.log('userId: ', userId);
   return (!me || userId === me.id
     ? null
     : me.Followings && (me.Followings.find(v => v.id === userId)
