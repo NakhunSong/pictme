@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { all, fork, call, put, delay, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
-import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAILURE, UNFOLLOW_USER_REQUEST, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAILURE, LOAD_FOLLOWINGS_REQUEST, LOAD_FOLLOWINGS_SUCCESS, LOAD_FOLLOWINGS_FAILURE, LOAD_FOLLOWERS_REQUEST, LOAD_FOLLOWERS_SUCCESS, LOAD_FOLLOWERS_FAILURE } from '../reducers/user';
+import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAILURE, UNFOLLOW_USER_REQUEST, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAILURE, LOAD_FOLLOWINGS_REQUEST, LOAD_FOLLOWINGS_SUCCESS, LOAD_FOLLOWINGS_FAILURE, LOAD_FOLLOWERS_REQUEST, LOAD_FOLLOWERS_SUCCESS, LOAD_FOLLOWERS_FAILURE, REMOVE_FOLLOWER_REQUEST, REMOVE_FOLLOWER_SUCCESS, REMOVE_FOLLOWER_FAILURE } from '../reducers/user';
 
 // 회원가입
 function signUpAPI(signUpData) {
@@ -148,6 +148,31 @@ function* watchUnfollowUser() {
   yield takeEvery(UNFOLLOW_USER_REQUEST, unfollowUser);
 }
 
+// 팔로워 제거
+function removeFollowerAPI(userId) {
+  return axios.delete(`/user/${userId}/follower/`, {
+    withCredentials: true,
+  });
+}
+function* removeFollower(action) {
+  try {
+    const result = yield call(removeFollowerAPI, action.data);
+    yield put({
+      type: REMOVE_FOLLOWER_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: REMOVE_FOLLOWER_FAILURE,
+      error: e.response && e.response.data,
+    });
+  }
+}
+function* watchRemoveFollower() {
+  yield takeEvery(REMOVE_FOLLOWER_REQUEST, removeFollower);
+}
+
 // 팔로잉 목록 불러오기
 function loadFollowingsAPI(userId, lastId = 0, limit = 2) {
   return axios.get(`/user/${userId}/followings?lastId=${lastId}&limit=${limit}`, {
@@ -206,6 +231,7 @@ export default function* userSaga() {
     fork(watchLoadUser),
     fork(watchFollowUser),
     fork(watchUnfollowUser),
+    fork(watchRemoveFollower),
     fork(watchLoadFollowings),
     fork(watchLoadFollowers),
   ]);

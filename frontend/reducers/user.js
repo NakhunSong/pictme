@@ -40,6 +40,10 @@ export const UNFOLLOW_USER_REQUEST = 'UNFOLLOW_USER_REQUEST';
 export const UNFOLLOW_USER_SUCCESS = 'UNFOLLOW_USER_SUCCESS';
 export const UNFOLLOW_USER_FAILURE = 'UNFOLLOW_USER_FAILURE';
 
+export const REMOVE_FOLLOWER_REQUEST = 'REMOVE_FOLLOWER_REQUEST';
+export const REMOVE_FOLLOWER_SUCCESS = 'REMOVE_FOLLOWER_SUCCESS';
+export const REMOVE_FOLLOWER_FAILURE = 'REMOVE_FOLLOWER_FAILURE';
+
 export const LOAD_FOLLOWERS_REQUEST = 'LOAD_FOLLOWERS_REQUEST';
 export const LOAD_FOLLOWERS_SUCCESS = 'LOAD_FOLLOWERS_SUCCESS';
 export const LOAD_FOLLOWERS_FAILURE = 'LOAD_FOLLOWERS_FAILURE';
@@ -182,6 +186,7 @@ export default (state = initialState, action) => {
           ...state.me,
           Followings: state.me.Followings.filter(v => v.id !== action.data),
         },
+        followingList: state.followingList.filter(v => v.id !== action.data),
         userInfo: {
           ...state.userInfo,
           Followers: state.userInfo.Followers.filter(v => v.id !== state.me.id),
@@ -189,6 +194,30 @@ export default (state = initialState, action) => {
       };
     }
     case UNFOLLOW_USER_FAILURE: {
+      return {
+        ...state,
+      };
+    }
+    case REMOVE_FOLLOWER_REQUEST: {
+      return {
+        ...state,
+      };
+    }
+    case REMOVE_FOLLOWER_SUCCESS: {
+      return {
+        ...state,
+        me: {
+          ...state.me,
+          Followers: state.me.Followers.filter(v => v.id !== action.data),
+        },
+        followerList: state.followerList.filter(v => v.id !== action.data),
+        userInfo: {
+          ...state.userInfo,
+          Followings: state.userInfo.Followings.filter(v => v.id !== action.data),
+        },
+      };
+    }
+    case REMOVE_FOLLOWER_FAILURE: {
       return {
         ...state,
       };

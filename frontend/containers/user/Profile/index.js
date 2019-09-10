@@ -88,9 +88,10 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
             </a>
           </Link>,
         ]}
-        extra={mode === 'meProfile'
+        // mode === 'meProfile'
+        extra={userInfo.id === me.id
           ? <ProfileEditButton />
-          : <FollowButton userId={userInfo.id} onFollow={handleClickFollow} onUnfollow={handleClickUnfollow} />
+          : <FollowButton userInfo={userInfo} userId={userInfo.id} onFollow={handleClickFollow} onUnfollow={handleClickUnfollow} />
         }
       >
         <Card.Meta

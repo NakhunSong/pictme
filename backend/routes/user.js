@@ -175,6 +175,19 @@ router.delete('/:id/follow', isLoggedIn, async (req, res, next) => {
   }
 });
 
+router.delete('/:id/follower', isLoggedIn, async (req, res, next) => {
+  try {
+    const me = await db.User.findOne({
+      where: { id: req.user.id },
+    });
+    await me.removeFollower(req.params.id);
+    res.send(req.params.id);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
+
 router.get('/:id/followings', isLoggedIn, async (req, res, next) => {
   try {
     let where = {};

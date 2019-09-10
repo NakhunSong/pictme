@@ -14,7 +14,7 @@ const Follower = () => {
     );
   }
   return (
-    <FollowList title="팔로워" followList={followerList} userInfo={userInfo} />
+    <FollowList title="팔로워" mode="FOLLOWER" followList={followerList} userInfo={userInfo} />
   );
 };
 

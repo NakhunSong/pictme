@@ -1,26 +1,45 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, Avatar, Button } from 'antd';
-import Proptypes from 'prop-types';
+import { List, Avatar, Button, message, Popconfirm } from 'antd';
+import PropTypes from 'prop-types';
 
 import FollowButton from '../../../components/user/FollowButton';
 import {
   FollowListWrapper,
 } from './style';
-import { LOAD_FOLLOWINGS_REQUEST, LOAD_FOLLOWERS_REQUEST } from '../../../reducers/user';
+import { LOAD_FOLLOWINGS_REQUEST, LOAD_FOLLOWERS_REQUEST, UNFOLLOW_USER_REQUEST, REMOVE_FOLLOWER_REQUEST } from '../../../reducers/user';
+import RemoveButton from '../../../components/user/RemoveButton';
 
-const FollowList = ({ title, followList, userInfo }) => {
+const FollowList = ({ title, mode, followList, userInfo }) => {
   const dispatch = useDispatch();
   const { hasMoreFollower, hasMoreFollowing } = useSelector(state => state.user);
   const hasMoreFollow = title === '팔로잉' ? hasMoreFollowing : hasMoreFollower;
+  const meId = useSelector(state => state.user.me && state.user.me.id);
 
   const handleLoadMoreClick = useCallback(() => {
     dispatch({
-      type: title === '팔로잉' ? LOAD_FOLLOWINGS_REQUEST : LOAD_FOLLOWERS_REQUEST,
+      type: mode === 'FOLLOWING' ? LOAD_FOLLOWINGS_REQUEST : LOAD_FOLLOWERS_REQUEST,
       data: userInfo.id,
       lastId: followList && followList[followList.length - 1].id,
     });
   }, [followList && followList.length]);
+
+  const handleRemoveFollow = useCallback(userId => () => {
+    if (!meId) {
+      return message.error('로그인이 필요한 작업입니다.');
+    }
+    if (mode === 'FOLLOWING') {
+      dispatch({
+        type: UNFOLLOW_USER_REQUEST,
+        data: userId,
+      });
+    } else {
+      dispatch({
+        type: REMOVE_FOLLOWER_REQUEST,
+        data: userId,
+      });
+    }
+  }, [meId]);
 
   return (
     <FollowListWrapper>
@@ -32,7 +51,10 @@ const FollowList = ({ title, followList, userInfo }) => {
         loadMore={hasMoreFollow && <Button onClick={handleLoadMoreClick} style={{ width: '100%' }}>more</Button>}
         renderItem={item => (
           <List.Item
-            extra={<FollowButton />}
+            extra={(meId === userInfo.id
+              ? <RemoveButton onRemove={handleRemoveFollow} itemId={item.id} />
+              : <FollowButton mode={mode} />
+            )}
           >
             <List.Item.Meta
               avatar={<Avatar>{item.nickname[0]}</Avatar>}
@@ -46,9 +68,10 @@ const FollowList = ({ title, followList, userInfo }) => {
 };
 
 FollowList.propTypes = {
-  title: Proptypes.string.isRequired,
-  followList: Proptypes.array.isRequired,
-  userInfo: Proptypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  mode: PropTypes.string.isRequired,
+  followList: PropTypes.array.isRequired,
+  userInfo: PropTypes.object.isRequired,
 };
 
 export default FollowList;
