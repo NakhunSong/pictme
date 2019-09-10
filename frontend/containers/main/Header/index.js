@@ -54,6 +54,8 @@ const Header = () => {
             onChange={handleChangeSearch}
             onSearch={handleSearch}
             value={searchText}
+            addonBefore="#"
+            placeholder="해쉬태그로 검색해보세요"
             // enterButton={handleSearch}
           />
         </div>

@@ -12,7 +12,7 @@ import {
 } from './style';
 import { FOLLOW_USER_REQUEST, UNFOLLOW_USER_REQUEST } from '../../../reducers/user';
 import ProfilePosts from '../../../components/post/ProfilePosts';
-import FollowButton from '../../../components/user/FollowButton';
+import FollowButton from '../FollowButton';
 import ProfileEditButton from '../../../components/user/ProfileEditButton';
 import { LOAD_USER_POSTS_REQUEST } from '../../../reducers/post';
 

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { List, Avatar, Button, message } from 'antd';
 import PropTypes from 'prop-types';
 
-import FollowButton from '../../../components/user/FollowButton';
+import FollowButton from '../FollowButton';
 import {
   FollowListWrapper,
 } from './style';
