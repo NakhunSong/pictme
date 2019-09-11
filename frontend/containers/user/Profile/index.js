@@ -97,7 +97,7 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
         <Card.Meta
           avatar={<Avatar>{userInfo.nickname[0]}</Avatar>}
           title={userInfo.nickname}
-          description="한마디"
+          description="자신을 소개해보세요"
         />
       </Card>
       <Seperator />

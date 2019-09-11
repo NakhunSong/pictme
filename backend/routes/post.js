@@ -81,7 +81,7 @@ router.get('/:id', hasPost, async (req, res, next) => {
       where: { id: req.params.id },
       include: [{
         model: db.User,
-        attributes: ['id', 'nickname'],
+        attributes: ['id', 'nickname', 'userId'],
       }, {
         model: db.Image,
       }, {
