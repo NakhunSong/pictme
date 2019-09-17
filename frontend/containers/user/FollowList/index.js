@@ -45,7 +45,7 @@ const FollowList = ({ title, mode, followList, userInfo }) => {
   return (
     <FollowListWrapper>
       <List
-        header={`${userInfo.nickname}님의 ${title} 목록`}
+        header={`${meId === userInfo.id? '내' : `${userInfo.nickname}님의`} ${title} 목록`}
         bordered
         itemLayout="horizontal"
         dataSource={followList || []}
