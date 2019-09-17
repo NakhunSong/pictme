@@ -11,7 +11,7 @@ const LikerList = ({ singlePost }) => {
   return (
     <LikerListWrapper>
       <List
-        header="좋아요 목록"
+        header={`...${singlePost.content.substring(singlePost.content.length-2, singlePost.content.length)} 게시글 좋아요 목록`}
         bordered
         itemLayout="horizontal"
         dataSource={singlePost.Likers || []}

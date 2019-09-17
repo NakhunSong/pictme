@@ -15,10 +15,10 @@ import {
   LikeCounter,
 } from './style';
 import CommentForm from '../CommentForm';
+import ProfilePhoto from '../../../components/user/ProfilePhoto/UserInfo';
 
 const SinglePostCard = ({ singlePost }) => {
   const dispatch = useDispatch();
-  // const { singlePost } = useSelector(state => state.post);
   const [commentFormOpended, setCommentFormOpended] = useState(false);
 
   const imageSrc = singlePost && singlePost.Images && singlePost.Images[0] && singlePost.Images[0].src;
@@ -66,7 +66,7 @@ const SinglePostCard = ({ singlePost }) => {
   return (
     <SinglePostWrapper>
       <div className="profile" onClick={handleClickProfile}>
-        <Avatar>{singlePost.User.nickname[0]}</Avatar>
+        <ProfilePhoto userInfo={singlePost.User} />
         <div className="nickname">{singlePost.User.nickname}</div>
       </div>
       <div className="image">
@@ -107,7 +107,7 @@ const SinglePostCard = ({ singlePost }) => {
                 <Comment
                   content={item.content}
                   author={item.User && item.User.nickname}
-                  avatar={item.User && <Avatar>{item.User.nickname[0]}</Avatar>}
+                  avatar={item.User && <ProfilePhoto userInfo={item.User} />}
                 />
               </li>
             )}
