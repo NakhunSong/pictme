@@ -12,6 +12,7 @@ import {
 import { REMOVE_POST_REQUEST } from '../../../reducers/post';
 import PostImages from '../../../components/post/PostImages';
 import PostCardContent from '../../../components/post/PostCardContent';
+import RemoveButton from '../../../components/user/RemoveButton';
 
 const PostCard = memo(({ post }) => {
   const dispatch = useDispatch();
@@ -36,9 +37,10 @@ const PostCard = memo(({ post }) => {
   }, []);
 
   return (
-    <PostCardWrapper>
+    <PostCardWrapper
+      onClick={handleClickCard}
+    >
       <CardWrapper
-        onClick={handleClickCard}
         title={(
           <Card.Meta
             avatar={post.User.profileImg ? <Avatar size="large" src={`${post.User.profileImg}`} /> : <Avatar size="large">{post.User.nickname[0]}</Avatar>}
@@ -74,7 +76,6 @@ const PostCard = memo(({ post }) => {
                 {userId && post.UserId === userId
                   ? (
                     <>
-                      <Button type="default">수정</Button>
                       <Button type="danger" onClick={handleRemovePost(post.id)}>삭제</Button>
                     </>
                   )
