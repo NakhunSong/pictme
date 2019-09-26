@@ -20,4 +20,4 @@
 - Mysql
 
 ## Project Screenshots
-![profilepage](./static/images/portfolio/profilepage.jpg)
+![profilepage](./frontend/static/images/portfolio/profilepage.jpg)
