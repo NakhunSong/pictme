@@ -1,9 +1,12 @@
-import React from 'react';
-import { Button } from 'antd';
+import React, { useCallback } from 'react';
+import { Button, message } from 'antd';
 
 const ProfileEditButton = () => {
+  const handleEditProfile = useCallback(() => {
+    message.info('아직 등록되지 않은 서비스입니다.');
+  }, []);
   return (
-    <Button>프로필 수정</Button>
+    <Button onClick={handleEditProfile} >프로필 수정</Button>
   );
 };
 

@@ -18,3 +18,6 @@
 - Express
 - Sequelize
 - Mysql
+
+## Project Screenshots
+![profilepage](./static/images/portfolio/profilepage.jpg)
