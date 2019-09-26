@@ -59,4 +59,5 @@ export const LikeCounter = styled.div`
   display: inline-block;
   color: rgba(0, 0, 0, 0.65);
   ${props => props.active && 'cursor: pointer'}
+  ${props => props.active && 'color: #3897F0'}
 `;
