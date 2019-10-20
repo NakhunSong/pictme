@@ -25,7 +25,7 @@ const PostCard = memo(({ post }) => {
     Router.push({
       pathname: '/singlepost',
       query: { id: post.id },
-    });
+    }, `singlepost/${post.id}`);
   }, [post && post.id]);
   const handleRemovePost = useCallback(postId => (e) => {
     e.stopPropagation();
