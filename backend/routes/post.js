@@ -107,7 +107,7 @@ router.delete('/:id', isLoggedIn, hasPost, async (req, res, next) => {
     });
     if (comments){
       await db.Comment.destroy({
-        where: { PostId: parseInt(req.params.id) }
+        where: { PostId: parseInt(req.params.id, 10) }
       });
     }
     const images = await db.Image.findAll({
@@ -115,11 +115,11 @@ router.delete('/:id', isLoggedIn, hasPost, async (req, res, next) => {
     });
     if (images) {
       await db.Image.destroy({
-        where: { PostId: parseInt(req.params.id) }
+        where: { PostId: parseInt(req.params.id, 10) }
       });
     }
     await db.Post.destroy({
-      where: { id: req.params.id }
+      where: { id: parseInt(req.params.id, 10) }
     });
     
     res.status(200).send(req.params.id);
