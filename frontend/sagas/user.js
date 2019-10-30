@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { all, fork, call, put, delay, takeEvery, takeLatest, throttle } from 'redux-saga/effects';
 import { SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOAD_USER_REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE, FOLLOW_USER_REQUEST, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAILURE, UNFOLLOW_USER_REQUEST, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAILURE, LOAD_FOLLOWINGS_REQUEST, LOAD_FOLLOWINGS_SUCCESS, LOAD_FOLLOWINGS_FAILURE, LOAD_FOLLOWERS_REQUEST, LOAD_FOLLOWERS_SUCCESS, LOAD_FOLLOWERS_FAILURE, REMOVE_FOLLOWER_REQUEST, REMOVE_FOLLOWER_SUCCESS, REMOVE_FOLLOWER_FAILURE } from '../reducers/user';
+import Router from 'next/router';
 
 // 회원가입
 function signUpAPI(signUpData) {
@@ -18,6 +19,8 @@ function* signUp(action) {
       type: SIGN_UP_FAILURE,
       error: e.response && e.response.data,
     });
+  } finally {
+    Router.push('/login');
   }
 }
 function* watchSignup() {
@@ -43,6 +46,8 @@ function* logIn(action) {
       type: LOG_IN_FAILURE,
       error: e.response && e.response.data,
     });
+  } finally {
+    Router.push('/');
   }
 }
 function* watchLogIn() {
@@ -66,6 +71,8 @@ function* logOut() {
     yield put({
       type: LOG_OUT_FAILURE,
     });
+  } finally {
+    Router.push('/');
   }
 }
 function* watchLogOut() {

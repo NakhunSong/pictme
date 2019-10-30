@@ -65,23 +65,23 @@ Pictme.propTypes = {
 };
 
 Pictme.getInitialProps = async (context) => {
-  const { ctx, Component } = context; // ctx: pages, store, ..., Component: pages file(login, postup, ...)
+  const { ctx, Component } = context;
   let pageProps = {};
 
-  const state = ctx.store.getState(); // store에서 state 로드
-  const cookie = ctx.isServer ? ctx.req.headers.cookie : ''; // 서버환경이면 headers에서 직접 쿠키 가져오기, 클라환경이면 빈값('')
-  // console.log('-----ctx.isServer------ : ', ctx.isServer);
-  Axios.defaults.headers.Cookie = ''; // 이전 로그인한 사용자 쿠키가 frontend 서버(axios) 패키지에 계속 남아있어, 방지하고자 초기화.
+  const state = ctx.store.getState();
+  const cookie = ctx.isServer ? ctx.req.headers.cookie : ''; // 서버: headers에서 쿠키 로드, 클라: ''
+  
+  Axios.defaults.headers.Cookie = ''; // 이전 로그인 사용자 쿠키 초기화.
   if (ctx.isServer && cookie) {
-    Axios.defaults.headers.Cookie = cookie; // axios에 쿠키를 기본적으로 심어주는 기능(브라우저가 제공하는 기능 직접 구현해야함).
+    Axios.defaults.headers.Cookie = cookie; // 서버사이드 렌더링 시 axios에 쿠키 세팅(클라 환경에선 브라우저가 해당 작업 수행)
   }
   if (!state.user.me) {
     ctx.store.dispatch({
       type: LOAD_USER_REQUEST,
     });
   }
-  if (Component.getInitialProps) { // pages file에 getInitialProps 있다면 실행
-    pageProps = await Component.getInitialProps(ctx) || {}; // {}로 undefined에러 방지
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx) || {};
   }
   return { pageProps };
 };
@@ -96,7 +96,7 @@ const configureStore = (initialState, options) => {
       !options.isServer && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined' ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
     );
   const store = createStore(reducer, initialState, enhancer);
-  store.sagaTask = sagaMiddleware.run(rootSaga); // 사가 동작
+  store.sagaTask = sagaMiddleware.run(rootSaga);
   return store;
 };
 

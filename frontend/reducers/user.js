@@ -1,5 +1,3 @@
-import Router from 'next/router';
-
 export const initialState = {
   isLoggingIn: false,
   isLoggingOut: false,
@@ -65,7 +63,6 @@ export default (state = initialState, action) => {
       };
     }
     case SIGN_UP_SUCCESS: {
-      Router.push('/login'); // 회원가입 성공 시 로그인 페이지로
       return {
         ...state,
         isSigningUp: false,
@@ -87,7 +84,6 @@ export default (state = initialState, action) => {
       };
     }
     case LOG_IN_SUCCESS: {
-      Router.push('/');
       return {
         ...state,
         isLoggingIn: false,
@@ -132,7 +128,6 @@ export default (state = initialState, action) => {
       };
     }
     case LOG_OUT_SUCCESS: {
-      Router.push('/');
       return {
         ...state,
         isLoggingOut: false,
