@@ -46,12 +46,15 @@ const Main = () => {
   }
   return (
     <MainWrapper>
-      <CardWrapper>
-        <Card.Meta
-          avatar={<Avatar>{me.nickname[0]}</Avatar>}
-          title={me.nickname}
-        />
-      </CardWrapper>
+      {me ?
+        <CardWrapper>
+          <Card.Meta
+            avatar={<Avatar>{me.nickname[0]}</Avatar>}
+            title={me.nickname}
+          />
+        </CardWrapper>
+        : null
+      }
       <div className="posts">
         {mainPosts && mainPosts.map((p) => {
           return (

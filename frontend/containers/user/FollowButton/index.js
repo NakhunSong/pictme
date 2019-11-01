@@ -33,8 +33,8 @@ const FollowButton = memo(({ mode, userId }) => {
 });
 
 FollowButton.propTypes = {
-  mode: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
+  mode: PropTypes.string,
+  userId: PropTypes.number,
 };
 
 export default FollowButton;

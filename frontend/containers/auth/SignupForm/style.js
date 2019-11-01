@@ -10,6 +10,9 @@ export const SignupFormWrapper = styled.div`
   padding: 0px;
 `;
 export const SignupFormInnerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   border: 1px solid #e6e6e6;
   border-radius: 2px;
   background: white;

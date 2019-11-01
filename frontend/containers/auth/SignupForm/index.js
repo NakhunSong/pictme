@@ -73,9 +73,6 @@ const SignupForm = () => {
           <div className="description">
             사진으로 이야기를 공유하세요
           </div>
-          <Button type="primary" size="large" block>
-            <Link href="/about"><a>About us</a></Link>
-          </Button>
           <div className="seperator">
             <div className="or">회원가입</div>
           </div>
@@ -91,11 +88,11 @@ const SignupForm = () => {
           <Input value={passwordCheck} size="large" placeholder="패스워드확인" onChange={onChangePasswordCheck} type="password" />
           <br />
           {passwordError ? <SignupError>패스워드가 다릅니다.</SignupError> : null}
-          <Checkbox onChange={onChangeTerm}>정보 제공에 동의합니다.</Checkbox>
-          {termError ? <SignupError>정보 제공에 동의해주세요.</SignupError> : null}
+          <Checkbox onChange={onChangeTerm}>가입 확인</Checkbox>
+          {termError ? <SignupError>가입 확인을 체크해주세요.</SignupError> : null}
           <Button type="primary" size="large" block htmlType="submit" loading={isSigningUp}>가입</Button>
           <div className="policy">
-            가입하면 pictme의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.
+            가입 확인 버튼을 체크하여 가입을 완료해주세요.
           </div>
         </FormWrapper>
       </SignupFormInnerWrapper>

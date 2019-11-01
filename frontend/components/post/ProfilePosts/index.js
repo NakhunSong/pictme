@@ -8,16 +8,17 @@ import {
 } from './style';
 
 const ProfilePosts = memo(({ postRow }) => {
+  console.log(postRow);
   return (
     <RowWrapper>
       <ColWrapper>
-        {postRow[0] && <ProfilePostImage post={postRow[0]} images={postRow[0].Images} />}
+        {postRow[0] && <ProfilePostImage key={postRow[0].id} post={postRow[0]} images={postRow[0].Images} />}
       </ColWrapper>
       <ColWrapper>
-        {postRow[1] ? <ProfilePostImage post={postRow[1]} images={postRow[1].Images} /> : <div>not image</div> }
+        {postRow[1] ? <ProfilePostImage key={postRow[1].id} post={postRow[1]} images={postRow[1].Images} /> : <div>not image</div> }
       </ColWrapper>
       <ColWrapper>
-        {postRow[2] ? <ProfilePostImage post={postRow[2]} images={postRow[2].Images} /> : <div>not image</div>}
+        {postRow[2] ? <ProfilePostImage key={postRow[2].id} post={postRow[2]} images={postRow[2].Images} /> : <div>not image</div>}
       </ColWrapper>
     </RowWrapper>
   );

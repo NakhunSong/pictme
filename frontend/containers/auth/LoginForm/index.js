@@ -42,9 +42,6 @@ const LoginForm = () => {
           <div className="description">
             사진으로 이야기를 공유하세요
           </div>
-          <Button type="primary" size="large" block>
-            <Link href="/about"><a>About us</a></Link>
-          </Button>
           <div className="seperator">
             <div className="or">로그인</div>
           </div>

@@ -89,7 +89,7 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
           </Link>,
         ]}
         // mode === 'meProfile'
-        extra={userInfo.id === me.id
+        extra={userInfo.id === me && me.id
           ? <ProfileEditButton />
           : <FollowButton userInfo={userInfo} userId={userInfo.id} onFollow={handleClickFollow} onUnfollow={handleClickUnfollow} />
         }
@@ -103,9 +103,10 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
       <Seperator />
       <PostsWrapper>
         <Posts>
-          {mainPosts.map((v) => {
+          {mainPosts.map((v, i) => {
+            console.log(v);
             return (
-              <ProfilePosts postRow={v} />
+              <ProfilePosts key={i} postRow={v} />
             );
           })}
         </Posts>
@@ -115,7 +116,7 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
 };
 
 Profile.propTypes = {
-  mode: PropTypes.string.isRequired,
+  mode: PropTypes.string,
   userInfo: PropTypes.object.isRequired,
   mainPosts: PropTypes.array.isRequired,
 };
