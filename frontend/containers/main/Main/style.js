@@ -19,6 +19,7 @@ export const MainWrapper = styled.main`
 `;
 
 export const CardWrapper = styled(Card)`
+  margin: 20px 0;
   max-width: 400px;
   width: 100%;
 `;

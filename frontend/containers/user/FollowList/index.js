@@ -1,12 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { List, Avatar, Button, message } from 'antd';
+import { List, Avatar, Button, message, Card } from 'antd';
 import PropTypes from 'prop-types';
 
 import FollowButton from '../FollowButton';
-import {
-  FollowListWrapper,
-} from './style';
+import { FollowListWrapper, CardWrapper } from './style';
 import { LOAD_FOLLOWINGS_REQUEST, LOAD_FOLLOWERS_REQUEST, UNFOLLOW_USER_REQUEST, REMOVE_FOLLOWER_REQUEST } from '../../../reducers/user';
 import RemoveButton from '../../../components/user/RemoveButton';
 
@@ -14,7 +12,8 @@ const FollowList = ({ title, mode, followList, userInfo }) => {
   const dispatch = useDispatch();
   const { hasMoreFollower, hasMoreFollowing } = useSelector(state => state.user);
   const hasMoreFollow = title === '팔로잉' ? hasMoreFollowing : hasMoreFollower;
-  const meId = useSelector(state => state.user.me && state.user.me.id);
+  const { me } = useSelector(state => state.user);
+  const meId = me && me.id;
 
   const handleLoadMoreClick = useCallback(() => {
     dispatch({
@@ -44,6 +43,15 @@ const FollowList = ({ title, mode, followList, userInfo }) => {
 
   return (
     <FollowListWrapper>
+      {me ?
+        <CardWrapper>
+          <Card.Meta
+            avatar={<Avatar>{me.nickname[0]}</Avatar>}
+            title={me.nickname}
+          />
+        </CardWrapper>
+        : null
+      }
       <List
         header={`${meId === userInfo.id? '내' : `${userInfo.nickname}님의`} ${title} 목록`}
         bordered

@@ -104,7 +104,6 @@ const Profile = ({ mode, mainPosts, userInfo }) => {
       <PostsWrapper>
         <Posts>
           {mainPosts.map((v, i) => {
-            console.log(v);
             return (
               <ProfilePosts key={i} postRow={v} />
             );

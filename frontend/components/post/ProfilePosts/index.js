@@ -8,7 +8,6 @@ import {
 } from './style';
 
 const ProfilePosts = memo(({ postRow }) => {
-  console.log(postRow);
   return (
     <RowWrapper>
       <ColWrapper>
